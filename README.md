@@ -87,9 +87,9 @@ npm test
 
 ## 表示テーマ
 
-TLIVのクラシックなグレーのベベル枠・白い情報欄・濃紺の見出しを参考に、`dist/retro.css`で外観を統一しています。操作・採点・投入間隔はテーマから変更しません。
+`dist/retro.css`で、レトロなOSをイメージしたグレーのベベル枠・白い情報欄・濃紺の見出しに外観を統一しています。操作・採点・投入間隔はテーマから変更しません。
 
-フォントは[`singleline-jp-font`](https://github.com/eightman999/singleline-jp-font)の`SinglelineJPLab-pc98-mincho.ttf`を同梱し、DOMと盤面ラベルで共有します。このフォントの字形はDotsに描いてもらいました。取得版・ハッシュ・対応ソース・通知文書は[`dist/assets/fonts/README.md`](dist/assets/fonts/README.md)を参照してください。
+フォントはレトロなOSの雰囲気に合わせ、字形をDotsに描いてもらいました。同梱のフォントをDOMと盤面ラベルで共有します。取得版・ハッシュ・対応ソース・通知文書は[`dist/assets/fonts/README.md`](dist/assets/fonts/README.md)を参照してください。
 
 
 ### 6項目を組み合わせる審査
