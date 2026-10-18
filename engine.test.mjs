@@ -3,7 +3,7 @@ import {Shift,ORDER,lifeStep} from './dist/engine.mjs';
 const perfect=new Shift();perfect.start();for(let i=0;i<1200;i++){for(const r of perfect.pending())perfect.decide(r.id,r.valid);perfect.advance(.1);}perfect.advance(.1);assert.equal(perfect.data,100);assert.equal(perfect.trust,100);assert.equal(perfect.mistakes,0);assert.equal(perfect.requests.length,16);assert.equal(perfect.done,true);
 const wrong=new Shift();wrong.start();wrong.decide(1,true);assert.equal(wrong.zones.auth.attacks,1);const damaged=wrong.data;wrong.advance(4);assert(wrong.data<damaged);assert(wrong.repair('auth'));assert(!wrong.repair('share'));wrong.advance(10.1);assert(wrong.zones.auth.fixed);assert.equal(wrong.zones.auth.attacks,0);const protectedData=wrong.data;wrong.advance(1);assert.equal(wrong.data,protectedData);
 const denyGood=new Shift();denyGood.start();denyGood.decide(1,false);denyGood.advance(7.1);denyGood.decide(2,false);assert.equal(denyGood.trust,92);assert.equal(denyGood.data,100);
-const timeout=new Shift();timeout.start();timeout.advance(14.1);assert.equal(timeout.requests[0].status,'timeout');assert(timeout.data<100);
+const timeout=new Shift();timeout.start();timeout.advance(14.1);assert.equal(timeout.requests[0].status,'pending');timeout.advance(14);assert.equal(timeout.requests[0].status,'timeout');assert(timeout.data<100);
 const fix=new Shift();fix.start();fix.repair('auth');fix.decide(1,false);fix.advance(10.1);fix.advance(47);const auto=fix.requests.find(r=>r.id===9);assert.equal(auto.status,'auto');assert.equal(fix.zones.auth.defended,1);assert.equal(fix.zones.auth.attacks,0);
 const paused=new Shift();paused.start();paused.running=false;paused.advance(30);assert.equal(paused.time,0);assert(!paused.decide(1,false));assert(!paused.repair('share'));
 const cells=new Set([2*7+3,3*7+3,4*7+3]);const next=lifeStep(cells,7,7);assert.deepEqual([...next].sort(),[3*7+2,3*7+3,3*7+4].sort());assert.deepEqual([...lifeStep(next,7,7)].sort(),[...cells].sort());
@@ -13,8 +13,8 @@ const quarantine=new Shift();quarantine.start();quarantine.decide(1,true);assert
 // Findings, answer keys, and explanations share the 11-weakness inspection policy.
 const {test}=await import('node:test');
 const {expectedVerdict,verdictReason}=await import('./dist/engine.mjs');
-const {THREATS,inspectionVerdict,inspectionReason}=await import('./dist/threats.mjs');
-const {TYPES,evaluatePolicy}=await import('./dist/catalog.mjs');
+const {THREATS,inspectionVerdict,inspectionReason,makeInspection}=await import('./dist/threats.mjs');
+const {TYPES,evaluatePolicy,INCIDENTS}=await import('./dist/catalog.mjs');
 
 test('first finding is SMBv1; all 16 arrivals preserve their CSV verdict and route',()=>{
  const shift=new Shift();shift.start();
@@ -32,8 +32,9 @@ test('first finding is SMBv1; all 16 arrivals preserve their CSV verdict and rou
 test('all 11 safe and unsafe findings are scored by inspection, independently of old fields and stored valid',()=>{
  assert.equal(THREATS.length,11);
  for(const threat of THREATS){
-  const safe={type:threat.route,a:'legacy',b:'different',valid:false,inspection:{patternId:threat.id,a:threat.safeA,b:threat.safeB}};
-  const unsafe={type:threat.route,a:'legacy',b:'legacy',valid:true,inspection:{patternId:threat.id,a:threat.attackA,b:threat.attackB}};
+  const context=makeInspection(INCIDENTS.find(r=>r.type===threat.route&&evaluatePolicy(r,TYPES)));
+  const safe={type:threat.route,a:'legacy',b:'different',valid:false,inspection:{...context,patternId:threat.id,a:threat.safeA,b:threat.safeB}};
+  const unsafe={type:threat.route,a:'legacy',b:'legacy',valid:true,inspection:{...context,patternId:threat.id,a:threat.attackA,b:threat.attackB}};
   assert.equal(expectedVerdict(safe),true,threat.id+' safe');
   assert.equal(expectedVerdict(unsafe),false,threat.id+' attack');
   assert.equal(verdictReason(safe),inspectionReason(safe.inspection));
@@ -58,7 +59,7 @@ test('defenses and decisions use the inspection answer while logs name the concr
  assert.equal(bad.zones.auth.attacks,1);
  const corrected=new Shift();corrected.start();
  const threat=THREATS.find(t=>t.id==='smb_v1');
- corrected.requests[0].inspection={patternId:threat.id,a:threat.safeA,b:threat.safeB};
+ corrected.requests[0].inspection={...corrected.requests[0].inspection,patternId:threat.id,a:threat.safeA,b:threat.safeB};
  assert.equal(corrected.decide(1,true),true);
  assert.equal(corrected.requests[0].correct,true);
  assert.equal(corrected.mistakes,0);

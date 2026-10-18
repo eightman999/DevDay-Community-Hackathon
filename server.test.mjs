@@ -138,6 +138,10 @@ test('HTTP boundary rejects foreign origins, oversized/invalid bodies and untrus
   assert.equal(root.status, 200);
   assert.match(root.headers.get('content-type'), /text\/html/);
   assert.equal((await fetch(base + '/data/incidents.csv')).status, 200);
+  const score = await fetch(base + '/music/tactical-breach.txt');
+  assert.equal(score.status, 200);
+  assert.match(score.headers.get('content-type'), /text\/plain/);
+  assert.ok((await score.text()).length > 100);
   const navigation = await fetch(base, { headers: { 'Sec-Fetch-Site': 'cross-site' } });
   assert.equal(navigation.status, 200);
   assert.match(await navigation.text(), /<!doctype html>/i);
