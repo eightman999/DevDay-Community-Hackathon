@@ -1,0 +1,411 @@
+{
+  "result": "passed",
+  "models": [
+    {
+      "file": "3d/models/pcv_access_card_reader_pedestal.glb",
+      "bytes": 90724,
+      "triangles": 2644,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_clipboard_transfer_clamp.glb",
+      "bytes": 107208,
+      "triangles": 3108,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_curved_monitor_shelter.glb",
+      "bytes": 153688,
+      "triangles": 4416,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_deadletter_return_basket.glb",
+      "bytes": 70524,
+      "triangles": 2036,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_deletion_recovery_vault.glb",
+      "bytes": 265068,
+      "triangles": 7996,
+      "mesh_nodes": 17,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_disk_image_cutaway_platter.glb",
+      "bytes": 35164,
+      "triangles": 980,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_folder_fan_pocket.glb",
+      "bytes": 55012,
+      "triangles": 1080,
+      "mesh_nodes": 10,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_folder_portal_house.glb",
+      "bytes": 202332,
+      "triangles": 6092,
+      "mesh_nodes": 13,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_garbage_collection_sweeper.glb",
+      "bytes": 65376,
+      "triangles": 1824,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_hide_walkin_shelf.glb",
+      "bytes": 211332,
+      "triangles": 6568,
+      "mesh_nodes": 14,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_journal_replay_drum.glb",
+      "bytes": 634724,
+      "triangles": 18712,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_json_nested_bracebox.glb",
+      "bytes": 81740,
+      "triangles": 2584,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_passkey_touch_saddle.glb",
+      "bytes": 67788,
+      "triangles": 1988,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_quarantine_airlock_room.glb",
+      "bytes": 181172,
+      "triangles": 5616,
+      "mesh_nodes": 12,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_recovery_fragment_scoop.glb",
+      "bytes": 130408,
+      "triangles": 5476,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_recycle_petal_bin.glb",
+      "bytes": 65776,
+      "triangles": 1188,
+      "mesh_nodes": 8,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_reset_checkpoint_crank.glb",
+      "bytes": 100144,
+      "triangles": 3456,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_split_keyboard_keybed.glb",
+      "bytes": 349288,
+      "triangles": 10532,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_spreadsheet_grid_binder.glb",
+      "bytes": 292624,
+      "triangles": 8848,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_storage_capacity_floatvessel.glb",
+      "bytes": 104708,
+      "triangles": 3088,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_trackball_palm_socket.glb",
+      "bytes": 124000,
+      "triangles": 4532,
+      "mesh_nodes": 1,
+      "materials": 4,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_trash_intake_corner.glb",
+      "bytes": 123808,
+      "triangles": 3712,
+      "mesh_nodes": 8,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_usb_port_puck_hub.glb",
+      "bytes": 138140,
+      "triangles": 4048,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_vertical_mouse_cradle.glb",
+      "bytes": 71380,
+      "triangles": 2088,
+      "mesh_nodes": 1,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_walkthrough_checkpoint.glb",
+      "bytes": 137508,
+      "triangles": 4188,
+      "mesh_nodes": 9,
+      "materials": 5,
+      "external_resources": 0
+    },
+    {
+      "file": "3d/models/pcv_zip_clasp_trunk.glb",
+      "bytes": 93812,
+      "triangles": 1664,
+      "mesh_nodes": 16,
+      "materials": 5,
+      "external_resources": 0
+    }
+  ],
+  "images": [
+    {
+      "file": "3d/previews/pcv_access_card_reader_pedestal.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_clipboard_transfer_clamp.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_curved_monitor_shelter.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_deadletter_return_basket.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_deletion_recovery_vault.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_disk_image_cutaway_platter.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_folder_fan_pocket.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_folder_portal_house.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_garbage_collection_sweeper.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_hide_walkin_shelf.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_journal_replay_drum.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_json_nested_bracebox.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_passkey_touch_saddle.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_quarantine_airlock_room.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_recovery_fragment_scoop.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_recycle_petal_bin.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_reset_checkpoint_crank.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_split_keyboard_keybed.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_spreadsheet_grid_binder.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_storage_capacity_floatvessel.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_trackball_palm_socket.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_trash_intake_corner.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_usb_port_puck_hub.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_vertical_mouse_cradle.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_walkthrough_checkpoint.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/previews/pcv_zip_clasp_trunk.png",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "3d/six-regions250-overview.png",
+      "size": [
+        1800,
+        1050
+      ]
+    }
+  ],
+  "relative_markdown_links": 120,
+  "python_syntax_files": 4,
+  "publication_hygiene": "All bundled bytes scanned for common credential signatures; text files, GLB JSON, image metadata and audio tags inspected for local paths and private identifiers. This is a bounded automated check, not a proof that no secret can exist.",
+  "Unity_tested": false,
+  "fps_measured": false,
+  "source_glb_hash_matches": 26,
+  "source_preview_matches": 26
+}

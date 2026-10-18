@@ -4,6 +4,7 @@ import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { normalizeEnemyTurn } from './dist/enemy-policy.mjs';
 import {createDecisionService} from './server/decision-service.mjs';
+import {createCompanionService} from './server/companion-service.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('./dist/', import.meta.url)));
 const BODY_LIMIT = 32768;
@@ -40,12 +41,22 @@ function sameOrigin(request) {
 /** Loopback-only development server; the Worker uses the same decision service. */
 export function createCellwatchServer(options = {}) {
   const {decide, status} = createDecisionService(options);
+  const companion = createCompanionService({apiKey:options.apiKey,enabled:options.companionEnabled ?? false,...options.companionOptions});
   const server = createServer(async (request, response) => {
     try {
       if (!allowedHost(request, server.address()?.port)) return json(response, 403, { error: 'origin' });
       const url = new URL(request.url, 'http://127.0.0.1');
       if (url.pathname.startsWith('/api/') && !sameOrigin(request)) return json(response, 403, { error: 'origin' });
       if (url.pathname === '/api/enemy/status' && request.method === 'GET') return json(response, 200, status);
+      if (url.pathname === '/api/companion/status' && request.method === 'GET') return json(response, 200, companion.status);
+      if (url.pathname === '/api/companion/message' && request.method === 'POST') {
+        if (!/^application\/json(?:;|$)/i.test(request.headers['content-type'] || '')) return json(response, 415, {error:'content-type'});
+        try {
+          const payload=JSON.parse(await readBody(request));
+          if(typeof payload?.sessionId!=='string'||!/^[a-zA-Z0-9_-]{8,80}$/.test(payload.sessionId))return json(response,400,{error:'invalid-request'});
+          return json(response,200,await companion.message(payload.sessionId,payload));
+        } catch(error) {request.resume();return json(response,error.message==='body-limit'?413:400,{error:error.message==='body-limit'?'body-limit':'invalid-request'});}
+      }
       if (url.pathname === '/api/enemy/decide' && request.method === 'POST') {
         if (!/^application\/json(?:;|$)/i.test(request.headers['content-type'] || '')) return json(response, 415, { error: 'content-type' });
         if (Number(request.headers['content-length']) > BODY_LIMIT) return json(response, 413, { error: 'body-limit' });
@@ -88,7 +99,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     console.error('CELLWATCH_PORT / PORT または CELLWATCH_ENEMY_MODE の設定が不正です。');
     process.exitCode = 1;
   } else {
-    const server = createCellwatchServer({ apiKey: process.env.OPENAI_API_KEY || '', mode: mode || undefined });
+    const server = createCellwatchServer({ apiKey: process.env.OPENAI_API_KEY || '', mode: mode || undefined,companionEnabled:process.env.COMPANION_AI_ENABLED==='true' });
     server.on('error', () => { console.error('CELLWATCH サーバーを起動できませんでした。ポートを確認してください。'); process.exitCode = 1; });
     server.listen(port, '127.0.0.1', () => console.log(`CELLWATCH http://127.0.0.1:${port} (適応型の敵: ${mode === 'local' || !process.env.OPENAI_API_KEY ? 'local' : 'decisions'})`));
   }

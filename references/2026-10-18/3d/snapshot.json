@@ -1,0 +1,28 @@
+{
+  "snapshot": "CYBER G07 completed 250 independent families",
+  "created": 250,
+  "verified": 250,
+  "selected_families": 26,
+  "glb_files": 26,
+  "joined_mesh_aliases": 17,
+  "all_static": true,
+  "blender_previously_verified": true,
+  "Unity_tested": false,
+  "real_phone_tested": false,
+  "fps_measured": false,
+  "full250_world_instantiated": false,
+  "region_counts": {
+    "CPU": 52,
+    "FS": 47,
+    "NET": 38,
+    "RAM": 44,
+    "SEC": 40,
+    "TRASH": 29
+  },
+  "snapshot_record_sha256": "a3398a6fc1850a9532920dfeb872645db8e8319eed9c7a9790c886ea255fe321",
+  "owner_record_sha256": "6e147b728d4363be397277ff1eccbea6b16149adb12a5eec89276564f1705119",
+  "notes": [
+    "Mobile aliases are the same independent family, not additional models.",
+    "The six-region map is a proposed role/slot plan; actual D04 placements are recorded separately."
+  ]
+}

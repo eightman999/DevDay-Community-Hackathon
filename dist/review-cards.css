@@ -1,0 +1,39 @@
+/* Preserve the merged classic theme while keeping all six checks together. */
+.review-evidence{max-height:none!important;overflow:visible;box-shadow:none;background:transparent}
+.inspection-table tbody{gap:7px}
+.inspection-table tbody tr{background:#fff;border-color:#808080;box-shadow:var(--sunken)}
+.inspection-table tbody th{background:#dfdfdf;color:#111;padding:5px 8px 2px;border:0;font-size:12px;line-height:1.4}
+.inspection-table tbody th::before{color:#000080}
+.inspection-table tbody td{border:0;background:transparent;padding:3px 8px}
+.inspection-table tbody td:has(.comparison-value){padding:2px 7px}
+.request-fields .comparison-value{min-height:28px;padding:4px 16px 4px 7px}
+.request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .review-rule{font-size:12px;line-height:1.5;color:#111;font-weight:400}
+.inspection-table .review-rule{padding-top:2px;padding-bottom:5px}
+.enemy-observation{background:#fff;color:#111;border-color:#808080}
+.enemy-observation h3{color:#000080}
+.enemy-observation h3 small,.enemy-observation summary{color:#454545}
+.try-practice{background:#c0c0c0;color:#000080}
+@media(min-width:951px) and (max-height:820px){
+ header{min-height:66px;padding:5px 10px;gap:6px;flex-wrap:nowrap}
+ .logo{font-size:16px}.logo small{font-size:8px;margin-top:3px}
+ .bureau{display:none}
+ .topstat{padding:3px 6px}.topstat>span{font-size:9px}.topstat strong,.topstat strong b{font-size:18px}
+ .shiftclock{padding:3px 6px}.shiftclock>span{font-size:9px}.shiftclock strong{font-size:23px}
+ .topcontrols{flex:1 1 auto;flex-wrap:wrap;justify-content:flex-end;border:0;padding:0;gap:4px}
+ .topcontrols button{font-size:11px;padding:3px 7px;min-height:25px}
+ .bgmvolume,.bgmstatus{font-size:9px}.bgmstatus{margin-right:0}
+ main{padding-top:8px}
+ .controlroom{grid-template-columns:minmax(0,1.6fr) minmax(360px,1fr)}
+ .desk .transitstrip{display:none}
+ .deskfilter{padding:5px 9px;font-size:11px}.enemycontrol{font-size:10px}
+ .ticketqueue{padding-inline:9px;min-height:30px}.queueitem{font-size:11px;padding:3px 8px;min-height:25px}
+ .paper{padding:7px}.paper h3{font-size:15px;line-height:1.3;margin:4px 0}.paper h3 small{font-size:10px}
+ .request-summary{padding:3px 0;min-height:34px}.request-summary .request-character img{width:30px;height:30px}
+ .request-summary .request-character figcaption b{font-size:11px}.request-summary .request-character figcaption small{font-size:9px}
+ .request-summary .deadline{font-size:9px}.request-summary .deadline b{font-size:20px}
+ .inspection-instruction{font-size:11px;line-height:1.4;margin:0 0 4px}
+ .request-extras{margin-top:5px;padding-top:3px}.request-extras summary{font-size:10px;line-height:1.4}
+ .comparison{margin:0 9px 5px;padding:0;box-shadow:none;background:transparent;min-height:0}
+ .comparison>span{display:none}.comparison p{font-size:10px;line-height:1.5}
+ .stamptray{padding:5px 9px}.stamptray button{min-height:48px}.stamptray b{font-size:14px}.stamptray small{font-size:9px}
+}

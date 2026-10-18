@@ -1,5 +1,6 @@
+import {LOCAL_INTERVAL} from '../dist/timing.mjs';
 import { INCIDENTS } from '../dist/catalog.mjs';
-import { THREATS, makeInspection, inspectionChecks } from '../dist/threats.mjs';
+import { THREATS, makeInspection, inspectionChecks, inspectionIncident } from '../dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal, enemyActions, validEnemyAction } from '../dist/enemy-policy.mjs';
 
 const ENDPOINT = 'https://api.openai.com/v1/decisions';
@@ -40,13 +41,13 @@ function selectedAction(result, actions) {
 }
 
 /** Runtime-neutral Decisions boundary, shared by Node and the Sites Worker. */
-export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 1200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
+export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 3200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
   if (mode !== undefined && !['auto', 'local', 'decisions'].includes(mode)) throw new Error('Invalid enemy mode');
   const configured = typeof apiKey === 'string' && apiKey.length > 0;
   const activeMode = configured && mode !== 'local' ? 'decisions' : 'local';
   const sessions = new Map();
   let calls = 0;
-  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: 7, tactic: 'local', source: 'local', reason });
+  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: LOCAL_INTERVAL, tactic: 'local', source: 'local', reason });
 
   async function upstream(turn) {
     const actions = enemyActions(turn);
@@ -54,9 +55,10 @@ export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThi
       const incident = INCIDENTS.find(item => item.id === id);
       const inspection = makeInspection({...incident, templateId:id}, turn.round);
       const pattern = THREATS.find(p => p.id === inspection.patternId);
+      const detected = inspectionIncident(inspection);
       return {id, type:incident.type, a:incident.a, b:incident.b,
         rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),
-        inspection, weakness:pattern.name, impact:pattern.impact, impactKind:pattern.impactKind};
+        inspection, profile:pattern.name, detected, weakness:detected.name, impact:pattern.impact, impactKind:detected.impactKind};
     });
     const controller = new AbortController();
     let timer;

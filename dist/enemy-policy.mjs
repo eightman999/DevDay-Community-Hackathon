@@ -1,4 +1,5 @@
-// CSV-backed, deterministic rules shared by the browser and the API boundary.
+import {SHIFT_SECONDS,ARRIVAL_INTERVALS,LOCAL_INTERVAL} from './timing.mjs';
+// CSV-backed boundaries; local selection is reproducible within a seeded run.
 import {INCIDENTS, ORDER, TYPES, evaluatePolicy} from './catalog.mjs';
 
 const RECENT_LIMIT = 24;
@@ -10,14 +11,15 @@ export function enemyCandidateIds(turn) {
   if (turn.round === 0 && (valid(INCIDENTS[0]) || !Object.values(turn.zones[INCIDENTS[0].type]).some(Boolean))) return [INCIDENTS[0].id];
   const normal = INCIDENTS.filter(valid);
   const attacks = INCIDENTS.filter(r => !valid(r) && !Object.values(turn.zones[r.type]).some(Boolean));
-  const candidates = turn.round % 3 === 1 || !attacks.length ? normal : attacks;
-  // A CSV containing only one verdict still produces a bounded, playable shift.
-  return (candidates.length ? candidates : INCIDENTS.filter(r => valid(r) || !Object.values(turn.zones[r.type]).some(Boolean))).map(r => r.id);
+  // Never reveal the verdict through the round number. The API can choose either
+  // class; defenses exclude malicious candidates only, not needed normal work.
+  return [...normal, ...attacks].sort((a,b)=>a.id-b.id).map(r=>r.id);
 }
 
 export function buildEnemyTurn(shift) {
   const turn = {
     round: shift.serial,
+    seed: shift.seed ?? 0,
     time: Math.round(shift.time * 1000) / 1000,
     zones: Object.fromEntries(ORDER.map(type => {
       const z = shift.zones[type];
@@ -32,7 +34,9 @@ export function normalizeEnemyTurn(raw) {
   const fail = () => { throw new Error('Invalid enemy observation'); };
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) fail();
   if (!Number.isInteger(raw.round) || raw.round < 0 || raw.round >= INCIDENTS.length) fail();
-  if (!Number.isFinite(raw.time) || raw.time < 0 || raw.time > 120) fail();
+  const seed = raw.seed ?? 0;
+  if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) fail();
+  if (!Number.isFinite(raw.time) || raw.time < 0 || raw.time > SHIFT_SECONDS) fail();
   if (!raw.zones || typeof raw.zones !== 'object' || Array.isArray(raw.zones)) fail();
   const zones = Object.fromEntries(ORDER.map(type => {
     const z = raw.zones[type];
@@ -45,13 +49,21 @@ export function normalizeEnemyTurn(raw) {
     return {type: r.type, status: r.status, valid: r.valid};
   });
   // Do not trust browser-supplied candidates: derive them again from the CSV.
-  const turn = {round: raw.round, time: raw.time, zones, recent};
+  const turn = {round: raw.round, seed, time: raw.time, zones, recent};
   return {...turn, candidateIds: enemyCandidateIds(turn)};
 }
 
 export function chooseLocal(turn) {
-  const candidates = enemyCandidateIds(turn);
+  let candidates = enemyCandidateIds(turn);
   if (!candidates.length) return null;
+  // Per-run entropy removes the ID-only answer key without changing scoring.
+  let entropy = ((turn.seed ?? 0) ^ Math.imul(turn.round + 1, 0x9e3779b9)) >>> 0;
+  entropy = Math.imul(entropy ^ (entropy >>> 16), 0x85ebca6b);
+  entropy = Math.imul(entropy ^ (entropy >>> 13), 0xc2b2ae35);
+  entropy ^= entropy >>> 16;
+  const preferNormal = (entropy >>> 0) / 0x100000000 < .45;
+  const preferred = candidates.filter(id=>valid(INCIDENTS[id-1])===preferNormal);
+  if (turn.round > 0 && preferred.length) candidates = preferred;
   const latest = turn.recent.at(-1);
   const scores = Object.fromEntries(ORDER.map(type => [type, 10]));
   for (const [index, r] of turn.recent.entries()) {
@@ -80,7 +92,7 @@ export function enemyActions(turn) {
     switch: switching.length ? switching : attacks,
     pressure: pressure.length ? pressure : attacks
   };
-  return Object.entries(groups).flatMap(([tactic, rows]) => rows.flatMap(row => [4, 7, 10].map(interval => ({
+  return Object.entries(groups).flatMap(([tactic, rows]) => rows.flatMap(row => ARRIVAL_INTERVALS.map(interval => ({
     value: `action_${row.id}_${interval}_${tactic}`, id: row.id, interval, tactic
   }))));
 }
@@ -88,6 +100,6 @@ export function enemyActions(turn) {
 export function validEnemyAction(turn, action) {
   if (!action) return false;
   if (action.source === 'local') return (action.id === null && !turn.candidateIds.length || turn.candidateIds.includes(action.id)) &&
-    (action.interval === undefined || action.interval === 7) && (action.tactic === undefined || action.tactic === 'local');
+    (action.interval === undefined || action.interval === LOCAL_INTERVAL) && (action.tactic === undefined || action.tactic === 'local');
   return enemyActions(turn).some(item => item.id === action.id && item.interval === action.interval && item.tactic === action.tactic);
 }

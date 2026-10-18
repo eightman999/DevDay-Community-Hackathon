@@ -3,15 +3,15 @@ import assert from 'node:assert/strict';
 import { request as httpRequest } from 'node:http';
 import { createCellwatchServer } from './server.mjs';
 import { normalizeEnemyTurn, enemyActions } from './dist/enemy-policy.mjs';
-import {THREATS,makeInspection,inspectionChecks} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionChecks,inspectionIncident} from './dist/threats.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 
 const secret = 'mock-key-for-tests-only';
 function turn(round = 2) {
-  return { round, time: round * 7, zones: Object.fromEntries(['auth', 'share', 'flood', 'exfil'].map(type => [type, { fixed: false, repairing: false, quarantined: false }])), recent: [] };
+  return { round, time: round * 3.5, zones: Object.fromEntries(['auth', 'share', 'flood', 'exfil'].map(type => [type, { fixed: false, repairing: false, quarantined: false }])), recent: [] };
 }
 function answer(id = 1, extra = {}) {
-  return new Response(JSON.stringify({ answers: [{ type: 'choice', name: 'next_action', choice: `action_${id}_7_switch`, confidence: 0.8, ...extra }] }), { headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ answers: [{ type: 'choice', name: 'next_action', choice: `action_${id}_3.5_switch`, confidence: 0.8, ...extra }] }), { headers: { 'Content-Type': 'application/json' } });
 }
 async function fixture(t, options = {}) {
   const server = createCellwatchServer(options);
@@ -38,7 +38,7 @@ test('unknown enemy modes fail at server creation', () => {
 
 test('Decisions request uses fixed endpoint/model and only CSV-backed choices and bounded observations', async t => {
   let called = 0;
-  const observation = { ...turn(), candidateIds: [9999], secret: 'untrusted-client-extra' };
+  const observation = { ...turn(), seed: 0xffffffff, candidateIds: [9999], secret: 'untrusted-client-extra' };
   const { base, post } = await fixture(t, { apiKey: secret, fetchImpl: async (url, options) => {
     called++;
     assert.equal(url, 'https://api.openai.com/v1/decisions');
@@ -59,13 +59,14 @@ test('Decisions request uses fixed endpoint/model and only CSV-backed choices an
       const row=INCIDENTS.find(row=>row.id===info.id);
       const inspection=makeInspection({...row,templateId:row.id},observation.round);
       const pattern=THREATS.find(pattern=>pattern.id===inspection.patternId);
-      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),inspection,weakness:pattern.name,impact:pattern.impact,impactKind:pattern.impactKind});
+      const detected=inspectionIncident(inspection);
+      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),inspection,profile:pattern.name,detected,weakness:detected.name,impact:pattern.impact,impactKind:detected.impactKind});
     }
     assert.ok(!options.body.includes('untrusted-client-extra'));
     return answer(1);
   } });
   assert.deepEqual(await (await fetch(`${base}/api/enemy/status`)).json(), { mode: 'decisions', configured: true });
-  assert.deepEqual(await (await post(observation)).json(), { id: 1, interval: 7, tactic: 'switch', source: 'decisions', reason: 'selected' });
+  assert.deepEqual(await (await post(observation)).json(), { id: 1, interval: 3.5, tactic: 'switch', source: 'decisions', reason: 'selected' });
   assert.equal(called, 1);
 });
 
@@ -74,7 +75,7 @@ test('invalid answers, refusal, upstream errors and invalid JSON fall back witho
     [() => answer(999), 'invalid-response'],
     [() => answer(1, { confidence: 1.2 }), 'invalid-response'],
     [() => answer(1, { confidence: undefined }), 'invalid-response'],
-    [() => answer(1, { probabilities: [{ value: 'action_1_7_switch', probability: -1 }] }), 'invalid-response'],
+    [() => answer(1, { probabilities: [{ value: 'action_1_3.5_switch', probability: -1 }] }), 'invalid-response'],
     [() => answer(1, { name: 'wrong_question' }), 'invalid-response'],
     [() => new Response(JSON.stringify({ answers: [{ type: 'refusal', refusal: secret }] })), 'refusal'],
     [() => new Response('not JSON ' + secret), 'invalid-response'],

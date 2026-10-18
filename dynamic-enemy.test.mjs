@@ -16,7 +16,7 @@ test('Decisions actions combine bounded intervals with verdict-compatible tactic
   const actions = enemyActions(turn);
   assert(actions.length);
   assert.equal(new Set(actions.map(action=>action.value)).size,actions.length);
-  assert.deepEqual([...new Set(actions.map(action=>action.interval))].sort((a,b)=>a-b),[4,7,10]);
+  assert.deepEqual([...new Set(actions.map(action=>action.interval))].sort((a,b)=>a-b),[2,3.5,5]);
   for (const action of actions) {
     const row = INCIDENTS.find(row=>row.id===action.id);
     assert.equal(action.value,`action_${action.id}_${action.interval}_${action.tactic}`);
@@ -39,10 +39,10 @@ test('switch changes the latest route and pressure targets the latest missed att
   assert(enemyActions(turn).every(action=>expectedVerdict(INCIDENTS[action.id-1])||INCIDENTS[action.id-1].type!=='exfil'));
 });
 
-test('joint API selection can choose normal traffic outside the local attack cycle', async () => {
+test('joint API selection can choose normal traffic and a bounded feint interval', async () => {
   const turn=observation();
-  const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===4);
-  assert(action);assert(!turn.candidateIds.includes(action.id));
+  const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===2);
+  assert(action);assert(turn.candidateIds.includes(action.id));assert(expectedVerdict(INCIDENTS[action.id-1]));
   const service=createDecisionService({apiKey:'mock-key',fetchImpl:async(_url,init)=>{
     const body=JSON.parse(init.body);
     assert.equal(body.questions.length,1);
@@ -50,7 +50,7 @@ test('joint API selection can choose normal traffic outside the local attack cyc
     assert(body.questions[0].choices.some(choice=>choice.value===action.value));
     return response(action.value);
   }});
-  assert.deepEqual(await service.decide('joint-choice',turn),{id:action.id,interval:4,tactic:'feint',source:'decisions',reason:'selected'});
+  assert.deepEqual(await service.decide('joint-choice',turn),{id:action.id,interval:2,tactic:'feint',source:'decisions',reason:'selected'});
 });
 
 test('unoffered interval or tactic cannot be combined with an otherwise allowed incident', async () => {
@@ -59,22 +59,22 @@ test('unoffered interval or tactic cannot be combined with an otherwise allowed 
   for (const choice of [`action_${action.id}_1_feint`,`action_${action.id}_7_pressure`,'incident_1']) {
     const service=createDecisionService({apiKey:'mock-key',fetchImpl:async()=>response(choice)});
     const result=await service.decide('invalid-joint-choice',turn);
-    assert.equal(result.source,'local');assert.equal(result.reason,'invalid-response');assert.equal(result.interval,7);
+    assert.equal(result.source,'local');assert.equal(result.reason,'invalid-response');assert.equal(result.interval,3.5);
   }
 });
 
 test('browser validates the whole action and keeps the local choice on invalid combinations', async () => {
   const turn=observation();
-  const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===10);
+  const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===5);
   for (const change of [{interval:0},{interval:120},{tactic:'pressure'},{tactic:'freeform'}]) {
     const provider=createEnemyProvider({fetchImpl:async()=>new Response(JSON.stringify({...action,...change,source:'decisions',reason:'selected'}))});
     const result=await provider.choose(turn);
-    assert.equal(result.source,'local');assert.equal(result.reason,'invalid-response');assert.equal(result.interval,7);
+    assert.equal(result.source,'local');assert.equal(result.reason,'invalid-response');assert.equal(result.interval,3.5);
   }
 });
 
-test('dynamic arrivals use selected intervals and still consume all 16 slots by 105 seconds', () => {
-  for (const interval of [4,10]) {
+test('dynamic arrivals use selected intervals and still consume all 16 slots by 52.5 seconds', () => {
+  for (const interval of [2,3.5,5]) {
     const shift=new Shift({director:{select:state=>({id:INCIDENTS[state.serial].id,interval,tactic:'switch',source:'decisions',reason:'fixture'})}});
     shift.start();
     for(let step=0;step<1201;step++) {
@@ -82,17 +82,17 @@ test('dynamic arrivals use selected intervals and still consume all 16 slots by 
       shift.advance(.1);
     }
     assert.equal(shift.done,true);assert.equal(shift.requests.length,16);assert.equal(shift.serial,16);
-    assert(shift.requests.at(-1).at<=105.11);
+    assert(shift.requests.at(-1).at<=52.61);
     assert(Math.abs(shift.requests[1].at-interval)<.11);
     assert.equal(shift.mistakes,0);assert.equal(shift.data,100);assert.equal(shift.trust,100);
-    for(let index=1;index<shift.requests.length;index++)assert(shift.requests[index].at-shift.requests[index-1].at>=3.89);
+    for(let index=1;index<shift.requests.length;index++)assert(shift.requests[index].at-shift.requests[index-1].at>=1.89);
   }
 });
 
-test('CSV practice keeps its fixed order, seven-second rhythm, and all eleven weaknesses', () => {
+test('CSV practice keeps its fixed order, 3.5-second rhythm, and all eleven weaknesses', () => {
   const shift=new Shift();shift.start();shift.advance(106);
   assert.deepEqual(shift.requests.map(request=>request.templateId),INCIDENTS.map(row=>row.id));
-  for(const [index,request]of shift.requests.entries())assert(Math.abs(request.at-index*7)<.11);
+  for(const [index,request]of shift.requests.entries())assert(Math.abs(request.at-index*3.5)<.11);
   assert.equal(new Set(shift.requests.map(request=>request.inspection.patternId)).size,11);
 });
 
@@ -101,20 +101,20 @@ test('director prefetch follows a four-second schedule after a dynamic decision'
   const calls=[];
   const director=new EnemyDirector({provider:{choose:async turn=>{
     calls.push(turn.time);
-    const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===4);
+    const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===5);
     return {...action,source:'decisions',reason:'selected'};
   }}});
   try {
-    const shift=new Shift({director});shift.start();shift.advance(5.1);
+    const shift=new Shift({director});shift.start();shift.advance(2.55);
     director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
-    shift.advance(2);
+    shift.advance(1);
     assert.equal(shift.requests[1].enemySource,'decisions');
-    assert(Math.abs(shift.nextArrival-11)<.11);
-    shift.advance(1);director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(calls.length,1);
+    assert(Math.abs(shift.nextArrival-8.5)<.11);
     shift.advance(1);director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
     assert.equal(calls.length,2);
-    assert(calls[1]>=9&&calls[1]<9.2);
+    shift.advance(1);director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(calls.length,2);
+    assert(calls[1]>=4.5&&calls[1]<4.7);
   } finally {director.dispose();}
 });
 

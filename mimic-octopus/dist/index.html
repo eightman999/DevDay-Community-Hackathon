@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#172741">
+  <meta name="description" content="変わり続けるデータの街で、色・形・リズムをまねる。ミミックオクトパスの90秒擬態ゲーム。">
+  <meta property="og:title" content="MIMIC — ミミックオクトパス">
+  <meta property="og:description" content="色を変えて。形を変えて。動きまでまねて。90秒、ふつうのふり。">
+  <meta property="og:image" content="https://mimic-octopus-1018.morita-shibu5.chatgpt.site/assets/concept-gameplay.svg">
+  <title>MIMIC — ミミックオクトパス</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="game-shell" id="gameShell" data-phase="ready">
+  <header class="topbar">
+    <a class="wordmark" href="./" aria-label="MIMIC ホーム"><span class="brand-mark" aria-hidden="true">m</span><span>MIMIC<small>ミミックオクトパス</small></span></a>
+    <div class="mission-label"><span class="live-dot"></span>90秒の潜伏ミッション</div>
+    <nav class="top-actions" aria-label="ゲーム設定">
+      <button id="soundButton" class="icon-button" aria-label="サウンドをオンにする" aria-pressed="false" title="サウンド"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="soundWaves" d="m16 9 5 6m0-6-5 6"/></svg></button>
+      <button id="coachButton" class="icon-button coach-trigger" aria-label="プレイを相談" title="この瞬間を記録して相談">相談</button>
+      <button id="helpButton" class="icon-button" aria-label="あそびかた" title="あそびかた">?</button>
+      <button id="pauseButton" class="icon-button" aria-label="一時停止" disabled title="一時停止"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
+    </nav>
+  </header>
+
+  <main class="world" id="world">
+    <canvas id="gameCanvas" aria-label="タコとデータの群れがいる3Dの街。周囲の色・形・動きをまねて隠れよう。"></canvas>
+    <div class="world-vignette" aria-hidden="true"></div>
+    <div class="hud">
+      <div class="hud-cell suspicion-cell"><div class="hud-caption"><span id="suspicionLabel">疑われ度</span><strong id="suspicionValue">0<small>%</small></strong></div><div class="suspicion-track" role="meter" aria-label="疑われ度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="suspicionMeter"><i id="suspicionFill"></i></div></div>
+      <div class="hud-cell timer-cell"><span class="hud-caption">のこり</span><strong id="timeValue">01:30</strong></div>
+      <div class="hud-cell scan-cell"><span class="hud-caption" id="scanCaption">次のスキャン</span><strong id="scanValue">準備中</strong></div>
+    </div>
+    <div id="eventBanner" class="event-banner" aria-live="polite"><span class="event-icon" aria-hidden="true">↻</span><div><strong id="eventTitle">環境更新！</strong><small id="eventDetail">周りが変わった。合わせ直そう。</small></div></div>
+    <div class="world-status" id="worldStatus"><span id="statusDot"></span><span id="statusText">隣のデータを、よく見て。</span></div>
+    <div id="loadError" class="load-error hidden" role="alert"><strong>3D画面を開けませんでした</strong><p id="loadErrorText">ブラウザを更新して、もう一度お試しください。</p><button id="reloadButton" class="primary-button">再読み込み</button></div>
+
+    <section class="intro-card" id="introCard" aria-labelledby="introTitle">
+      <div class="eyebrow"><span></span>CAMOUFLAGE / SURVIVAL</div>
+      <h1 id="introTitle">90秒、<br>ふつうのふり。</h1>
+      <p class="intro-copy">データの街に、タコが一匹。<br>周りが変わったら、きみも変わろう。</p>
+      <div class="intro-traits"><span><i class="mini-color"></i>色</span><span><i class="mini-shape"></i>形</span><span><i class="mini-beat"></i>リズム</span></div>
+      <button id="startButton" class="primary-button" disabled><span id="startButtonText">街を準備しています…</span><span aria-hidden="true">↗</span></button>
+      <div class="intro-meta"><span>スマホでもPCでも</span><button id="conceptButton" class="text-button">制作イメージを見る ↗</button></div>
+    </section>
+
+    <section class="overlay hidden" id="pauseOverlay" aria-labelledby="pauseTitle"><div class="modal-card"><div class="modal-symbol">Ⅱ</div><span class="eyebrow">TAKE A BREATH</span><h2 id="pauseTitle">ひとやすみ。</h2><p>タコも、監視ドローンも待っています。</p><button id="resumeButton" class="primary-button">潜伏をつづける <span aria-hidden="true">→</span></button><button id="restartFromPause" class="secondary-button">最初からあそぶ</button></div></section>
+    <section class="overlay hidden" id="resultOverlay" aria-labelledby="resultTitle"><div class="modal-card result-card"><div class="result-kicker" id="resultKicker">MISSION COMPLETE</div><div class="rank" id="resultRank">A</div><h2 id="resultTitle">うまく、まぎれた。</h2><p id="resultDescription"></p><div class="result-metrics"><div><small>生存時間</small><strong id="resultTime">90<small>秒</small></strong></div><div><small>スキャン突破</small><strong id="resultScans">7<small>回</small></strong></div><div><small>スコア</small><strong id="resultScore">0</strong></div></div><div id="resultLesson" class="result-lesson"></div><button id="resultCoach" class="secondary-button">この結果をChatGPTに相談</button><button id="retryButton" class="primary-button">もう一度、もぐりこむ <span aria-hidden="true">↗</span></button><button id="backButton" class="secondary-button">タイトルにもどる</button></div></section>
+  </main>
+
+  <div class="match-strip"><span class="match-caption" id="matchCaption">周りになじもう</span><div class="match-chips"><span id="matchColor" class="match-chip"><i></i>色</span><span id="matchShape" class="match-chip"><i></i>形</span><span id="matchRhythm" class="match-chip"><i></i>リズム</span></div><span class="score-label">SCORE <b id="scoreValue">0000</b></span></div>
+  <section class="controls" aria-label="擬態の操作">
+    <div class="control-card color-card"><div class="control-heading"><span class="control-number">01</span><h2>色をあわせる</h2><span id="selectedColor" class="selected-value">きいろ</span></div><div id="colorChoices" class="color-choices" role="group" aria-label="体の色"></div><div class="control-footer"><span>タップで色をかえる</span><kbd>Q W E R</kbd></div></div>
+    <div class="control-card shape-card" id="shapeCard"><div class="control-heading"><span class="control-number">02</span><h2>形をかえる</h2><span id="selectedShape" class="selected-value">しかく</span></div><div id="shapeChoices" class="shape-choices" role="group" aria-label="体の形"></div><div class="control-footer"><span>← スワイプでも →</span><kbd>← →</kbd></div></div>
+    <div class="control-card rhythm-card"><div class="control-heading"><span class="control-number">03</span><h2>リズムをあわせる</h2></div><div class="rhythm-inner"><button id="tapButton" class="tap-button" aria-label="リズムをタップ。周りに合わせて2回押す" disabled><span class="tap-ring" id="tapRing"></span><span id="tapLabel">TAP</span></button><div class="rhythm-guide"><strong id="rhythmMessage">周りに合わせて2回</strong><div class="beat-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div><small id="rhythmDetail">覚えたリズムで動きつづける</small></div></div><div class="control-footer"><span>動きが変わったら、もう一度</span><kbd>SPACE</kbd></div></div>
+  </section>
+  <footer class="bottom-bar"><span>まねして、まぎれて、生きのびる。</span><a class="feature-link" href="./devday.html">DevDay活用</a><span id="bestScore">BEST —</span></footer>
+</div>
+<dialog id="helpDialog"><div class="dialog-head"><div><span class="eyebrow">HOW TO PLAY</span><h2>まねることが、生きること。</h2></div><button class="icon-button close-dialog" aria-label="あそびかたを閉じる">×</button></div><p>きみはデータの街に紛れたミミックオクトパス。90秒間、監視ドローンに見つからずに生きのびよう。</p><ol class="help-steps"><li><b>周りを見る</b><span>近くのデータの色、形、跳ねるタイミングを観察。</span></li><li><b>自分をあわせる</b><span>色はタップ、形はスワイプ。リズムは周りに合わせて2回タップすると覚える。</span></li><li><b>スキャンをやり過ごす</b><span>光が当たる間に違っていると疑われ度が上がる。100%で発見。うまく合わせると回復する。</span></li></ol><div class="help-note">音なしでも遊べます。リズムは、周りのデータが跳ねる瞬間が目印。縦画面にも対応しています。</div><button class="primary-button close-dialog">わかった、もぐりこもう ↗</button></dialog>
+<dialog id="conceptDialog" class="concept-dialog"><div class="dialog-head"><div><span class="eyebrow">VISUAL CONCEPT</span><h2>目指すのは、この擬態。</h2></div><button class="icon-button close-dialog" aria-label="制作イメージを閉じる">×</button></div><img src="./assets/concept-gameplay.svg" width="1536" height="1024" alt="黄色いフォルダから青い丸へ変わる周囲に、ミミックオクトパスが色・形・リズムを合わせる制作イメージ" loading="lazy"><p>体そのものが変わり、腕がちょっとはみ出す。これは制作イメージです。ゲームの3Dキャラクターは実際に動きます。</p></dialog>
+<dialog id="coachDialog" class="coach-dialog">
+  <div class="dialog-head"><div><span class="eyebrow">PLAY / REFLECT / RETRY</span><h2>この瞬間から、うまくなる。</h2></div><button class="icon-button close-dialog" aria-label="プレイ相談を閉じる">×</button></div>
+  <p>ゲームを止めて、周囲と自分の違いを記録しました。ChatGPTに次の一手を相談できます。閉じた後は「潜伏をつづける」で再開。</p>
+  <p id="coachAvailability"></p>
+  <div oai-annotation-container><pre id="coachReport" tabindex="0" oai-annotatable="MIMICのプレイ記録"></pre></div>
+  <button id="askCoach" class="primary-button" hidden>この記録でChatGPTに相談 ↗</button>
+  <button id="copyCoach" class="secondary-button">相談用の記録をコピー</button>
+  <p id="coachStatus" role="status" aria-live="polite"></p>
+  <small>共有するのは画面に示したゲーム状態だけです。相談ボタンではまだ送信されません。勝敗判定とゲーム内ヒントは固定ルールです。</small>
+</dialog>
+<script type="module" src="./js/app.js"></script>
+<noscript><div class="noscript">このゲームを遊ぶにはJavaScriptを有効にしてください。</div></noscript>
+</body>
+</html>

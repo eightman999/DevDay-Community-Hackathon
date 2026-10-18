@@ -6,7 +6,7 @@ import {THREATS} from './dist/threats.mjs';
 import {INCIDENTS,evaluatePolicy,TYPES} from './dist/catalog.mjs';
 
 // These counts model 100 synthetic records and 100 appointments, not historical totals.
-test('correct hospital triage preserves zero cumulative harm through the adaptive 120-second shift', () => {
+test('correct hospital triage preserves zero cumulative harm through the adaptive 60-second shift', () => {
   const director = new EnemyDirector();
   const shift = new Shift({director});
   assert.equal(shift.unavailableRecords,0);
@@ -19,7 +19,7 @@ test('correct hospital triage preserves zero cumulative harm through the adaptiv
     director.tick(shift);shift.advance(.1);
   }
   assert.equal(shift.done,true);
-  assert.equal(shift.time,120);
+  assert.equal(shift.time,60);
   assert.equal(shift.requests.length,FORMS.length);
   assert.equal(shift.data,100);
   assert.equal(shift.trust,100);
@@ -31,7 +31,7 @@ test('correct hospital triage preserves zero cumulative harm through the adaptiv
 });
 
 test('rejecting necessary normal traffic postpones synthetic appointments without making records unreadable', () => {
-  const shift=new Shift();shift.start();shift.decide(1,false);shift.advance(7.1);
+  const shift=new Shift();shift.start();shift.decide(1,false);shift.advance(3.6);
   assert.equal(expectedVerdict(shift.requests[1]),true);
   shift.decide(2,false);
   assert.equal(shift.postponedAppointments,8);
@@ -63,7 +63,7 @@ test('a malicious passage and continuing infection increase unreadable synthetic
 });
 
 test('root repair prevents further route damage while cumulative hospital losses remain', () => {
-  const shift=new Shift();shift.start();shift.decide(1,true);shift.advance(7.1);shift.decide(2,false);
+  const shift=new Shift();shift.start();shift.decide(1,true);shift.advance(3.6);shift.decide(2,false);
   assert.equal(shift.repair('auth'),true);
   shift.advance(10.1);
   assert.equal(shift.zones.auth.fixed,true);

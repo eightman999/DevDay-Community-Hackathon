@@ -1,0 +1,348 @@
+{
+  "blender_version": "5.2.0 LTS",
+  "glb_import_and_render_count": 26,
+  "render_method": "Cycles CPU, 256 px, 4 samples; visual inspection of contact sheet",
+  "Unity_tested": false,
+  "real_phone_tested": false,
+  "fps_measured": false,
+  "models": [
+    {
+      "model": "models/pcv_access_card_reader_pedestal.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 2644,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        0.8400000333786011,
+        0.7963380813598633,
+        1.0299999713897705
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_clipboard_transfer_clamp.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 3108,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.5,
+        1.5,
+        0.9987927675247192
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_curved_monitor_shelter.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 4416,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.4037374258041382,
+        0.6500000953674316,
+        1.3050000667572021
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_deadletter_return_basket.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 2036,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.899999976158142,
+        1.4500000476837158,
+        1.559999942779541
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_deletion_recovery_vault.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 7996,
+      "mesh_nodes": 17,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        3.3550000190734863
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_disk_image_cutaway_platter.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 980,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.2000000476837158,
+        0.9399999976158142,
+        0.5649999976158142
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_folder_fan_pocket.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 1080,
+      "mesh_nodes": 10,
+      "dimensions_blender_xyz_m": [
+        1.2000000476837158,
+        0.5777469873428345,
+        1.3300000429153442
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_folder_portal_house.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 6092,
+      "mesh_nodes": 13,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        3.4750001430511475
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_garbage_collection_sweeper.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 1824,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.2300002574920654,
+        1.005800724029541,
+        0.9850000739097595
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_hide_walkin_shelf.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 6568,
+      "mesh_nodes": 14,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        2.990000009536743
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_journal_replay_drum.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 18712,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.190000295639038,
+        0.8500001430511475,
+        0.9800000786781311
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_json_nested_bracebox.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 2584,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.4119240045547485,
+        0.8600000143051147,
+        1.084572196006775
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_passkey_touch_saddle.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 1988,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.0499999523162842,
+        0.8199999928474426,
+        0.9449999928474426
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_quarantine_airlock_room.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 5616,
+      "mesh_nodes": 12,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        2.990000009536743
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_recovery_fragment_scoop.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 5476,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        0.966019868850708,
+        0.7134617567062378,
+        1.5053735971450806
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_recycle_petal_bin.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 1188,
+      "mesh_nodes": 8,
+      "dimensions_blender_xyz_m": [
+        1.3338096141815186,
+        1.4463999271392822,
+        1.0112311840057373
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_reset_checkpoint_crank.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 3456,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.960836410522461,
+        1.25,
+        1.654789924621582
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_split_keyboard_keybed.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 10532,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.525160789489746,
+        0.909652590751648,
+        0.2749999761581421
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_spreadsheet_grid_binder.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 8848,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.6500000953674316,
+        0.6499999761581421,
+        1.2934725284576416
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_storage_capacity_floatvessel.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 3088,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        0.9600000381469727,
+        0.8199999332427979,
+        1.2650001049041748
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_trackball_palm_socket.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 4532,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.0399994850158691,
+        1.119999885559082,
+        0.800000011920929
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_trash_intake_corner.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 3712,
+      "mesh_nodes": 8,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        3.3350000381469727
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_usb_port_puck_hub.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 4048,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        1.2585139274597168,
+        1.1449999809265137,
+        0.3100000023841858
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_vertical_mouse_cradle.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 2088,
+      "mesh_nodes": 1,
+      "dimensions_blender_xyz_m": [
+        0.7615050077438354,
+        1.1666722297668457,
+        1.0433933734893799
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_walkthrough_checkpoint.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 4188,
+      "mesh_nodes": 9,
+      "dimensions_blender_xyz_m": [
+        4.0,
+        4.0,
+        2.9549999237060547
+      ],
+      "static": true
+    },
+    {
+      "model": "models/pcv_zip_clasp_trunk.glb",
+      "import_pass": true,
+      "render_pass": true,
+      "triangles": 1664,
+      "mesh_nodes": 16,
+      "dimensions_blender_xyz_m": [
+        1.2400000095367432,
+        0.7717499732971191,
+        0.9700000286102295
+      ],
+      "static": true
+    }
+  ]
+}
