@@ -64,3 +64,30 @@ export function chooseLocal(turn) {
   const rotation = [...candidates.slice(turn.round % candidates.length), ...candidates.slice(0, turn.round % candidates.length)];
   return rotation.reduce((best, id) => scores[INCIDENTS[id - 1].type] > scores[INCIDENTS[best - 1].type] ? id : best, rotation[0]);
 }
+
+// A single bounded choice ties the communication, following interval and tactic together.
+// Normal traffic remains available even when every attack route is protected.
+export function enemyActions(turn) {
+  const legal = INCIDENTS.filter(row => valid(row) || !Object.values(turn.zones[row.type]).some(Boolean));
+  const normal = legal.filter(valid);
+  const attacks = legal.filter(row => !valid(row));
+  const latest = turn.recent.at(-1)?.type;
+  const missed = [...turn.recent].reverse().find(r => !r.valid && ['allow', 'timeout'].includes(r.status))?.type;
+  const switching = attacks.filter(row => row.type !== latest);
+  const pressure = attacks.filter(row => row.type === missed);
+  const groups = {
+    feint: normal,
+    switch: switching.length ? switching : attacks,
+    pressure: pressure.length ? pressure : attacks
+  };
+  return Object.entries(groups).flatMap(([tactic, rows]) => rows.flatMap(row => [4, 7, 10].map(interval => ({
+    value: `action_${row.id}_${interval}_${tactic}`, id: row.id, interval, tactic
+  }))));
+}
+
+export function validEnemyAction(turn, action) {
+  if (!action) return false;
+  if (action.source === 'local') return (action.id === null && !turn.candidateIds.length || turn.candidateIds.includes(action.id)) &&
+    (action.interval === undefined || action.interval === 7) && (action.tactic === undefined || action.tactic === 'local');
+  return enemyActions(turn).some(item => item.id === action.id && item.interval === action.interval && item.tactic === action.tactic);
+}

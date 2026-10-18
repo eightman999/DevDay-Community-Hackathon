@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { request as httpRequest } from 'node:http';
 import { createCellwatchServer } from './server.mjs';
-import { normalizeEnemyTurn } from './dist/enemy-policy.mjs';
+import { normalizeEnemyTurn, enemyActions } from './dist/enemy-policy.mjs';
 import {THREATS,makeInspection} from './dist/threats.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 
@@ -11,7 +11,7 @@ function turn(round = 2) {
   return { round, time: round * 7, zones: Object.fromEntries(['auth', 'share', 'flood', 'exfil'].map(type => [type, { fixed: false, repairing: false, quarantined: false }])), recent: [] };
 }
 function answer(id = 1, extra = {}) {
-  return new Response(JSON.stringify({ answers: [{ type: 'choice', name: 'next_incident', choice: `incident_${id}`, confidence: 0.8, ...extra }] }), { headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ answers: [{ type: 'choice', name: 'next_action', choice: `action_${id}_7_switch`, confidence: 0.8, ...extra }] }), { headers: { 'Content-Type': 'application/json' } });
 }
 async function fixture(t, options = {}) {
   const server = createCellwatchServer(options);
@@ -46,16 +46,26 @@ test('Decisions request uses fixed endpoint/model and only CSV-backed choices an
     assert.equal(options.method, 'POST');
     const body = JSON.parse(options.body);
     assert.equal(body.model, 'gpt-6-luna');
-    assert.deepEqual(JSON.parse(body.input), normalizeEnemyTurn(observation));
-    assert.equal(body.questions[0].name, 'next_incident');
-    assert.deepEqual(body.questions[0].choices.map(choice => choice.value), normalizeEnemyTurn(observation).candidateIds.map(id => `incident_${id}`));
-    assert.ok(body.questions[0].choices.every(choice => JSON.parse(choice.description).rule));
-    for(const choice of body.questions[0].choices){const info=JSON.parse(choice.description),id=Number(choice.value.slice(9)),row=INCIDENTS.find(r=>r.id===id);assert.deepEqual(info.inspection,makeInspection({...row,templateId:id},observation.round));assert.equal(info.weakness,THREATS.find(p=>p.id===info.inspection.patternId).name);assert.ok(info.impact);assert.ok(info.impactKind);}
+    const {communications,...normalized}=JSON.parse(body.input);
+    assert.deepEqual(normalized, normalizeEnemyTurn(observation));
+    assert(Array.isArray(communications));
+    assert.equal(body.questions[0].name, 'next_action');
+    assert.deepEqual(body.questions[0].choices.map(choice => choice.value), enemyActions(normalizeEnemyTurn(observation)).map(action => action.value));
+    for(const choice of body.questions[0].choices){
+      const action=enemyActions(normalized).find(action=>action.value===choice.value);
+      assert.deepEqual(JSON.parse(choice.description),{id:action.id,interval:action.interval,tactic:action.tactic});
+    }
+    for(const info of communications){
+      const row=INCIDENTS.find(row=>row.id===info.id);
+      const inspection=makeInspection({...row,templateId:row.id},observation.round);
+      const pattern=THREATS.find(pattern=>pattern.id===inspection.patternId);
+      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:pattern.fieldA+'='+pattern.safeA+' かつ '+pattern.fieldB+'='+pattern.safeB,inspection,weakness:pattern.name,impact:pattern.impact,impactKind:pattern.impactKind});
+    }
     assert.ok(!options.body.includes('untrusted-client-extra'));
     return answer(1);
   } });
   assert.deepEqual(await (await fetch(`${base}/api/enemy/status`)).json(), { mode: 'decisions', configured: true });
-  assert.deepEqual(await (await post(observation)).json(), { id: 1, source: 'decisions', reason: 'selected' });
+  assert.deepEqual(await (await post(observation)).json(), { id: 1, interval: 7, tactic: 'switch', source: 'decisions', reason: 'selected' });
   assert.equal(called, 1);
 });
 
@@ -64,7 +74,7 @@ test('invalid answers, refusal, upstream errors and invalid JSON fall back witho
     [() => answer(999), 'invalid-response'],
     [() => answer(1, { confidence: 1.2 }), 'invalid-response'],
     [() => answer(1, { confidence: undefined }), 'invalid-response'],
-    [() => answer(1, { probabilities: [{ value: 'incident_1', probability: -1 }] }), 'invalid-response'],
+    [() => answer(1, { probabilities: [{ value: 'action_1_7_switch', probability: -1 }] }), 'invalid-response'],
     [() => answer(1, { name: 'wrong_question' }), 'invalid-response'],
     [() => new Response(JSON.stringify({ answers: [{ type: 'refusal', refusal: secret }] })), 'refusal'],
     [() => new Response('not JSON ' + secret), 'invalid-response'],
