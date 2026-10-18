@@ -1,5 +1,13 @@
 # DevDay-Community-Hackathon
 
+## 今回の中心作品：CELLWATCH — 夜間システム監視局
+
+**面白くて遊んでいたら、情報漏洩につながる判断ミスと対処が分かる。** それを目指して作る、120秒のセキュリティゲームです。申請をさばき、広がる脅威に対処し、答え合わせで学びます。
+
+[公開ゲーム](https://cellwatch-inspection.eightman.chatgpt.site/) · [作品概要・審査項目の根拠](cellwatch/REVIEW.md) · [デモ手順](cellwatch/DEMO.md) · [検証記録](cellwatch/VERIFICATION.md) · [提出前の残課題](cellwatch/READINESS.md)
+
+審査対象の実装は `cellwatch/`。リポジトリ直下のPATCH / PANICは別の試作です。ゲーム中の判断は固定ロジックで、モデルAPIは未接続。DevDay新機能の利用根拠は[残課題](cellwatch/READINESS.md)で明示しています。
+
 ## アイデア
 
 脆弱性（サイバーセキュリティ）×ゲーム ＝教育
