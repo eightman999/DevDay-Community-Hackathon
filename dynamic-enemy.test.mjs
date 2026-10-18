@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Shift, expectedVerdict} from './dist/engine.mjs';
-import {INCIDENTS} from './dist/catalog.mjs';
+import {INCIDENTS,evaluatePolicy,TYPES} from './dist/catalog.mjs';
+import {makeInspection,inspectionChecks,inspectionVerdict} from './dist/threats.mjs';
 import {buildEnemyTurn, enemyActions} from './dist/enemy-policy.mjs';
 import {EnemyDirector} from './dist/enemy.mjs';
 import {createEnemyProvider} from './dist/enemy-provider.mjs';
@@ -143,4 +144,31 @@ test('Decisions input sends each legal communication once and action description
       assert(communications.some(info=>info.id===description.id&&info.inspection&&info.rule&&info.impact));
     }
   }
+});
+
+
+test('Decisions communications share all six review rules and preserve CSV verdicts in every round', async () => {
+  const failingKeys=new Set();
+  const service=createDecisionService({apiKey:'mock-key',fetchImpl:async(_url,init)=>{
+    const payload=JSON.parse(init.body);
+    const input=JSON.parse(payload.input);
+    for(const communication of input.communications) {
+      const template=INCIDENTS.find(row=>row.id===communication.id);
+      const inspection=makeInspection({...template,templateId:template.id},input.round);
+      const checks=inspectionChecks(communication.inspection);
+      assert.deepEqual(communication.inspection,inspection);
+      assert.deepEqual(checks.map(check=>check.key),['a','b','identity','permission','handling','capacity']);
+      assert.equal(communication.rule,checks.map(check=>check.label+'：'+check.rule).join(' / '));
+      assert.equal(inspectionVerdict(communication.inspection),evaluatePolicy(template,TYPES));
+      for(const check of checks)if(!check.passed)failingKeys.add(check.key);
+      const tacticChoices=payload.questions[0].choices.filter(choice=>JSON.parse(choice.description).id===template.id);
+      assert(tacticChoices.length);
+      assert.equal(tacticChoices.every(choice=>JSON.parse(choice.description).tactic==='feint'),inspectionVerdict(communication.inspection));
+    }
+    return response(payload.questions[0].choices[0].value);
+  }});
+  for(let round=0;round<INCIDENTS.length;round++) {
+    assert.equal((await service.decide('six-check-communications',observation(round))).source,'decisions');
+  }
+  assert.deepEqual(failingKeys,new Set(['a','b','identity','permission','handling','capacity']));
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { request as httpRequest } from 'node:http';
 import { createCellwatchServer } from './server.mjs';
 import { normalizeEnemyTurn, enemyActions } from './dist/enemy-policy.mjs';
-import {THREATS,makeInspection} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionChecks} from './dist/threats.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 
 const secret = 'mock-key-for-tests-only';
@@ -59,7 +59,7 @@ test('Decisions request uses fixed endpoint/model and only CSV-backed choices an
       const row=INCIDENTS.find(row=>row.id===info.id);
       const inspection=makeInspection({...row,templateId:row.id},observation.round);
       const pattern=THREATS.find(pattern=>pattern.id===inspection.patternId);
-      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:pattern.fieldA+'='+pattern.safeA+' かつ '+pattern.fieldB+'='+pattern.safeB,inspection,weakness:pattern.name,impact:pattern.impact,impactKind:pattern.impactKind});
+      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),inspection,weakness:pattern.name,impact:pattern.impact,impactKind:pattern.impactKind});
     }
     assert.ok(!options.body.includes('untrusted-client-extra'));
     return answer(1);
@@ -148,6 +148,10 @@ test('HTTP boundary rejects foreign origins, oversized/invalid bodies and untrus
   assert.equal(root.status, 200);
   assert.match(root.headers.get('content-type'), /text\/html/);
   assert.equal((await fetch(base + '/data/incidents.csv')).status, 200);
+  const score = await fetch(base + '/music/tactical-breach.txt');
+  assert.equal(score.status, 200);
+  assert.match(score.headers.get('content-type'), /text\/plain/);
+  assert.ok((await score.text()).length > 100);
   const navigation = await fetch(base, { headers: { 'Sec-Fetch-Site': 'cross-site' } });
   assert.equal(navigation.status, 200);
   assert.match(await navigation.text(), /<!doctype html>/i);

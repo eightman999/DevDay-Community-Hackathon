@@ -61,7 +61,7 @@ test('queue closes the gap over .25 game seconds, with no teleport on a decision
 test('wrong approval and timeout create red intrusion from the same ID inside the 48×60 home', () => {
   for (const timeout of [false, true]) {
     const shift = new Shift(), board = new BoardState(); shift.start(); board.update(shift);
-    if (timeout) shift.advance(14.1); else shift.decide(1, true);
+    if (timeout) shift.advance(28.1); else shift.decide(1, true);
     const scene = board.update(shift), node = scene.nodes.find(n => n.id === 1);
     assert.equal(node.phase, 'intrusion');
     assert.equal(scene.threats.get(node.id).w, 48);

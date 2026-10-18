@@ -1,5 +1,5 @@
 import { INCIDENTS } from '../dist/catalog.mjs';
-import { THREATS, makeInspection } from '../dist/threats.mjs';
+import { THREATS, makeInspection, inspectionChecks } from '../dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal, enemyActions, validEnemyAction } from '../dist/enemy-policy.mjs';
 
 const ENDPOINT = 'https://api.openai.com/v1/decisions';
@@ -55,7 +55,7 @@ export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThi
       const inspection = makeInspection({...incident, templateId:id}, turn.round);
       const pattern = THREATS.find(p => p.id === inspection.patternId);
       return {id, type:incident.type, a:incident.a, b:incident.b,
-        rule:pattern.fieldA+'='+pattern.safeA+' かつ '+pattern.fieldB+'='+pattern.safeB,
+        rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),
         inspection, weakness:pattern.name, impact:pattern.impact, impactKind:pattern.impactKind};
     });
     const controller = new AbortController();
