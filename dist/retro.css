@@ -333,7 +333,7 @@ dialog a { color: #000080; }
 }
 .paper h3 small { color: #454545; font-size: 12px; }
 @media (min-width: 951px) {
-  .review-evidence { max-height: clamp(160px, calc(100dvh - 650px), 320px); }
+  .review-evidence { max-height: clamp(160px, calc(100dvh - 700px), 320px); }
 }
 @media (min-width: 951px) and (max-height: 820px) {
   header { padding: 5px 10px; gap: 6px 10px; }
