@@ -70,7 +70,8 @@ export function supportActions(context){
 }
 export function validSupportAction(context,action){return !!action&&supportActions(context).some(a=>a.kind===action.kind&&a.type===action.type);}
 export function localSupport(context){
-  const actions=supportActions(context),action=actions.find(a=>a.kind==='quarantine')||actions.find(a=>a.kind==='repair')||actions[0];
+  const actions=supportActions(context),previouslyIsolated=actions.find(a=>a.kind==='repair'&&context.zones.some(z=>z.type===a.type&&z.quarantineUntil>0));
+  const action=previouslyIsolated||actions.find(a=>a.kind==='quarantine')||actions.find(a=>a.kind==='repair')||actions[0];
   return {source:'local',reason:'local',message:action.kind==='wait'?'先輩が監視を続けています。':`${TYPES[action.type].name}の${action.kind==='quarantine'?'一時隔離':'根本修復'}を支援します。`,action};
 }
 

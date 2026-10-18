@@ -120,6 +120,15 @@ test('cleanup retries a 409 even if cancellation fails',async()=>{
  assert.equal((await service.message('s',{requestId:'first',kind:'consult',context:context()})).source,'agents');
  assert.equal(deletions,2);
 });
+test('Worker deferral returns the reply without waiting for session teardown',async()=>{
+ const tasks=[];let release;
+ const service=createCompanionService({enabled:true,apiKey:'test',defer:p=>tasks.push(p),fetchImpl:async(_url,options)=>{
+  if(options.method==='DELETE')return new Promise(r=>{release=()=>r(new Response('{}'));});
+  return stream({message:'照合しましょう。',evidenceIds:[]});
+ }});
+ const result=await service.message('s',{requestId:'one',kind:'consult',context:context()});
+ assert.equal(result.source,'agents');assert.equal(tasks.length,1);release();await Promise.all(tasks);
+});
 test('review requires end of shift, preserves reason fields, and disabled mode never calls upstream',async()=>{
  const s=new Shift();s.start();s.advance(120);const snapshot=companionSnapshot(s);
  const service=createCompanionService({fetchImpl:()=>assert.fail('no API')});

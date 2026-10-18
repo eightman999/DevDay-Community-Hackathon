@@ -47,3 +47,9 @@ test('a selected request timing out during advance cannot break the support tick
  assert.doesNotThrow(()=>new CompanionSupport().tick(s,{selectedId:1}));
  assert.equal(companionSnapshot(s,1).selectedId,null);
 });
+test('six automatic notes fit within the fourteen-second review deadline',()=>{
+ const s=new Shift();s.start();let count=0;
+ const support=new CompanionSupport();
+ for(let i=0;i<=10;i++){support.tick(s,{selectedId:1,onNote:()=>{if(count>=6)return false;count++;return true;}});s.advance(1);}
+ assert.equal(count,6);assert.equal(s.requests[0].status,'pending');
+});

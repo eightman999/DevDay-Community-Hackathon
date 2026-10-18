@@ -12,7 +12,7 @@ export class CompanionSupport {
     if(shift.done){this.flight?.controller.abort();this.flight=null;this.ready=null;return;}
     if(!shift.running)return;
     if(shift.time>=this.nextNote){
-      this.nextNote=shift.time+3;
+      this.nextNote=shift.time+2;
       const request=shift.requests.find(r=>r.id===selectedId&&r.status==='pending');
       if(request&&onNote())this.onAction({kind:'note',type:request.type,message:`先輩：通信 #${String(request.id).padStart(3,'0')} の確認メモを付けました。規則を満たすかは自分で判断してください。`,source:'local'});
     }
