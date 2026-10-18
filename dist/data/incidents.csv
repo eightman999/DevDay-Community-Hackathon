@@ -1,0 +1,17 @@
+id,type,a,b,characterName,characterRole,characterLine,characterImage,sourceSystem,destinationSystem,transport,purpose
+1,auth,AOI,UNKNOWN,キーコ,受付認証便,受付の処理申請です。端末名だけでなく、検査所見も確認してください。,assets/characters/incident-01.png,RECEPTION-03,AUTH-GW,TLS 1.2,受付認証
+2,share,REN,REN,カルテオ,カルテ参照係,カルテ参照の通信です。処理に必要な条件を照合してください。,assets/characters/incident-02.png,WARD-02,RECORDS-CORE,TLS 1.3,カルテ照会
+3,flood,UNKNOWN,74,ラボット,検査データ搬送係,検査データの取り込みを申請します。処理の検査所見を届けました。,assets/characters/incident-03.png,LAB-07,RESULT-BUS,TLS 1.2,検査結果通知
+4,exfil,公開資料,外部,ヨヤクル,予約案内配達係,予約に関わるデータを運んできました。通過条件を確認してください。,assets/characters/incident-04.png,BOOKING-01,NOTIFY-GW,TLS 1.3,予約連絡
+5,share,AOI,UNKNOWN,カルピ,カルテ照会係,カルテ照会の申請を持ってきました。検査された範囲を見てください。,assets/characters/incident-05.png,WARD-02,RECORDS-CORE,TLS 1.3,カルテ照会
+6,auth,MIKA,MIKA,マイカ,受付認証便,受付からの通信です。安全な処理かどうかを確かめてください。,assets/characters/incident-06.png,RECEPTION-03,AUTH-GW,TLS 1.2,受付認証
+7,exfil,社内資料,外部,ヨテラ,予約資料転送係,予約窓口の資料を届けます。送り先と処理の条件を確認してください。,assets/characters/incident-07.png,BOOKING-01,NOTIFY-GW,TLS 1.3,予約連絡
+8,flood,REN,8,ケンサン,検査結果配達係,検査結果に関わる通信です。必要なデータを安全に届けたいです。,assets/characters/incident-08.png,LAB-07,RESULT-BUS,TLS 1.2,検査結果通知
+9,auth,REN,UNKNOWN,レンキー,受付認証便,受付システムへの申請です。見た目ではなく検査所見を確認してください。,assets/characters/incident-09.png,RECEPTION-05,AUTH-GW,TLS 1.3,受付認証
+10,share,AOI,AOI,カルア,カルテ参照係,カルテを扱う処理を申請します。許可できる範囲を確認してください。,assets/characters/incident-10.png,WARD-04,RECORDS-CORE,TLS 1.2,カルテ照会
+11,flood,UNKNOWN,92,ラボクル,検査データ搬送係,検査データを受け付ける処理です。検査された内容を照合してください。,assets/characters/incident-11.png,LAB-04,RESULT-BUS,TLS 1.3,検査結果通知
+12,exfil,社内資料,社内,ナイヨウ,予約連絡配達係,予約連絡のデータを運びます。処理条件を照合してください。,assets/characters/incident-12.png,BOOKING-02,NOTIFY-GW,TLS 1.2,予約連絡
+13,share,MIKA,UNKNOWN,カルミ,カルテ照会係,カルテ情報の取り扱いを申請します。所見を確認してください。,assets/characters/incident-13.png,WARD-04,RECORDS-CORE,TLS 1.2,カルテ照会
+14,auth,REN,REN,キーレン,受付認証便,受付のデータ通信です。通過に必要な条件を満たすか確認してください。,assets/characters/incident-14.png,RECEPTION-05,AUTH-GW,TLS 1.3,受付認証
+15,exfil,社内資料,外部,ヨヤミ,予約資料転送係,予約関連の処理申請を持ってきました。検査所見をお願いします。,assets/characters/incident-15.png,BOOKING-02,NOTIFY-GW,TLS 1.2,予約連絡
+16,flood,MIKA,12,ラボミ,検査結果配達係,検査結果を届けるための申請です。安全な処理か確認してください。,assets/characters/incident-16.png,LAB-04,RESULT-BUS,TLS 1.3,検査結果通知

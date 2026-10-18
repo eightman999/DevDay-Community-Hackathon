@@ -1,0 +1,5 @@
+id,name,label,pattern,rule,patch,hint,color,policy,limit,publicValue,internalValue
+auth,受付,なりすまし,REPLICATOR / 単核複製,受付の認証は、本人と鍵の送信先が一致する通信だけ通す。,受付の本人と鍵の送信先を照合,12世代で自己複製する核が広がる。,#edb96d,match,,,
+share,電子カルテ,権限の抜け,MIRROR / 鏡像複製,電子カルテのファイルは、持ち主と閲覧者が一致する通信だけ通す。,カルテの持ち主と閲覧者を照合,鏡像の核が反対の対角線へ自己複製する。,#d78eaf,match,,,
+flood,検査,大量リクエスト,DOUBLE / 双核複製,検査窓口への同じ相手からの通信は、毎秒{limit}件まで通す。,検査の送信者ごとに通信量を制限,二つの核が速い世代更新で自己複製する。,#c2a2ed,rate_limit,20,,
+exfil,予約,情報の持ち出し,PRECURSOR / 前駆体複製,予約窓口の「{publicValue}」は外部宛てにも送れる。それ以外の資料は「{internalValue}」の宛先だけに送れる。,予約資料の分類と宛先を照合,6セルの前駆体から複製核が生まれる。,#79cbd4,classification,,公開資料,社内
