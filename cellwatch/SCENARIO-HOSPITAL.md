@@ -16,6 +16,10 @@
 
 出典: [英国会計検査院（NAO）, Investigation: WannaCry cyber attack and the NHS, 2017-10-27](https://www.nao.org.uk/reports/investigation-wannacry-cyber%20attack-and-the-nhs/)（2026-10-18確認）。把握値と推計値を区別し、この事例を個人情報が盗まれた事例として紹介しません。
 
+## 遊び終えたあとの学び
+
+この舞台で楽しく遊んだあと、[学びの題材候補](LEARNING-TOPICS.md)から現実の弱点や病院への影響に少し触れられる形を検討します。11種は敵の一覧や攻略仕様ではなく、ゲームの挙動をその分類へ合わせる必要はありません。WannaCry以外の10種を2017年NHS事件の原因として扱いません。
+
 ## 遊びと業務の対応案
 
 | 今の要素 | 病院ステージでの見せ方 | 実装時に必要なこと |
