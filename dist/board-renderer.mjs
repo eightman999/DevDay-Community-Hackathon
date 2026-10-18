@@ -62,9 +62,9 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
       cell(node.x + x - .5, node.y + y - .5,
         !scene.reducedMotion && (x + y + Math.floor(scene.time * 3)) % 3 === 0 ? '#8b7952' : color);
     }
-    ctx.textAlign = 'center'; ctx.font = `600 ${13 * labelScale}px monospace`; ctx.fillStyle = color;
+    ctx.textAlign = 'center'; ctx.font = `600 ${13 * labelScale}px "PC98", monospace`; ctx.fillStyle = color;
     ctx.fillText('#' + String(node.id).padStart(3, '0'), node.x * CELL, (node.y - 3.5) * CELL);
-    ctx.font = `${10 * labelScale}px sans-serif`;
+    ctx.font = `${10 * labelScale}px "PC98", serif`;
     ctx.fillText(TYPE_LABELS[node.type], node.x * CELL, (node.y + 4) * CELL);
     const result = node.remaining !== undefined ? node.remaining + 's'
       : node.phase === 'rejected' ? (node.auto ? '× 防壁' : '× 遮断')
@@ -82,10 +82,10 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
   ctx.fillStyle = '#10191b'; ctx.fillRect(45.8 * CELL, 26 * CELL, 3.4 * CELL, 8 * CELL);
   ctx.strokeStyle = '#8bd5ff'; ctx.lineWidth = 3;
   ctx.strokeRect(45.8 * CELL, 26 * CELL, 3.4 * CELL, 8 * CELL);
-  ctx.fillStyle = '#cde9f8'; ctx.textAlign = 'center'; ctx.font = `600 ${12 * labelScale}px monospace`;
+  ctx.fillStyle = '#cde9f8'; ctx.textAlign = 'center'; ctx.font = `600 ${12 * labelScale}px "PC98", monospace`;
   ctx.fillText('GATE', 47.5 * CELL, 24 * CELL);
 
-  function label(text, x, y, color, font = '16px monospace') {
+  function label(text, x, y, color, font = '16px "PC98", monospace') {
     ctx.save(); ctx.translate(x * CELL, y * CELL);
     ctx.font = font.replace(/([\d.]+)px/, (_, size) => `${Number(size) * labelScale}px`); ctx.textAlign = 'center';
     const metrics = ctx.measureText(text);
@@ -104,6 +104,6 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
     if (z.repairEnd) return [TYPE_LABELS[type] + ' 修復 ' + Math.ceil(z.repairEnd - scene.time) + 's'];
     return [];
   });
-  statuses.forEach((text, i) => label(text, 80, 17 + i * 4, '#c7dfeb', '14px sans-serif'));
+  statuses.forEach((text, i) => label(text, 80, 17 + i * 4, '#c7dfeb', '14px "PC98", serif'));
   ctx.restore();
 }

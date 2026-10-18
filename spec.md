@@ -18,7 +18,9 @@
 | ファイル | 責務 |
 | --- | --- |
 | `dist/index.html` | 監視卓、申請書、操作ガイド、教科書、報告書 |
-| `dist/style.css` | デジタル通信審査端末、PC優先のレイアウト |
+| `dist/style.css` | 通信審査端末のレイアウトとローカルフォント定義 |
+| `dist/retro.css` | TLIVを参考にしたグレーのベベル・濃紺見出し・白い情報欄の表示テーマ |
+| `dist/assets/fonts/` | Singleline JP Lab PC98 Mincho Inspired本体と出典・通知 |
 | `dist/app.mjs` | UI、盤面との接続、教科書・実験台の操作 |
 | `dist/board-state.mjs` / `dist/board-renderer.mjs` | 到着時刻と通信IDに基づく待機列・ゲート・院内盤面の状態と描画 |
 | `dist/engine.mjs` | 当直、申請、正解条件、スコア、対処 |

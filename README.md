@@ -84,3 +84,9 @@ npm test
 固定順/適応型の完走と採点、全11種類の所見、三種のカルテ被害と予約延期・修復しても回復しないこと、自己複製、CSV、APIのモック、実HTTP経路、異常応答・期限超過・重複・予算・遅着/リセット、通信・間隔・戦術の同時選択と動的投入を検証します。通常テストは実APIや実キーを使いません。実APIの課金呼出は未実施で、疎通と利用権限は別途確認が必要です。
 
 詳しくは[仕様書](spec.md)、学習内容は[教科書](textbook.md)を参照してください。ゲーム状態はメモリ内で、リセット・再読み込み時に消えます。
+
+## 表示テーマ
+
+TLIVのクラシックなグレーのベベル枠・白い情報欄・濃紺の見出しを参考に、`dist/retro.css`で外観を統一しています。操作・採点・投入間隔はテーマから変更しません。
+
+フォントは[`singleline-jp-font`](https://github.com/eightman999/singleline-jp-font)の`SinglelineJPLab-pc98-mincho.ttf`を同梱し、DOMと盤面ラベルで共有します。取得版・ハッシュ・対応ソース・通知文書は[`dist/assets/fonts/README.md`](dist/assets/fonts/README.md)を参照してください。
