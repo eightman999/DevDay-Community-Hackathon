@@ -6,7 +6,9 @@
 
 画面・操作・数値は試作中です。企画の正本は[コンセプト](cellwatch/CONCEPT.md)。病院を舞台にする案は[シナリオ候補](cellwatch/SCENARIO-HOSPITAL.md)にまとめています。現時点で病院ステージの採用は未確定です。
 
-[現行プロトタイプを遊ぶ](https://cellwatch-inspection.eightman.chatgpt.site/) · [審査基準と根拠](cellwatch/REVIEW.md)
+[現行プロトタイプを遊ぶ](https://cellwatch-inspection.eightman.chatgpt.site/) · [DevDay技術の役割と実装根拠](cellwatch/FEATURES.md) · [審査基準と根拠](cellwatch/REVIEW.md)
+
+**技術の柱:** MCP EventsやAgents APIを体験に結びつけることを重視します。確認済みの接続コードは、別ブランチ[mainのDecisions API連携](https://github.com/eightman999/DevDay-Community-Hackathon/blob/be3632425341f5a4afda03275744bb620b47282c/server.mjs#L79)です。MCP Events／Agents APIの接続は現時点の調査では未確認。使う目的・実装箇所・実行結果を[技術資料](cellwatch/FEATURES.md)へ集約します。
 
 ## まず読む文書
 
@@ -35,7 +37,7 @@
 
 `cellwatch/` が中心作品、配信ファイルは `cellwatch/dist/` です。現在は汎用システムの夜間監視を題材にした120秒・16申請の固定ルール版。HighLifeで脅威が自己複製し、拒否・隔離・修復と理由付きの答え合わせを試せます。病院の業務・被害・復旧のシミュレーションは未実装です。
 
-ゲーム中のモデルAPI・Sites MCP連携は未実装です。面白さと学習効果は設計目標で、利用者調査はこれからです。
+この `master/cellwatch/` は固定ルールの静的試作です。`main` のルートにはDecisions APIを使う別実装があり、作品全体を「API未実装」とは扱いません。実API成功・公開版稼働は未確認です。面白さと学習効果は設計目標で、利用者調査はこれからです。
 
 ```sh
 cd cellwatch

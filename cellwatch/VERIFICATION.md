@@ -4,6 +4,12 @@
 
 確認日: 2026-10-18（日本時間）。ゲーム実装の基準コミット: [`7fae963b6a903f53263a0c6c3ee59aced49ae546`](https://github.com/eightman999/DevDay-Community-Hackathon/commit/7fae963b6a903f53263a0c6c3ee59aced49ae546)。今回の変更は説明・導線と検証の追加で、判定・セル規則は変更していません。
 
+## 2026-10-18の技術実装の所在確認
+
+`main@be3632425341f5a4afda03275744bb620b47282c` のルートに、Decisions APIの接続コードとモックを使うテストがあることを読取確認しました。以下の自動テスト結果は `master/cellwatch/` の固定ルール版の記録で、mainのテスト再実行や実API成功の記録ではありません。[技術資料](FEATURES.md)にコミット固定リンクを掲載しています。
+
+mainのREADMEは実APIの課金呼び出しと既存公開先への同期・公開を未実施と記載しています。MCP Events／Agents APIの接続コードは今回の調査範囲では未確認です。
+
 ## 自動検証
 
 Node.js v24.19.0で、以下のコマンドを `cellwatch/` 内から実行しました。npmが利用できる環境では `npm run check` と `npm test` も同じ対象を実行します。依存インストールは不要です。
@@ -50,7 +56,7 @@ node --test engine.test.mjs automata.test.mjs ui-wiring.test.mjs review-evidence
 
 - 初見ユーザーの操作性、面白さ、学習前後の理解度、再挑戦率、実際の事故削減効果。
 - スマートフォン実機、スクリーンリーダー、全ブラウザでの互換性。
-- ゲーム中のモデルAPI・Sites MCP連携。DevDay新機能の活用根拠。
+- MCP Events／Agents APIの接続と実行。mainにあるDecisions連携の実API成功・公開稼働。技術のコード所在は[FEATURES](FEATURES.md)を参照。
 - 正式な審査AIによる採点。審査用プロンプト・配点・提出物の読み取り方法は未確認。
 
 自動検証、ブラウザでの操作確認、ユーザー調査、公式審査は別々の根拠として扱います。
