@@ -15,3 +15,15 @@ DevDay 2026のWebsite annotationsで、その瞬間のゲーム状態をChatGPT�
 ## 参加条件の確認事項
 
 午前に公開した初版をベースにしています。事前プロトタイプの未公開条件との整合は主催者への確認が必要です。
+
+
+## BEAT BORDER — 音ゲー × 入国審査のコンセプト
+
+書類を読み、許可・拒否・追加検査を選び、拍に合わせて判子を押すゲーム案です。
+16秒・120 BPM・音付きのモック動画を作りました。
+
+[![BEAT BORDER コンセプト動画](media/beat-border-preview.png)](media/beat-border-concept.mp4)
+
+[動画ファイルを開く・ダウンロード](media/beat-border-concept.mp4)
+
+この映像は実装前のコンセプトアニメーションです。Sites MCPによる管制操作、Decisions APIによる追加検査は今後の構想であり、この動画では接続していません。
