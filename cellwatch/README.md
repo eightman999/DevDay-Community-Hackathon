@@ -24,6 +24,9 @@ npm test
 
 ## 文書
 
+- [提出用紹介文](SUBMISSION.md): 短文・詳しい紹介・技術欄。
+- [機能利用の根拠](FEATURES.md): DevDay公式発表と実装の照合。
+- [公開手順](DEPLOYMENT.md): 既存Sitesへの反映と確認。
 - [仕様書](spec.md): 画面、当直、審査条件、得点、セル規則、検証条件。
 - [教科書](textbook.md): 承認/拒否の基準、対処の違い、自己複製の解説。
 - Sitesの公開識別子は `.openai/hosting.json` に保持。更新時に新規Siteを作らないでください。
