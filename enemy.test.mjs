@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Shift, expectedVerdict, ORDER} from './dist/engine.mjs';
+import {Shift, expectedVerdict, ORDER, MAX_ROOT_REPAIRS} from './dist/engine.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 import {buildEnemyTurn, normalizeEnemyTurn, chooseLocal} from './dist/enemy-policy.mjs';
 import {EnemyDirector} from './dist/enemy.mjs';
@@ -8,6 +8,17 @@ import {evidenceBot, simulate, summarize} from './scripts/verify-demo.mjs';
 
 const settle = () => new Promise(resolve => setImmediate(resolve));
 const preparedShift = director => {const shift = new Shift({director});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
+
+test('choice traces retain the API observation, while local fallback records recalculated input',async()=>{
+ for(const source of ['decisions','local']){
+  const director=new EnemyDirector({provider:{choose:async turn=>({id:turn.candidateIds[0],source,reason:source==='local'?'unconfigured':'selected'})}});
+  const shift=new Shift({director,seed:42});shift.start();shift.advance(5.1);director.tick(shift);await settle();
+  shift.decide(1,false);shift.advance(2.1);const next=shift.requests[1];
+  assert.equal(next.enemySource,source);assert.equal(next.enemyObservation.recent.length,source==='decisions'?0:1);
+  assert.equal(next.enemyObservation.candidateCount,16);assert(!('seed' in next.enemyObservation));
+  director.dispose();
+ }
+});
 
 test('local adaptive shift keeps 16 CSV communications, seven-second arrivals, and perfect verdicts', () => {
   const director = new EnemyDirector();
@@ -72,6 +83,32 @@ test('every courier can carry normal and malicious evidence without becoming an 
 
 test('verification traces replay exactly under the same explicit seed and actions', () => {
   for (const seed of [1, 128, 0xffffffff]) assert.deepEqual(simulate(seed, evidenceBot), simulate(seed, evidenceBot));
+});
+
+test('repair-only play exhausts two root repairs and leaves attacks requiring manual review', () => {
+  assert.equal(MAX_ROOT_REPAIRS, 2);
+  const runs = Array.from({length:128}, (_, index) =>
+    simulate(index+1, () => undefined, new EnemyDirector(), {repairOnly:true}));
+  assert(runs.every(run => run.reviewed === 0 && run.completedRepairs === 2 && run.repairRejections > 0));
+  assert(runs.every(run => run.timedOut > 0), 'Unfixed routes must continue requiring review');
+  for (const seed of [1,2,3,42]) {
+    const run = runs[seed-1];
+    assert(Object.values(run.damage).some(value => value > 0), `Repair-only seed ${seed} must not bypass inspection`);
+  }
+  const shift = new Shift({director:new EnemyDirector(),seed:1});
+  shift.start();
+  assert.equal(shift.repair('auth'), true);
+  assert.equal(shift.repair('share'), false, 'Only one repair can run at a time');
+  shift.advance(10.1);
+  assert.equal(shift.repair('share'), true);
+  shift.advance(10.1);
+  assert.equal(shift.repaired, 2);
+  for (const type of ['flood','exfil']) {
+    assert.equal(shift.repair(type), false, 'Exhausted capacity must reject further repair requests');
+    assert.equal(shift.zones[type].repairEnd, 0);
+    assert.equal(shift.zones[type].fixed, false);
+  }
+  shift.director.dispose();
 });
 
 test('selection seeds replay choices, change on a new run, and cannot expand the server observation', () => {

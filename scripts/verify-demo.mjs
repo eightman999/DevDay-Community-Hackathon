@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {Shift, expectedVerdict} from '../dist/engine.mjs';
 import {EnemyDirector} from '../dist/enemy.mjs';
-import {INCIDENTS} from '../dist/catalog.mjs';
+import {INCIDENTS, ORDER} from '../dist/catalog.mjs';
 import {THREATS, TRANSFER_LIMITS} from '../dist/threats.mjs';
 
 // Only evidence shown by the inspection sheet and its published rules are read.
@@ -27,11 +27,15 @@ export function evidenceBot({inspection: i}) {
 
 export const idModuloBot = request => request.id % 3 === 2;
 
-export function simulate(seed, bot, director = new EnemyDirector()) {
+export function simulate(seed, bot, director = new EnemyDirector(), {repairOnly = false} = {}) {
   const shift = new Shift({director, seed});
-  let correct = 0, reviewed = 0;
+  let correct = 0, reviewed = 0, repairRejections = 0;
   shift.start();
   while (!shift.done) {
+    if (repairOnly && !ORDER.some(type => shift.zones[type].repairEnd)) {
+      const type = ORDER.find(type => !shift.zones[type].fixed);
+      if (type && !shift.repair(type)) repairRejections++;
+    }
     for (const request of shift.pending()) {
       const allow = bot(request);
       if (allow === undefined) continue;
@@ -39,7 +43,7 @@ export function simulate(seed, bot, director = new EnemyDirector()) {
       reviewed++;
       shift.decide(request.id, allow);
     }
-    // All bots observe the same half-second clock; no repair or quarantine.
+    // All bots observe the same clock. Only repairOnly requests root repairs.
     shift.advance(.5);
   }
   director.dispose?.();
@@ -47,6 +51,9 @@ export function simulate(seed, bot, director = new EnemyDirector()) {
     seed, requests: shift.requests.length, reviewed, correct,
     accuracy: reviewed ? correct / reviewed : null,
     mistakes: shift.mistakes,
+    completedRepairs:shift.repaired, repairRejections,
+    autoDefended:shift.requests.filter(r => r.status === 'auto').length,
+    timedOut:shift.requests.filter(r => r.status === 'timeout').length,
     unreviewed: shift.requests.filter(r => ['pending','timeout'].includes(r.status)).length,
     damage: {
       unavailableRecords: shift.unavailableRecords,
@@ -72,7 +79,11 @@ export function summarize(runs) {
     couriers.find(courier => courier.id === request.courierId)[request.normal ? 'normal' : 'malicious']++;
   }
   return {shifts:runs.length, requests:sum('requests'), reviewed, correct,
-    accuracy:correct/reviewed, mistakes:sum('mistakes'), unreviewed:sum('unreviewed'),
+    accuracy:reviewed ? correct/reviewed : null, mistakes:sum('mistakes'), unreviewed:sum('unreviewed'),
+    completedRepairs:sum('completedRepairs'), repairRejections:sum('repairRejections'),
+    autoDefended:sum('autoDefended'), timedOut:sum('timedOut'),
+    zeroDamageShifts:runs.filter(run => Object.values(run.damage).every(value => value === 0)).length,
+    zeroDamageCompletionRate:runs.filter(run => Object.values(run.damage).every(value => value === 0)).length/runs.length,
     damage, couriers, everyCourierCarriesBoth:couriers.every(c => c.normal && c.malicious),
     traceSha256:createHash('sha256').update(JSON.stringify(runs)).digest('hex')};
 }
@@ -91,19 +102,25 @@ export async function verifyDemo() {
   assert.equal(results.evidencePerfect.mistakes, 0);
   assert(Object.values(results.evidencePerfect.damage).every(metric => metric.total === 0));
   assert(results.evidencePerfect.everyCourierCarriesBoth);
+  const repairRuns = seeds.map(seed => simulate(seed, () => undefined, new EnemyDirector(), {repairOnly:true}));
+  assert(repairRuns.every(run => run.reviewed === 0 && run.completedRepairs === 2 && run.repairRejections > 0));
+  results.repairOnly = summarize(repairRuns);
+  assert(results.repairOnly.zeroDamageCompletionRate < 1, 'Repair-only must not guarantee a damage-free shift');
   const sourceFiles = ['dist/engine.mjs','dist/enemy.mjs','dist/enemy-policy.mjs','dist/threats.mjs',
     'dist/catalog.mjs','dist/data/incidents.csv','dist/data/vulnerabilities.csv','dist/data/attack-patterns.csv','scripts/verify-demo.mjs'];
   const sourceSha256 = Object.fromEntries(await Promise.all(sourceFiles.map(async file =>
-    [file, createHash('sha256').update(await readFile(new URL(`../${file}`, import.meta.url))).digest('hex')])));
+    [file, createHash('sha256').update((await readFile(new URL(`../${file}`, import.meta.url), 'utf8')).replace(/\r\n/g, '\n'), 'utf8').digest('hex')])));
   return {
     schemaVersion:1, seeds:{first:1,last:128,count:128},
     conditions:{durationSeconds:120, arrivalIntervalSeconds:7, decisionClockSeconds:.5,
-      repairs:false, quarantine:false, provider:'local only; no external calls', initialData:100, initialAppointments:100},
-    results, sourceSha256,
+      repairs:'idModulo/evidencePerfect: none; repairOnly: auth then share, at most two, one at a time',
+      quarantine:false, provider:'local only; no external calls', initialData:100, initialAppointments:100},
+    results, sourceHashEncoding:'UTF-8 text, CRLF normalized to LF, SHA-256', sourceSha256,
     limitations:[
       '同じseedと時計を各botに適用する。適応型のため判断履歴が異なると後続の投入経路も異なる。',
       '最初の通信は意図的に固定のSMB不正。以降の伝票ID・配達員の見た目は正解キーとして使わない。',
       'evidencePerfectは公開された6項目規則を完全に実行する理想bot。人間の読解速度や学習効果は測定していない。',
+      'repairOnlyは開始時auth、完了後shareを順次修復し、手動審査を一切しない。自動拒否と未審査通過を分けて記録する。他の修復戦略の網羅検証ではない。',
       'API判断との優劣・品質・遅延・コストは未検証。外部API、外部サービス、実攻撃は実行しない。',
       '被害は1当直100件を上限とするゲーム内指標の累計。各種類は独立で、実患者や実運用の被害ではない。',
       '固定templateIdと内部seedを読むソース解析botへの耐性は保証しない。CSV番号は画面非表示だが内部正解は秘密ではない。'

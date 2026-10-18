@@ -51,6 +51,13 @@ test('untimed practice advances one document only after judgment and explicit ne
  assert.equal(shift.requests.length,16);assert.equal(shift.time,0);
 });
 
+test('a normal timeout supports work but is never counted as a manual correct review',()=>{
+ const shift=new Shift();shift.start();shift.decide(1,false);shift.advance(35.1);
+ const normal=shift.requests.find(r=>r.id===2);assert.equal(normal.status,'timeout');
+ assert.equal(normal.correct,null);assert.equal(shift.zones.share.correct,0);
+ assert.equal(shift.postponedAppointments,0);
+});
+
 test('first finding is SMBv1; all 16 arrivals preserve their CSV verdict and route',()=>{
  const shift=new Shift();shift.start();
  assert.equal(shift.requests[0].inspection.patternId,'smb_v1');

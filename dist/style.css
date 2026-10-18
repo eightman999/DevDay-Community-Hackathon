@@ -188,6 +188,12 @@
   .inspection-table tbody tr{display:flex}
   .inspection-table tbody th{font-size:12px}
 }
+.enemy-observation{padding:10px 14px;border-block:1px solid var(--line);background:#102329}
+.enemy-observation h3{font-size:11px;font-weight:500;color:var(--blue);margin:0 0 6px}
+.enemy-observation h3 small{font:8px 'IBM Plex Mono',monospace;margin-left:8px;color:var(--muted)}
+.enemy-observation p{font-size:11px;line-height:1.7;margin:6px 0;overflow-wrap:anywhere}
+.enemy-observation summary{font-size:10px;color:var(--muted);cursor:pointer}
+#enemyTrace p{border-top:1px solid var(--line);padding-top:7px}
 
 /* Chapter 12: only the hospital monitoring board is styled here. */
 .dashboard .maplabels { inset:8px 8px auto; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
@@ -203,3 +209,4 @@
 .dashboard .zone.fixed .zonestatus,.dashboard .boardblue { color:#8bd5ff; }
 .dashboard .boardfixed { color:#e0edf8; }
 .dashboard .atlas { background:#101a20; }
+.try-practice{margin-top:16px;padding:10px 16px;border-color:var(--green);color:var(--green);background:#18382f;font-size:12px}
