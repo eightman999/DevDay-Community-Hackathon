@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1019">
+  <meta name="description" content="03:17 — ON CALL。深夜のインシデント対応を120秒で体験する、13歳以上向け教育タワーディフェンス・プロトタイプ。">
+  <title>03:17 — ON CALL | 教育ゲーム・プロトタイプ</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="global-noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#" id="brand-home" aria-label="03:17 ON CALL — はじめから">
+      <span class="brand-symbol">↳</span>
+      <span>03:17 <b>/ ON CALL</b></span>
+    </a>
+    <div class="nav-right"><span class="tag tag-neutral">SECURITY EDUCATION</span><span class="prototype-chip">PRIVATE PROTOTYPE <span class="live-dot"></span></span></div>
+  </header>
+  <main id="app-root">
+    <section id="intro-screen" class="screen intro-screen" aria-labelledby="intro-title">
+      <div class="intro-layout">
+        <div class="intro-content">
+          <p class="eyebrow">EPISODE 01 / 深夜のリリース</p>
+          <div class="timecode"><span class="timecode-small">SUN. / 03:17 AM</span><span class="timecode-big">03<span class="punct">:</span>17</span></div>
+          <h1 id="intro-title">異常は、<br><span class="accent-text">眠っている間</span>に<br>増えていく。</h1>
+          <p class="intro-lead">新機能のリリース直後、誰かが「他人の資料」を見られるようになった。あなたは今夜の当番エンジニア。<strong>120秒</strong>で、サービスを守り抜け。</p>
+          <div class="intro-call" role="group" aria-label="入電の内容">
+            <div class="avatar"><span>運</span></div>
+            <div class="call-copy"><span class="call-label">着信 / 運用担当・ミナ</span><p>「ごめん、起きてる？ 本番で、他の人の資料が見えてるかも……」</p></div>
+            <span class="ring-icon" aria-hidden="true">☎</span>
+          </div>
+          <div class="intro-actions">
+            <button class="button button-primary button-xl" id="start-btn"><span>電話に出て、対応する</span><span aria-hidden="true">↗</span></button>
+            <button class="button button-outline button-xl" id="practice-btn">時間制限なしで学ぶ</button>
+          </div>
+          <p class="intro-meta"><span>◷ 1プレイ 1〜3分</span><span>◇ 13歳以上</span><span>◈ 架空の演習環境</span></p>
+        </div>
+        <div class="hero-scene" aria-label="暗い部屋で光るPCモニターと着信中のスマートフォンのイラスト">
+          <div class="scene-halo"></div><div class="scene-window"><div class="scene-moon"></div><div class="scene-city one"></div><div class="scene-city two"></div><div class="scene-city three"></div><div class="rain rain-one"></div><div class="rain rain-two"></div></div>
+          <div class="scene-monitor"><div class="monitor-bezel"><div class="monitor-heading"><span>● <span class="terminal-quiet">STAGING / PROD</span></span><span class="terminal-red">02 WARNINGS</span></div><div class="terminal-line muted short"></div><div class="terminal-line cyan"></div><div class="terminal-line muted"></div><div class="terminal-line danger half"></div><div class="terminal-line muted short"></div><div class="terminal-line cyan half"></div><div class="terminal-cursor"></div></div><div class="monitor-stand"></div></div>
+          <div class="scene-desk"></div><div class="scene-mug"></div><div class="scene-phone"><div class="phone-speaker"></div><div class="phone-face">緊急着信<br><strong>運用担当</strong><span>受信中…</span></div><div class="phone-answer">●</div></div>
+          <div class="scene-caption"><span class="blink-dot"></span> YOUR SHIFT STARTS NOW <span class="scene-no">01 / 03</span></div>
+        </div>
+      </div>
+    </section>
+    <section id="game-screen" class="screen game-screen hidden" aria-labelledby="game-title">
+      <div class="game-heading"><div><p class="eyebrow">SIMULATION / NIGHT SHIFT</p><h1 id="game-title">守るのは、コードだけじゃない。</h1></div><div class="game-settings"><span id="game-mode-chip" class="tag tag-neutral">STANDARD / 120 SEC</span><button class="quiet-button" id="help-btn" type="button">遊び方 <span aria-hidden="true">↗</span></button></div></div>
+      <div class="hud" aria-label="現在の状況">
+        <div class="hud-time"><span class="hud-kicker">TIME LEFT</span><strong id="hud-time">02:00</strong><div class="hud-timer-bar"><div id="hud-timer-fill"></div></div></div>
+        <div class="hud-stat"><span class="hud-kicker">SERVICE UPTIME</span><strong id="hud-uptime">100<span>%</span></strong><small id="uptime-caption">正常</small></div>
+        <div class="hud-stat"><span class="hud-kicker">DATA AT RISK</span><strong id="hud-data">0<span>%</span></strong><small id="data-caption">流出リスク（演習値）</small></div>
+        <div class="hud-stat"><span class="hud-kicker">THREAT PROGRESS</span><strong id="hud-threat">25<span>%</span></strong><small id="threat-caption">侵入経路を調査中</small></div>
+      </div>
+      <div class="game-layout">
+        <section class="map-panel panel" aria-label="ネットワーク防衛マップ">
+          <div class="panel-top"><div><p class="panel-label">FIELD VIEW <span>/ SERVICE NETWORK</span></p><h2>HARBOR / サービス全体図</h2></div><span id="map-status" class="status-badge status-danger">問題発生中</span></div>
+          <div class="map-subhead"><span><i class="legend legend-safe"></i> 正規のアクセス</span><span><i class="legend legend-hostile"></i> 不審なアクセス</span><span><i class="legend legend-issue"></i> 未修正の弱点</span></div>
+          <div class="map-viewport">
+            <svg id="network-map" viewBox="0 0 920 485" role="img" aria-label="入口、ゲートウェイ、Webサーバー、認証、共有機能、データ保管庫、新機能のつながりを表示します">
+              <defs>
+                <linearGradient id="edgeNormal" x1="0" x2="1"><stop offset="0" stop-color="#335a71"/><stop offset="1" stop-color="#44b2a4"/></linearGradient>
+                <linearGradient id="edgeRisk" x1="0" x2="1"><stop offset="0" stop-color="#a04f68"/><stop offset="1" stop-color="#eb7b79"/></linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <pattern id="mapgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#2a3846" stroke-width=".7" opacity=".52"/></pattern>
+              </defs>
+              <rect width="920" height="485" fill="url(#mapgrid)"/>
+              <g class="network-edges">
+                <path d="M132 232 H206" class="link-safe"/>
+                <path d="M322 232 C345 232 345 181 382 181" class="link-safe"/>
+                <path d="M498 181 H553" class="link-safe"/>
+                <path id="attack-path" d="M132 232 H206 M322 232 C345 232 345 181 382 181 C500 181 500 335 552 335 H734" class="link-risk"/>
+                <path d="M498 181 C534 181 515 335 552 335 H734" class="link-risk"/>
+                <path d="M671 335 H734" class="link-risk"/>
+                <path d="M672 136 H734" class="link-safe"/>
+              </g>
+              <g class="particles" aria-hidden="true">
+                <circle r="4" fill="#55dbbd" filter="url(#glow)"><animateMotion dur="3.2s" repeatCount="indefinite" path="M132 232 H206 L322 232 C345 232 345 181 382 181 H553" /></circle>
+                <circle r="5" fill="#f17d8b" filter="url(#glow)" id="attack-dot"><animateMotion dur="4.5s" repeatCount="indefinite" path="M132 232 H206 L322 232 C345 232 345 181 382 181 C500 181 500 335 552 335 H734" /></circle>
+              </g>
+              <g class="node" data-node="outside" tabindex="0" role="button" aria-label="外部ネットワークを調べる" transform="translate(27 183)"><rect width="105" height="96" rx="14"/><text x="52" y="35" class="node-symbol">◎</text><text x="52" y="61" class="node-title">外部</text><text x="52" y="79" class="node-sub">TRAFFIC</text></g>
+              <g class="node" data-node="gateway" tabindex="0" role="button" aria-label="ゲートウェイを調べる" transform="translate(206 183)"><rect width="116" height="96" rx="14"/><text x="58" y="35" class="node-symbol">◇</text><text x="58" y="61" class="node-title">入口</text><text x="58" y="79" class="node-sub">GATEWAY</text></g>
+              <g class="node" data-node="web" tabindex="0" role="button" aria-label="Webサーバーを調べる" transform="translate(382 134)"><rect width="116" height="96" rx="14"/><text x="58" y="35" class="node-symbol">▣</text><text x="58" y="61" class="node-title">Web</text><text x="58" y="79" class="node-sub">APP SERVER</text></g>
+              <g class="node" data-node="auth" tabindex="0" role="button" aria-label="認証サーバーを調べる" transform="translate(553 88)"><rect width="119" height="96" rx="14"/><text x="59" y="35" class="node-symbol">⌁</text><text x="59" y="61" class="node-title">認証</text><text x="59" y="79" class="node-sub">IDENTITY</text></g>
+              <g class="node node-risk" data-node="share" tabindex="0" role="button" aria-label="共有機能の脆弱性を調べる" transform="translate(552 287)"><rect width="119" height="96" rx="14"/><circle cx="105" cy="13" r="8" class="node-alert"/><text x="59" y="35" class="node-symbol">▤</text><text x="59" y="61" class="node-title">共有機能</text><text x="59" y="79" class="node-sub">SHARING</text></g>
+              <g class="node" data-node="database" tabindex="0" role="button" aria-label="データ保管庫を調べる" transform="translate(734 287)"><rect width="151" height="96" rx="14"/><text x="75" y="35" class="node-symbol">▥</text><text x="75" y="61" class="node-title">データ保管庫</text><text x="75" y="79" class="node-sub">DOCUMENT STORE</text></g>
+              <g class="node new-feature" data-node="preview" tabindex="0" role="button" aria-label="新機能の管理プレビューを調べる" transform="translate(734 88)"><rect width="151" height="96" rx="14"/><text x="75" y="35" class="node-symbol">⬡</text><text x="75" y="61" class="node-title">新機能</text><text x="75" y="79" class="node-sub">ADMIN PREVIEW</text></g>
+              <text x="34" y="44" class="map-watermark">INCIDENT / 001</text>
+              <text x="34" y="460" class="map-coordinates">◈ MAP IS SIMULATED — NOT A REAL NETWORK SCAN</text>
+            </svg>
+          </div>
+          <div class="node-inspector" id="node-inspector" aria-live="polite"><div><span class="inspector-kicker">SELECTED NODE / 共有機能</span><strong>資料ごとの閲覧権限が不足している疑い</strong></div><span class="inspector-right">↗ 地図をクリックして調査</span></div>
+        </section>
+        <section class="decision-panel panel" aria-labelledby="incident-title">
+          <div class="panel-top"><div><p class="panel-label">INCIDENT BOARD <span id="stage-number">/ PHASE 01</span></p><h2 id="incident-title">不審な閲覧を検知</h2></div><span class="pulse-pill"><span></span> LIVE</span></div>
+          <div id="phase-tracker" class="phase-tracker" aria-label="進行状況"></div>
+          <div class="incident-copy"><p id="incident-description">一般ユーザーが、許可されていない資料を閲覧できる可能性があります。</p><div id="incident-evidence" class="evidence-box"></div></div>
+          <div class="action-heading"><strong>次の行動を選ぶ</strong><small id="action-count">STEP 1 / 3</small></div>
+          <div id="action-cards" class="action-cards"></div>
+          <div class="custom-response"><div class="custom-heading"><span>✦ 自分の言葉で提案する</span><span id="engine-chip" class="engine-chip">ローカルデモ判定</span></div><label for="custom-text" class="sr-only">対処案を自由に入力</label><textarea id="custom-text" maxlength="300" rows="2" placeholder="例：共有機能を一時停止して被害を抑える" aria-describedby="custom-hint"></textarea><div class="custom-footer"><small id="custom-hint">入力内容を対応カテゴリに分類し、実行前に確認します。</small><button id="evaluate-btn" class="button button-small">対処案を判定 ↗</button></div><div id="custom-result" class="custom-result hidden" aria-live="polite"></div></div>
+        </section>
+      </div>
+      <div class="bottom-layout"><section class="timeline-panel panel"><div class="panel-top"><div><p class="panel-label">AUDIT TRAIL</p><h2>対応ログ</h2></div><span class="tag tag-neutral">GAME EVENTS</span></div><div id="game-timeline" class="timeline-list" aria-live="polite"></div></section><section class="lesson-panel panel"><p class="panel-label">FIELD NOTE / 知っておきたいこと</p><h2 id="lesson-title">弱点と攻撃は違います。</h2><p id="lesson-content">脆弱性は、システムに残った弱点。不審なアクセスを追い払っても弱点が残っていれば、別の人が同じ経路から入れるかもしれません。</p><button class="plain-link" id="lesson-help">ルールと用語を見る <span>↗</span></button></section></div>
+    </section>
+    <section id="report-screen" class="screen report-screen hidden" aria-labelledby="report-title"><div class="report-wrap"><div class="report-header"><div><p class="eyebrow">POST-INCIDENT REVIEW / 09:00 AM</p><h1 id="report-title">インシデント事後報告書</h1><p>遊びはここまで。これからは、実際の現場で役立つ判断を振り返ります。</p></div><div class="report-actions"><button class="button button-outline" id="report-print">印刷 / PDF保存</button><button class="button button-primary" id="restart-btn">もう一度挑戦 ↗</button></div></div><div class="report-score"><div><span class="hud-kicker">DEFENSE RATING / 演習上の評価</span><div class="score-row"><strong id="report-grade">B</strong><span id="report-grade-desc">原因に近づけました</span></div></div><div class="report-metrics"><div><span>情報保護</span><strong id="report-protection">100%</strong></div><div><span>サービス稼働</span><strong id="report-service">100%</strong></div><div><span>根本対策</span><strong id="report-fix">未実施</strong></div></div></div><div class="report-sections"><section class="report-main panel"><p class="panel-label">01 / YOUR DECISIONS</p><h2>あなたの対応履歴</h2><div id="report-timeline" class="report-list"></div><p id="report-conclusion" class="report-conclusion"></p></section><section class="report-learn panel"><p class="panel-label">02 / TAKEAWAYS</p><h2>今回の学び</h2><div id="report-takeaways"></div></section><section class="report-cve panel"><p class="panel-label">03 / REAL-WORLD CASE STUDY</p><h2>実在する脆弱性と比較</h2><p class="cve-id">CVE-2023-22515</p><p>2023年に公表されたConfluence Data Center／Serverのアクセス制御に関する脆弱性。権限のない管理者アカウントが作成され、影響を受ける環境にアクセスされる可能性がありました。</p><p class="cve-note"><strong>混同に注意：</strong>ゲームは架空のファイル共有シナリオです。このCVEを再現したものではなく、「アクセス制御の欠陥」という共通テーマを持つ実例です。</p><div class="cve-links"><a target="_blank" rel="noopener noreferrer" href="https://confluence.atlassian.com/security/cve-2023-22515-broken-access-control-vulnerability-in-confluence-data-center-and-server-1295682276.html">Atlassianの一次情報 ↗</a><a target="_blank" rel="noopener noreferrer" href="https://cwe.mitre.org/data/definitions/862.html">CWE-862（認可チェックの欠落） ↗</a></div></section></div><div class="report-endnote">THIS IS A SIMULATED TRAINING EXERCISE · 実際のネットワーク検査・侵入試験・漏えい判定は実施していません。</div></div></section>
+  </main>
+  <footer class="site-footer"><span>03:17 / ON CALL — BUILD A SAFER RELEASE.</span><span>Non-public hackathon preparation prototype · © 2026</span></footer>
+  <dialog id="help-dialog" class="help-dialog"><div class="dialog-header"><p class="eyebrow">HOW TO PLAY</p><button type="button" id="close-help" aria-label="閉じる" class="quiet-button">閉じる ×</button></div><h2>弱点を直さなければ、また入られる。</h2><p>架空のネットワークを守る演習です。画面右の3つの候補から対応を選び、3局面を突破してください。</p><ol><li><strong>初動：</strong>不審なアクセスを調べるか、一時停止するか。</li><li><strong>原因：</strong>見た目の変更か、根本修正か。</li><li><strong>リリース：</strong>安全確認か、急いで公開か、延期か。</li></ol><p>マップの建物を選ぶと説明を読めます。時間切れになると、その時点の判断を報告書にまとめます。学習モードなら時間制限なし。</p><p class="hint-panel"><b>判定モードについて</b><br>API未接続時の自由記述は単純なキーワード分類（AI未使用）です。AI接続時も最終的なアクションは必ず確認してください。</p></dialog>
+</body>
+</html>
