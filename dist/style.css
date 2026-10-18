@@ -19,3 +19,71 @@
 .privacy-impact{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:10px 16px;font-size:9px;color:var(--muted)}.privacy-impact b{color:var(--red);font:12px 'IBM Plex Mono',monospace;margin-left:8px}.threatcards article{display:flex;flex-direction:column}.threatcards article>p{margin:9px 0}.threatcards article>p strong{font-size:10px;color:var(--amber)}.threatcards article>a{font-size:10px;margin-top:10px;align-self:start}.threatcards article>small{margin-top:auto}.reportmetrics{flex-wrap:wrap}.reportmetrics>div{flex:1;min-width:130px}.paper h3{overflow-wrap:anywhere}
 
 .legend .purple{color:#ba89e0}.legend .altered{color:#e8ae66}
+
+/* Keep each scanner finding beside its requirement, at every viewport size. */
+.inspectiondesk{grid-template-columns:minmax(0,1fr);gap:10px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.request-summary{display:flex;align-items:center;gap:16px;padding:14px 0}
+.request-summary .request-character{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.request-summary .request-character img{width:56px;height:56px;flex-shrink:0}
+.request-summary .request-character figcaption{padding:0}
+.request-summary .request-character figcaption b{font-size:13px}
+.request-summary .request-character figcaption small{font-size:10px}
+.request-summary .character-line{flex:1;min-width:0;margin:0;padding:0;border:0;background:none;font-size:11px;line-height:1.8;color:var(--muted)}
+.request-summary .deadline{flex-shrink:0;flex-direction:column;align-items:flex-end;gap:3px;padding:0;margin-left:auto;font-size:10px}
+.request-summary .deadline b{font-size:24px;line-height:1.2}
+.inspection-instruction{font-size:12px;line-height:1.8;margin:0 0 10px;color:var(--muted)}
+.inspection-table{width:100%;table-layout:fixed;border-collapse:collapse;text-align:left}
+.inspection-table th,.inspection-table td{border:1px solid #38555d;padding:12px;overflow-wrap:anywhere}
+.inspection-table thead th{background:#122329;font-size:11px;font-weight:400;color:var(--muted)}
+.inspection-table thead th:first-child{width:32%}
+.inspection-table tbody th{background:#14272d;font-size:13px;font-weight:500;line-height:1.7}
+.inspection-table td{background:#102126;width:34%;vertical-align:middle}
+.inspection-table td:has(.comparison-value){padding:6px}
+.request-fields .comparison-value{min-height:52px;padding:10px 20px 10px 10px;margin:0;background:#1b333b;border-color:#4b6b76;justify-content:center}
+.request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .required-value strong{font-family:'Noto Sans JP',sans-serif;font-size:16px;line-height:1.6;font-weight:500;color:var(--text);overflow-wrap:anywhere}
+.request-fields .comparison-value::after{right:7px;top:7px;font-size:10px}
+.request-fields .comparison-value.selected{background:#26302c;border-color:var(--amber)}
+.request-extras{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.request-extras summary,.policy-details summary{font-size:12px;color:var(--muted);cursor:pointer;line-height:1.8}
+.request-extras summary span,.policy-details summary span{font-size:10px;margin-left:10px;color:var(--muted)}
+.request-extras .field-grid{margin-top:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.request-extras .paperrow{margin:0;min-height:62px;flex-direction:column;align-items:flex-start;justify-content:center;padding:10px;gap:6px}
+.request-extras .paperrow strong,.request-extras .paperrow strong.jp{font-size:12px;line-height:1.5}
+.request-extras .paperrow>span{font-size:10px}
+.policy-details{padding:12px 16px;margin:12px 18px 0}
+.policy-details[open] #deskRule{padding-top:12px}
+.policy-details #deskRule>b{font-size:12px}
+@media(max-height:820px) and (min-width:951px){
+  .transitstrip{padding-block:8px}
+  .transitstrip small{display:none}
+  .request-summary{padding:8px 0}
+  .request-summary .request-character img{width:40px;height:40px}
+  .inspection-table th,.inspection-table td{padding:8px}
+  .request-fields .comparison-value{min-height:44px;padding:8px 20px 8px 8px}
+  .request-extras{margin-top:10px;padding-top:8px}
+  .comparison{min-height:0;padding:0;border:0;background:none;margin-bottom:10px}
+  .comparison>span{display:none}
+}
+@media(max-width:1100px){
+  .request-summary{gap:10px;flex-wrap:wrap}
+  .request-summary .character-line{flex-basis:100%;order:3}
+  .request-extras .field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .inspection-table th,.inspection-table td{padding:10px}
+  .inspection-table tbody th{font-size:12px}
+  .request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .required-value strong{font-size:14px}
+}
+@media(max-width:720px){
+  .request-summary{padding:12px 0}
+  .request-summary .request-character img{width:44px;height:44px}
+  .request-summary .deadline b{font-size:22px}
+  .inspection-table th,.inspection-table td{padding:8px}
+  .inspection-table thead th{font-size:10px}
+  .inspection-table tbody th{font-size:11px}
+  .inspection-table td:has(.comparison-value){padding:4px}
+  .request-fields .comparison-value{min-height:52px;padding:8px}
+  .request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .required-value strong{font-size:13px}
+  .request-fields .comparison-value::after{content:none}
+  .request-extras summary span,.policy-details summary span{display:none}
+  .policy-details{margin-inline:12px}
+}
