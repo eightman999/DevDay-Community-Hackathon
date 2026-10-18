@@ -3,7 +3,9 @@ import { cp, mkdir, readFile, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const result = spawnSync('npm', ['--prefix', 'sites', 'run', 'build'], {cwd: root, stdio: 'inherit'});
+// npm.cmd cannot be spawned directly on Windows without a shell. Reuse npm's JS entry point.
+const npmEntry = process.env.npm_execpath;
+const result = spawnSync(npmEntry ? process.execPath : 'npm', [...(npmEntry ? [npmEntry] : []), '--prefix', 'sites', 'run', 'build'], {cwd: root, stdio: 'inherit'});
 if (result.error) throw result.error;
 if (result.status !== 0) process.exit(result.status ?? 1);
 const manifest = JSON.parse(await readFile(new URL('../.openai/hosting.json', import.meta.url), 'utf8'));
