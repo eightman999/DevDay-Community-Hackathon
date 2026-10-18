@@ -8,7 +8,7 @@
 
 [現行プロトタイプを遊ぶ](https://cellwatch-inspection.eightman.chatgpt.site/) · [DevDay技術の役割と実装根拠](cellwatch/FEATURES.md) · [審査基準と根拠](cellwatch/REVIEW.md)
 
-**技術の柱:** ゲームで使う音楽をDotsで制作中です。完成した楽曲はゲーム内BGMとして採用する予定です。制作工程での活用に加え、MCP EventsやAgents APIを体験に結びつけることを重視します。確認済みの接続コードは、別ブランチ[mainのDecisions API連携](https://github.com/eightman999/DevDay-Community-Hackathon/blob/be3632425341f5a4afda03275744bb620b47282c/server.mjs#L79)です。MCP Events／Agents APIの接続は現時点の調査では未確認。使う目的・実装箇所・実行結果を[技術資料](cellwatch/FEATURES.md)へ集約します。
+**技術の柱:** ゲームで使う音楽をDotsで制作中です。完成した楽曲はゲーム内BGMとして採用する予定です。開発では、実装レビューとテスト結果の評価・採点にもDotsを採用します。制作工程での活用に加え、MCP EventsやAgents APIを体験に結びつけることを重視します。確認済みの接続コードは、別ブランチ[mainのDecisions API連携](https://github.com/eightman999/DevDay-Community-Hackathon/blob/be3632425341f5a4afda03275744bb620b47282c/server.mjs#L79)です。MCP Events／Agents APIの接続は現時点の調査では未確認。使う目的・実装箇所・実行結果を[技術資料](cellwatch/FEATURES.md)へ集約します。
 
 ## まず読む文書
 
