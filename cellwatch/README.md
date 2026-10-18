@@ -1,10 +1,12 @@
 # CELLWATCH — 夜間システム監視局
 
-[公開ゲーム](https://cellwatch-inspection.eightman.chatgpt.site/)
+[現行プロトタイプ](https://cellwatch-inspection.eightman.chatgpt.site/)
 
 個人情報漏洩という社会課題に対し、楽しさを入口にセキュリティインシデントの判断と対処を学ぶことを目指す120秒ゲーム。夜間監視員として紙の申請書を照合し、承認・拒否しながら、広がる脅威に対処します。旧PATCH / PANICとは別モックです。
 
-**最初に読む:** [作品概要・審査4項目の根拠](REVIEW.md) → [デモ手順](DEMO.md) → [検証記録](VERIFICATION.md)。チーム向けの[提出前の残課題](READINESS.md)もあります。
+**企画から読む:** [コンセプト](CONCEPT.md) → [病院シナリオ候補](SCENARIO-HOSPITAL.md) → [審査基準と根拠](REVIEW.md)。
+
+このREADME以下の開発説明は現行試作の記録です。画面・数値は仮で、病院案の採用は未確定です。操作は[デモ](DEMO.md)、確認済みの事実は[検証記録](VERIFICATION.md)、次の作業は[準備状況](READINESS.md)を参照してください。
 
 背景はライフゲーム（B3/S23）、脅威は実際に自己複製するHighLife（B36/S23）。4領域で核の配置・向き・更新速度を変えています。隔離は8秒、根本修復は10秒。教科書には申請ごとの正解と理由、自己複製実験台があります。
 
