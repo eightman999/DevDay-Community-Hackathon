@@ -1,0 +1,123 @@
+diff --git a/README.md b/README.md
+index c6aaa4e..291f486 100644
+--- a/README.md
++++ b/README.md
+@@ -8,7 +8,7 @@
+ 
+ [現行プロトタイプを遊ぶ](https://cellwatch-inspection.eightman.chatgpt.site/) · [DevDay技術の役割と実装根拠](cellwatch/FEATURES.md) · [審査基準と根拠](cellwatch/REVIEW.md)
+ 
+-**技術の柱:** ゲームで使う音楽をDotsで制作中です。完成した楽曲はゲーム内BGMとして採用する予定です。制作工程での活用に加え、MCP EventsやAgents APIを体験に結びつけることを重視します。確認済みの接続コードは、別ブランチ[mainのDecisions API連携](https://github.com/eightman999/DevDay-Community-Hackathon/blob/be3632425341f5a4afda03275744bb620b47282c/server.mjs#L79)です。MCP Events／Agents APIの接続は現時点の調査では未確認。使う目的・実装箇所・実行結果を[技術資料](cellwatch/FEATURES.md)へ集約します。
++**技術の柱:** ゲームで使う音楽をDotsで制作中です。完成した楽曲はゲーム内BGMとして採用する予定です。レビューにもDotsを採用します。制作工程での活用に加え、MCP EventsやAgents APIを体験に結びつけることを重視します。確認済みの接続コードは、別ブランチ[mainのDecisions API連携](https://github.com/eightman999/DevDay-Community-Hackathon/blob/be3632425341f5a4afda03275744bb620b47282c/server.mjs#L79)です。MCP Events／Agents APIの接続は現時点の調査では未確認。使う目的・実装箇所・実行結果を[技術資料](cellwatch/FEATURES.md)へ集約します。
+ 
+ ## まず読む文書
+ 
+diff --git a/cellwatch/CONCEPT.md b/cellwatch/CONCEPT.md
+index 007800b..8ba0643 100644
+--- a/cellwatch/CONCEPT.md
++++ b/cellwatch/CONCEPT.md
+@@ -54,6 +54,7 @@
+ | 企画の軸 | 危険を止めることと、必要な利用を守ることの葛藤をつくる |
+ | 第一候補・未確定 | WannaCry/NHSの事件を参考にした架空の病院ステージ |
+ | 現行試作の選択 | 夜間監視、120秒、16申請、4領域、紙の申請書、セル盤面、保全率と信頼、隔離8秒・修復10秒 |
++| 採用方針 | 音楽制作に加え、レビューにもDotsを使う |
+ | 振り返りの題材候補 | SMBv1/WannaCry、認証回避、SQLインジェクションなど11種。掲載と見せ方は未定 |
+ | 今後調整する | 最終的な舞台、画面、操作、指標、難易度、各対処の時間と代償 |
+ | 未検証 | 初見の分かりやすさ、面白さ、理解の変化、再挑戦意向 |
+@@ -64,6 +65,8 @@
+ 
+ ゲーム内BGMはDotsで制作した音楽を採用する予定です。現在制作を進めており、音楽で作品の雰囲気や演出を支えます。DevDay技術をゲームの実行だけでなく、作品の素材づくりにも活用します。
+ 
++レビューにもDotsを採用します。レビューの指摘や気づきを次の改善へつなげる役割を担わせます。
++
+ MCP EventsやAgents APIなどDevDay関連技術の活用を、作品の技術的な柱として重視します。意味のあるゲーム状況の通知、相棒の対応や演出、最後の短いまとめなど、何のために使うかを定め、実装と動作の証拠を揃えます。画面配置や11の学習題材に技術を固定しません。
+ 
+ 現在確認できた接続コードは、別ブランチ `main` のDecisions APIによる次の通信候補の選択です。MCP Events／Agents APIの用途と接続は別に確認・設計します。技術ごとの状態と根拠は[FEATURES](FEATURES.md)を正本とします。
+diff --git a/cellwatch/FEATURES.md b/cellwatch/FEATURES.md
+index 3dc917c..20407e5 100644
+--- a/cellwatch/FEATURES.md
++++ b/cellwatch/FEATURES.md
+@@ -6,13 +6,14 @@
+ 
+ **ゲームで使う音楽をDotsで制作中です。完成した楽曲をゲーム内BGMとして採用する予定です。** 作品を動かすAPI連携と、音楽などの素材をつくる制作工程の両方で、DevDay技術を活用します。
+ 
+-Dotsは音楽制作を担うエージェントとして使い、完成曲を作品の雰囲気や演出につなげます。技術資料では、目指す体験と採用方針を先に示し、制作・実装の記録は進行に合わせて補います。
++Dotsは音楽制作とレビューを担うエージェントとして採用します。完成曲を作品の雰囲気や演出につなげ、レビューの指摘や気づきを改善へ活かします。技術資料では、目指す体験と採用方針を先に示し、制作・実装の記録は進行に合わせて補います。
+ 
+ ## 技術ごとの役割と状態
+ 
+ | 技術 | 作品を支える役割 | 状態と審査へ示す根拠 |
+ | --- | --- | --- |
+-| **Dots** | 音楽を制作し、ゲーム内BGMとして作品の雰囲気や演出を支える | **制作中・完成曲を採用予定**。具体的な曲名や使用場面は、制作と組込みに合わせて整理する |
++| **Dots：音楽制作** | 音楽を制作し、ゲーム内BGMとして作品の雰囲気や演出を支える | **制作中・完成曲を採用予定**。具体的な曲名や使用場面は、制作と組込みに合わせて整理する |
++| **Dots：レビュー** | レビューを担い、指摘や気づきを次の改善につなげる | **採用方針を決定**。レビューの対象と使い方を具体化していく |
+ | **Decisions API** | プレイヤーの防御状況と直近の審査を受け、用意した候補から次の通信を選ぶ。遊びに変化をつくる | **mainに接続コードあり**。下記の実装経路を参照。実API成功記録と公開稼働は未確認 |
+ | **MCP Events** | ゲームの重要な変化や終了を、購読したChatGPT側の相棒へ届ける | **優先する技術方針・接続は未確認**。購読→実イベント配送→受信先の応答までを証拠にする。ブラウザのクリックイベントとは別 |
+ | **Agents API** | ゲーム状況や履歴を受け、相棒の対応・演出・最後の短いまとめなどを実行する候補 | **優先する技術方針・接続は未確認**。用途とセッション作成・対象ターンの完了・出力とツール結果・ゲームへの反映を示す。Agents SDKやDecisions APIと区別する |
+@@ -28,6 +29,12 @@ Dotsでゲーム用の音楽を制作し、完成した楽曲をCELLWATCHのBGM
+ 
+ Dotsの公式な位置づけは[DevDay 2026公式まとめ](https://learn.chatgpt.com/docs/whats-new/devday-2026)と[Meet dots](https://learn.chatgpt.com/docs/dots)を参照してください。
+ 
++## Dotsによるレビュー
++
++レビュー担当としてDotsを採用します。音楽制作と合わせて、制作・体験・改善の流れでDotsを活用する方針です。レビューで得た指摘や気づきを、次の改善へつなげます。
++
++Dotsの採用と、MCP Events／Agents APIの接続設計は、それぞれの役割として整理します。レビューにDotsを使うこと自体を、これらのAPIとの連携完了としては扱いません。
++
+ ## MCP EventsとAgents APIをつなぐ場合の設計候補
+ 
+ 二つの技術は役割が異なります。公式の[MCP Events](https://developers.openai.com/plugins/build/mcp-events)は、ChatGPTがMCPサーバーのイベントを購読する仕組みです。MCP 2.0、購読の保存、署名付きHTTPS callbackなどが必要で、対象のWork環境も確認します。
+@@ -84,7 +91,7 @@ Dotsの公式な位置づけは[DevDay 2026公式まとめ](https://learn.chatgp
+ 
+ | 根拠資料 | 確認できること |
+ | --- | --- |
+-| [DevDay 2026公式まとめ](https://learn.chatgpt.com/docs/whats-new/devday-2026) | 2026-09-29の項目にDotsとMCP Eventsを明記。Dotsは音楽制作という制作工程の利用として説明する |
++| [DevDay 2026公式まとめ](https://learn.chatgpt.com/docs/whats-new/devday-2026) | 2026-09-29の項目にDotsとMCP Eventsを明記。Dotsは音楽制作とレビューの役割で説明する |
+ | [公式API Changelog](https://developers.openai.com/api/docs/changelog) | Agents API本体の公開betaは2026-09-10。2026-09-29の追加はAgents APIのcomputer use |
+ | [Agents APIとSDKの比較](https://developers.openai.com/api/docs/guides/agents) | 管理されたAPIと、アプリ内でループを動かすSDKは異なる |
+ 
+diff --git a/cellwatch/READINESS.md b/cellwatch/READINESS.md
+index 04f0333..bad9833 100644
+--- a/cellwatch/READINESS.md
++++ b/cellwatch/READINESS.md
+@@ -7,6 +7,7 @@
+ | 優先 | 作業 | 現在の状態／次の到達点 |
+ | --- | --- | --- |
+ | 最優先 | DevDay技術を体験の柱にする | MCP Events／Agents APIの役割と接続箇所を固める。`main` にあるDecisions連携を含め、[技術資料](FEATURES.md)で目的・コード・実行・公開版の根拠を揃える |
++| 高 | Dotsによるレビュー | レビュー担当として採用。対象と使い方を具体化し、指摘や気づきを改善へつなげる |
+ | 高 | Dotsの音楽制作とBGM採用 | 制作中の楽曲を仕上げ、ゲーム内BGMとして組み込む。曲名・使用場面を具体化し、作品の演出として確認する |
+ | 最優先 | 実装と実利用の照合 | Decisionsは接続コードあり、実API成功と公開稼働は未確認。MCP Events／Agents APIは現時点で接続未確認。別ブランチ・外部サービスも含め所在を記録する |
+ | 高 | 遊びの具体化 | 見落としの被害、止めすぎの代償、対処の順序が面白さになるかを確かめる。画面配置と数値は固定しない |
+diff --git a/cellwatch/REVIEW.md b/cellwatch/REVIEW.md
+index 74789df..e1662cd 100644
+--- a/cellwatch/REVIEW.md
++++ b/cellwatch/REVIEW.md
+@@ -16,7 +16,7 @@
+ 
+ | 項目 | 企画としての狙い | 現在ある根拠 | 残る課題 |
+ | --- | --- | --- | --- |
+-| 新機能の活用 | **MCP Events／Agents APIなどを体験の技術的な柱にする。** ゲーム状況、相棒・演出、最後のまとめなど目的を明示 | Dotsでゲーム用の音楽を制作中で、完成曲をゲーム内BGMへ採用予定。`main` にDecisions APIの適応敵連携コードあり。[制作工程・役割・実装経路](FEATURES.md)に整理 | Dotsの楽曲を仕上げてBGMに組み込み、作品の演出として示す。MCP Events／Agents APIの接続、実API成功と公開版での反映を記録し、DevDayの該当機能を明示 |
++| 新機能の活用 | **Dotsによる音楽制作・レビューと、MCP Events／Agents APIなどを技術的な柱にする。** ゲーム状況、相棒・演出、最後のまとめなど目的を明示 | Dotsでゲーム用の音楽を制作中で、完成曲をゲーム内BGMへ採用予定。レビューにもDotsの採用を決定。`main` にDecisions APIの適応敵連携コードあり。[制作工程・役割・実装経路](FEATURES.md)に整理 | Dotsの楽曲を仕上げてBGMに組み込み、作品の演出として示す。MCP Events／Agents APIの接続、実API成功と公開版での反映を記録し、DevDayの該当機能を明示 |
+ | 使いやすさ | 専門知識がなくても判断の条件と操作結果が分かり、途中で考えられる | 現行試作は条件表示、理由付き答え合わせ、一時停止する教科書を実装。[操作確認](VERIFICATION.md)あり | 画面は仮。初見ユーザー、実機、操作と文章の理解を確認する |
+ | 有用性 | 情報漏洩やシステム停止を身近な問題として捉える学びの入口 | [体験と学びの対応](CONCEPT.md)、[教科書](textbook.md)。病院案の背景は[NAO報告](SCENARIO-HOSPITAL.md) | 面白さ・理解度・継続利用・事故減少の効果は未測定。病院案は未実装 |
+ | 独創性 | 判断の照合、広がる脅威への対処、必要な業務を止める代償、振り返りを組み合わせる | [判定・対処](dist/engine.mjs)、[HighLife](dist/automata.mjs)、[試作仕様](spec.md) | 組み合わせが生む体験を初見プレイで確かめる。HighLife自体の発明や世界初という主張はしない |
+@@ -34,6 +34,7 @@
+ | 構想 | 病院の業務停止、隔離の影響、予防と復旧を描くステージ | [病院案](SCENARIO-HOSPITAL.md)。採用・実装は未確定 |
+ | 解説の候補 | 遊んだあとに触れる脆弱性11種。ゲームとしての再現は要件にしない | [題材と一次資料](LEARNING-TOPICS.md)。振り返りへの掲載は未実装 |
+ | 制作中・採用予定 | Dotsでゲーム用音楽を制作し、完成曲をゲーム内BGMに採用する計画 | [制作工程の記録](FEATURES.md#dotsによる音楽制作の記録) |
++| 採用方針決定 | レビュー担当としてDotsを採用し、指摘や気づきを改善につなげる | [レビューの方針](FEATURES.md#dotsによるレビュー) |
+ | 接続コードあり | `main` のDecisions APIで次の通信候補を選ぶ。実API成功・公開稼働は未確認 | [コードと証拠の区別](FEATURES.md) |
+ | 技術方針・接続未確認 | MCP Eventsによる状態通知、Agents APIによる相棒・演出・短いまとめなど | [技術ごとの役割と確認状態](FEATURES.md) |
+ | 未検証 | 面白さ、初見操作、学習効果 | [次の検証計画](READINESS.md) |
+diff --git a/cellwatch/SUBMISSION.md b/cellwatch/SUBMISSION.md
+index b4335a9..300eb7e 100644
+--- a/cellwatch/SUBMISSION.md
++++ b/cellwatch/SUBMISSION.md
+@@ -34,6 +34,8 @@ WannaCry、認証回避、SQLインジェクションなど、実際の弱点と
+ 
+ 自動テストでは、全16件に正しく判断すると保全率100・信頼100、全件拒否では信頼36になることを確認しました。ブラウザ確認の範囲と区別して[記録](VERIFICATION.md)しています。
+ 
++音楽制作に加え、レビューにもDotsを採用します。レビューの指摘や気づきを次の改善につなげます。
++
+ ゲーム内BGMには、Dotsで制作した音楽を採用する予定です。現在制作中の楽曲を、作品の雰囲気や演出を支える音楽として仕上げています。音楽の制作工程と、ゲームを動かすAPI連携の両方にDevDay技術を活用します。
+ 
+ 技術の柱としてMCP Events／Agents APIなどDevDay関連技術の活用を重視します。別ブランチ `main` にはDecisions APIが次の通信候補を選ぶ接続コードがあります。MCP Events／Agents APIの接続、実APIの成功、公開版での稼働は現時点で未確認です。[技術の役割と実装根拠](FEATURES.md)に基づき、提出時点で確認できた利用だけを記載します。楽しさ・学習効果は設計目標で、利用者調査は未実施です。
