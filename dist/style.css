@@ -96,3 +96,18 @@
 .bgmvolume{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#abc4b5}.bgmvolume input{width:64px;accent-color:#9dca83}.bgmstatus{font-size:10px;color:#9dca83;max-width:100px}#bgmBtn[aria-pressed="false"]{opacity:.6}
 
 #seBtn[aria-pressed="false"]{opacity:.6}
+
+/* Chapter 12: only the hospital monitoring board is styled here. */
+.dashboard .maplabels { inset:8px 8px auto; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+.dashboard .zone { position:static; width:auto; min-width:0; }
+.dashboard .zonepick { flex-direction:column; align-items:flex-start; padding:7px 6px; gap:4px; }
+.dashboard .zonepick b { font-size:9px; white-space:normal; }
+.dashboard .zonepick small { display:none; }
+.dashboard .zonestatus { color:#b8cad3; font-size:8px; white-space:normal; }
+.dashboard .zone.selected { border-color:#f1f5f9; }
+.dashboard .zone.underattack { border-color:#f16c65; }
+.dashboard .zone.underattack .zonestatus { color:#f16c65; }
+.dashboard .zone.fixed { border-color:#8bd5ff; }
+.dashboard .zone.fixed .zonestatus,.dashboard .boardblue { color:#8bd5ff; }
+.dashboard .boardfixed { color:#e0edf8; }
+.dashboard .atlas { background:#101a20; }
