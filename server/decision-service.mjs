@@ -40,7 +40,7 @@ function selectedAction(result, actions) {
 }
 
 /** Runtime-neutral Decisions boundary, shared by Node and the Sites Worker. */
-export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 1200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
+export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 3200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
   if (mode !== undefined && !['auto', 'local', 'decisions'].includes(mode)) throw new Error('Invalid enemy mode');
   const configured = typeof apiKey === 'string' && apiKey.length > 0;
   const activeMode = configured && mode !== 'local' ? 'decisions' : 'local';

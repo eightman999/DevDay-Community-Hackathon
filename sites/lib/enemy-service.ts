@@ -1,9 +1,22 @@
 import {env} from 'cloudflare:workers';
 // Shared with the local Node server; CSV imports are embedded by cellwatchData().
 import {createDecisionService} from '../../server/decision-service.mjs';
+import {createCompanionService} from '../../server/companion-service.mjs';
 import {getChatGPTUser} from '../app/chatgpt-auth';
 
-type EnemyEnv = {OPENAI_API_KEY?: string; ENEMY_MODE?: string; ENEMY_AI_ENABLED?: string};
+type EnemyEnv = {OPENAI_API_KEY?: string; ENEMY_MODE?: string; ENEMY_AI_ENABLED?: string; COMPANION_AI_ENABLED?: string};
+let companion: ReturnType<typeof createCompanionService> | undefined;
+let companionKey = '';
+export function companionService() {
+  const settings = env as unknown as EnemyEnv;
+  const enabled = settings.COMPANION_AI_ENABLED === 'true';
+  const key = enabled ? settings.OPENAI_API_KEY ?? '' : '';
+  if (!companion || companionKey !== key) {
+    companionKey = key;
+    companion = createCompanionService({apiKey:key,enabled});
+  }
+  return companion;
+}
 type Service = ReturnType<typeof createDecisionService>;
 const createService = createDecisionService as (options: {apiKey?: string; mode?: string}) => Service;
 let active: Service | undefined;

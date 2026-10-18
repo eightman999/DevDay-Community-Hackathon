@@ -3,7 +3,7 @@ import {buildEnemyTurn, chooseLocal, validEnemyAction} from './enemy-policy.mjs'
 
 // Selection is synchronous. The optional provider only prepares the next choice.
 export class EnemyDirector {
-  constructor({provider = null, timeoutMs = 1800} = {}) {
+  constructor({provider = null, timeoutMs = 3800} = {}) {
     this.provider = provider;
     this.timeoutMs = timeoutMs;
     this.status = {source: 'local', reason: provider ? '適応型の敵：ローカルで開始。' : 'API未設定：ローカル適応で稼働。', pending: false};
@@ -54,7 +54,7 @@ export class EnemyDirector {
     this.bind(shift);
     if (!this.provider || !shift.running || shift.done || shift.serial === 0 || shift.serial >= INCIDENTS.length) return;
     const remaining = shift.nextArrival - shift.time;
-    if (remaining > 2 || remaining <= 0 || this.attempted.has(shift.serial)) return;
+    if (remaining > 4 || remaining <= 0 || this.attempted.has(shift.serial)) return;
     const turn = buildEnemyTurn(shift);
     if (!turn.candidateIds.length) return;
     this.attempted.add(turn.round);

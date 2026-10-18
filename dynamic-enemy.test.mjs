@@ -111,10 +111,10 @@ test('director prefetch follows a four-second schedule after a dynamic decision'
     assert.equal(shift.requests[1].enemySource,'decisions');
     assert(Math.abs(shift.nextArrival-11)<.11);
     shift.advance(1);director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(calls.length,1);
+    assert.equal(calls.length,2);
     shift.advance(1);director.tick(shift);await new Promise(resolve=>setImmediate(resolve));
     assert.equal(calls.length,2);
-    assert(calls[1]>=9&&calls[1]<9.2);
+    assert(calls[1]>=8&&calls[1]<8.2);
   } finally {director.dispose();}
 });
 

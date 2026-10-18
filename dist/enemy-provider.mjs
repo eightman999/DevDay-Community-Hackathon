@@ -3,7 +3,7 @@ import { chooseLocal, normalizeEnemyTurn, validEnemyAction } from './enemy-polic
 const REASONS = new Set(['unconfigured', 'local-mode', 'timeout', 'api-error', 'invalid-response', 'refusal', 'budget', 'decisions', 'selected', 'cached', 'no-candidates', 'sign-in-required']);
 
 // A provider returns a validated CSV id. No credentials or model output reach the UI.
-export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 1600,
+export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 3600,
   sessionId = globalThis.crypto?.randomUUID?.() ?? `cellwatch-${Date.now()}-${Math.random().toString(36).slice(2)}` } = {}) {
   let unavailable = false;
   let unavailableReason = 'offline';
