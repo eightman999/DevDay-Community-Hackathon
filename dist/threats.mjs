@@ -114,6 +114,16 @@ export function inspectionVerdict(inspection) {
   return checks.length === 6 && checks.every(check => check.passed);
 }
 
+export function inspectionIncident(inspection) {
+  const pattern=THREATS.find(row=>row.id===inspection?.patternId);
+  const failed=inspectionChecks(inspection).filter(check=>!check.passed);
+  if(!pattern)return {name:'検査情報の不足',impactKind:'availability'};
+  if(!failed.length)return {name:'規則を満たす通信',impactKind:null};
+  if(failed.some(check=>check.key==='a'||check.key==='b'))return {name:pattern.name,impactKind:pattern.impactKind};
+  const context={identity:{name:'認証主体の不一致',impactKind:'integrity'},permission:{name:'操作権限の逸脱',impactKind:inspection.operation==='更新'?'integrity':'confidentiality'},handling:{name:'情報送信規則の違反',impactKind:'confidentiality'},capacity:{name:'処理容量の超過',impactKind:'availability'}};
+  return context[failed[0].key]||{name:'検査情報の不足',impactKind:'availability'};
+}
+
 export function inspectionReason(inspection) {
   const checks = inspectionChecks(inspection);
   if (!checks.length) return '拒否：既知の検査プロファイルと6項目の証拠が必要です。';

@@ -100,7 +100,7 @@
 /* Evidence stays readable while the decision controls remain below the sheet. */
 .paper h3 small{font-size:10px;font-weight:400;color:var(--muted);margin-left:8px}
 .request-summary .character-line{display:none}
-.review-evidence{max-height:420px;overflow:auto;overscroll-behavior:contain;scrollbar-color:#5b858c #102126;border:1px solid #38555d}
+.review-evidence{border:1px solid #38555d}
 .review-evidence:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 .review-evidence .inspection-table{border-style:hidden}
 .inspection-table thead th{position:sticky;top:0;z-index:1}
@@ -111,20 +111,82 @@
 .request-fields .comparison-value strong,.request-fields .comparison-value strong.jp{font-size:13px;line-height:1.7}
 .request-fields .comparison-value{padding:8px 16px 8px 8px;min-height:44px}
 @media(min-width:951px) and (max-height:950px){
-  .review-evidence{max-height:clamp(200px,calc(100dvh - 590px),400px)}
+  .review-evidence{max-height:none}
   .request-summary{padding-block:5px}
   .inspection-instruction{font-size:11px;margin-bottom:6px}
   .inspection-table th,.inspection-table td{padding:7px}
 }
 @media(max-width:720px){
   .paper h3 small{display:block;margin:5px 0 0}
-  .review-evidence{max-height:420px}
+  .review-evidence{max-height:none}
   .inspection-table thead{display:none}
   .inspection-table tbody tr{display:grid;grid-template-columns:30% minmax(0,1fr);border-bottom:1px solid #38555d}
   .inspection-table tbody th{display:flex;align-items:center}
   .inspection-table td{width:auto}
   .inspection-table .review-rule{grid-column:1/-1;padding:8px 10px;border-top:0;font-size:12px}
   .inspection-table .review-rule::before{content:'規則：';color:var(--muted)}
+}
+
+/* Keep every check visible together; the page, rather than the evidence, scrolls. */
+@media(min-width:951px){
+  .transitstrip{padding-block:6px;min-height:27px}
+  .transitstrip small{display:none}
+  .deskfilter{padding-block:5px 4px}
+  .ticketqueue{min-height:30px;padding-bottom:5px}
+  .queueitem{padding-block:5px}
+  .paper{padding:10px}
+  .paperhead{font-size:8px;line-height:1.2}
+  .paper h3{font-size:15px;margin-block:4px}
+  .request-summary{padding-block:3px;min-height:36px}
+  .request-summary .request-character img{width:32px;height:32px}
+  .request-summary .request-character figcaption b{font-size:11px}
+  .request-summary .request-character figcaption small{font-size:9px}
+  .request-summary .deadline{font-size:9px}
+  .request-summary .deadline b{font-size:20px}
+  .inspection-instruction{font-size:11px;line-height:1.5;margin-bottom:5px}
+  .inspection-table th,.inspection-table td{padding:5px}
+  .inspection-table td:has(.comparison-value){padding:3px}
+  .inspection-table thead th:first-child{width:21%}
+  .inspection-table thead th{font-size:10px;position:static}
+  .inspection-table tbody th{font-size:11px;line-height:1.5}
+  .request-fields .comparison-value{min-height:34px;padding:5px 16px 5px 7px}
+  .request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .review-rule{font-size:12px;line-height:1.5}
+  .comparison-value::after{right:5px;top:7px}
+  .request-extras{margin-top:6px;padding-top:4px}
+  .request-extras summary{font-size:11px;line-height:1.6}
+  .inspectiondesk{padding-bottom:6px}
+  .comparison{margin-bottom:6px}
+  .stamptray{padding-block:6px}
+  .stamptray button{min-height:50px}
+}
+@media(min-width:951px) and (max-height:820px){
+  main{padding-top:8px}
+  .desk>.panelhead{min-height:36px;padding-block:7px}
+  .desk .transitstrip{display:none}
+  .request-summary .request-character figcaption{line-height:1.4}
+  .request-summary .request-character figcaption b{line-height:1.4}
+  .request-summary .request-character figcaption small{line-height:1.4}
+  .request-summary .deadline{gap:0}
+}
+
+/* Six independent checks are visible as a 2×3 overview, without nested scroll. */
+.review-evidence{border:0}
+.review-evidence .inspection-table{display:block}
+.inspection-table thead{display:none}
+.inspection-table tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;counter-reset:check}
+.inspection-table tbody tr{display:flex;flex-direction:column;min-width:0;border:1px solid #38555d;border-radius:4px;background:#102126;overflow:hidden;counter-increment:check}
+.inspection-table tbody th{display:block;border:0;padding:5px 9px 2px;background:#14272d;font-size:12px;line-height:1.4}
+.inspection-table tbody th::before{content:'0' counter(check) ' / ';font-family:'IBM Plex Mono',monospace;color:var(--blue);font-size:10px}
+.inspection-table tbody td{display:block;border:0;width:auto;padding:5px 9px;background:none}
+.inspection-table tbody td:has(.comparison-value){padding:2px 8px}
+.inspection-table .comparison-value{min-height:28px;padding:5px 18px 5px 7px;background:#1b3037}
+.request-fields .comparison-value strong,.request-fields .comparison-value strong.jp,.inspection-table .review-rule{font-size:12px;line-height:1.5}
+.inspection-table .review-rule{margin-top:auto;padding-top:2px;padding-bottom:5px}
+.inspection-table .review-rule::before{content:'規則：';color:var(--muted)}
+@media(max-width:720px){
+  .inspection-table tbody{grid-template-columns:1fr}
+  .inspection-table tbody tr{display:flex}
+  .inspection-table tbody th{font-size:12px}
 }
 
 /* Chapter 12: only the hospital monitoring board is styled here. */

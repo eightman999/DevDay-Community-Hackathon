@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { request as httpRequest } from 'node:http';
 import { createCellwatchServer } from './server.mjs';
 import { normalizeEnemyTurn } from './dist/enemy-policy.mjs';
-import {THREATS,makeInspection} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionIncident} from './dist/threats.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 
 const secret = 'mock-key-for-tests-only';
@@ -50,7 +50,7 @@ test('Decisions request uses fixed endpoint/model and only CSV-backed choices an
     assert.equal(body.questions[0].name, 'next_incident');
     assert.deepEqual(body.questions[0].choices.map(choice => choice.value), normalizeEnemyTurn(observation).candidateIds.map(id => `incident_${id}`));
     assert.ok(body.questions[0].choices.every(choice => JSON.parse(choice.description).rule));
-    for(const choice of body.questions[0].choices){const info=JSON.parse(choice.description),id=Number(choice.value.slice(9)),row=INCIDENTS.find(r=>r.id===id);assert.deepEqual(info.inspection,makeInspection({...row,templateId:id},observation.round));assert.equal(info.weakness,THREATS.find(p=>p.id===info.inspection.patternId).name);assert.ok(info.impact);assert.ok(info.impactKind);}
+    for(const choice of body.questions[0].choices){const info=JSON.parse(choice.description),id=Number(choice.value.slice(9)),row=INCIDENTS.find(r=>r.id===id);assert.deepEqual(info.inspection,makeInspection({...row,templateId:id},observation.round));assert.equal(info.profile,THREATS.find(p=>p.id===info.inspection.patternId).name);assert.deepEqual(info.detected,inspectionIncident(info.inspection));assert.ok(info.impact);}
     assert.ok(!options.body.includes('untrusted-client-extra'));
     return answer(1);
   } });

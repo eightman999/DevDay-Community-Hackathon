@@ -3,7 +3,7 @@ import { readFile, realpath } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { INCIDENTS, TYPES } from './dist/catalog.mjs';
-import {THREATS,makeInspection,inspectionChecks} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionChecks,inspectionIncident} from './dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal } from './dist/enemy-policy.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('./dist/', import.meta.url)));
@@ -90,7 +90,7 @@ export function createCellwatchServer({ apiKey = '', mode, fetchImpl = globalThi
                   const incident = INCIDENTS.find(item => item.id === id);
                   const inspection=makeInspection({...incident,templateId:incident.id},turn.round);
                   const pattern=THREATS.find(p=>p.id===inspection.patternId);
-                  return { value: `incident_${id}`, description: JSON.stringify({ type: incident.type, a: incident.a, b: incident.b, rule: inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '), inspection, weakness:pattern.name, impact:pattern.impact, impactKind:pattern.impactKind }) };
+                  return { value: `incident_${id}`, description: JSON.stringify({ type: incident.type, a: incident.a, b: incident.b, rule: inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '), inspection, profile:pattern.name, detected:inspectionIncident(inspection), impact:pattern.impact }) };
                 })
               }]
             })

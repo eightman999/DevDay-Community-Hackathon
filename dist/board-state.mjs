@@ -63,9 +63,10 @@ export class BoardState {
           entry.toX = targetX; entry.moveAt = time;
           entry.duration = time - request.at < 3 ? Math.max(.25, 3 - (time - request.at)) : .25;
         }
-        const p = position(entry, time, reducedMotion);
+        const p = position(entry, time, reducedMotion || shift.practice);
         nodes.push({ id: request.id, type: request.type, ...p,
-          phase: time - request.at < 3 && !reducedMotion ? 'approach' : 'waiting',
+          phase: time - request.at < 3 && !reducedMotion && !shift.practice ? 'approach' : 'waiting',
+          untimed: !!shift.practice,
           remaining: Math.max(0, Math.ceil(request.deadline - time)),
           selected: selectedId === request.id, dimmed: !!filter && filter !== request.type,
           visible: rank < 5,

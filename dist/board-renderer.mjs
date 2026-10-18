@@ -66,7 +66,7 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
     ctx.fillText('#' + String(node.id).padStart(3, '0'), node.x * CELL, (node.y - 3.5) * CELL);
     ctx.font = `${10 * labelScale}px sans-serif`;
     ctx.fillText(TYPE_LABELS[node.type], node.x * CELL, (node.y + 4) * CELL);
-    const result = node.remaining !== undefined ? node.remaining + 's'
+    const result = node.untimed ? '時計なし' : node.remaining !== undefined ? node.remaining + 's'
       : node.phase === 'rejected' ? (node.auto ? '× 防壁' : '× 遮断')
       : node.phase === 'intrusion' ? '! 侵入' : '✓ 通過';
     ctx.fillText(result, node.x * CELL, (node.y + 6.4) * CELL);
