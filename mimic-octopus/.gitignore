@@ -1,0 +1,13 @@
+node_modules/
+.DS_Store
+.env
+.env.*
+!.env.example
+coverage/
+tmp/
+*.log
+*.tar.gz
+*.zip
+.codex-preview/
+dist/_qa*.html
+dist/vendor/*.js
