@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1019">
+  <meta name="description" content="03:17 — ON CALL。深夜のインシデント対応を120秒で体験する、13歳以上向け教育タワーディフェンス・プロトタイプ。">
+  <title>03:17 — ON CALL | 教育ゲーム・プロトタイプ</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap');
+:root{color-scheme:dark;--bg:#0b1019;--panel:#141c29;--panel2:#192332;--line:#293746;--text:#ecf1f4;--muted:#9daeba;--dim:#6f8490;--mint:#65e2c3;--mint-dark:#194d46;--rose:#ff7f91;--amber:#fac17a;--mono:'IBM Plex Mono',monospace;--sans:'Noto Sans JP',system-ui,-apple-system,'Helvetica Neue',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 70% 2%,#16253a 0%,transparent 42%),var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;overflow-x:hidden}button,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.hidden{display:none!important}.sr-only{position:absolute!important;height:1px;width:1px;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}.global-noise{pointer-events:none;position:fixed;inset:0;z-index:50;opacity:.11;background-image:url('data:image/svg+xml,%3Csvg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)" opacity=".3"/%3E%3C/svg%3E')}.topbar{height:74px;border-bottom:1px solid #243443;max-width:none;padding:0 max(28px,calc((100vw - 1460px)/2));display:flex;align-items:center;justify-content:space-between;background:#0d141eb8;backdrop-filter:blur(16px);position:relative;z-index:2}.brand{text-decoration:none;display:inline-flex;gap:12px;align-items:center;font:600 17px var(--mono);letter-spacing:-.7px;white-space:nowrap}.brand b{font-weight:500;color:var(--muted)}.brand-symbol{width:37px;height:37px;border:1px solid #4c716c;background:#183d3e;border-radius:10px;display:grid;place-items:center;font:700 29px var(--mono);color:var(--mint)}.nav-right{display:flex;align-items:center;gap:16px}.tag{display:inline-flex;align-items:center;font:600 10px var(--mono);padding:7px 10px;letter-spacing:.08em;border-radius:4px;text-transform:uppercase}.tag-neutral{border:1px solid #354552;color:#a8b5c1}.prototype-chip{font:500 10px var(--mono);letter-spacing:.08em;color:#c9a98f;white-space:nowrap}.live-dot,.blink-dot{display:inline-block;background:var(--amber);border-radius:50%;width:6px;height:6px;margin-left:5px;box-shadow:0 0 14px #ffcb7c88;animation:blink 2s infinite}.screen{max-width:1440px;margin:0 auto;padding:0 32px}.intro-layout{min-height:min(840px,calc(100vh - 140px));display:grid;grid-template-columns:.95fr 1.05fr;align-items:center;gap:5%;padding:50px 0 70px}.intro-content{z-index:1}.eyebrow,.panel-label,.hud-kicker{font:600 11px var(--mono);color:var(--mint);letter-spacing:.16em;text-transform:uppercase}.eyebrow{margin:0 0 36px}.timecode{display:flex;flex-direction:column;gap:0}.timecode-small{font:600 13px var(--mono);letter-spacing:.12em;color:var(--muted)}.timecode-big{font:500 clamp(88px,11vw,160px)/1.12 var(--mono);letter-spacing:-.09em;color:#f0f4f5}.timecode-big .punct{color:var(--mint);animation:blink 1.25s infinite}.intro-content h1{margin:4px 0 20px;font-size:clamp(29px,3.3vw,52px);line-height:1.45;letter-spacing:-.05em;font-weight:900}.accent-text{color:var(--mint)}.intro-lead{max-width:570px;color:#b3c2cc;font-size:14px;line-height:2;margin:0 0 28px}.intro-lead strong{color:#f4e3ca}.intro-call{display:flex;align-items:center;gap:16px;border:1px solid #3f4950;background:linear-gradient(100deg,#232b36aa,#17212db3);padding:16px;border-radius:15px;margin-bottom:24px;max-width:590px;box-shadow:0 18px 55px #07090f44}.avatar{flex-shrink:0;background:#34434e;border:1px solid #687981;border-radius:50%;width:48px;height:48px;display:grid;place-items:center;color:#fff;font-weight:700}.call-copy{flex:1}.call-label{display:block;color:var(--mint);font:500 11px var(--mono)}.call-copy p{margin:3px 0 0;font-size:13px}.ring-icon{border:1px solid #477a6e;color:var(--mint);background:#1a403b;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;font-size:20px;animation:ring 2s ease-in-out infinite}.intro-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.button{border:none;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;gap:16px;text-align:center;font-weight:800;transition:transform .17s,background .17s,color .17s,box-shadow .17s;user-select:none}.button:hover:not(:disabled){transform:translateY(-2px)}.button:disabled{opacity:.5;cursor:not-allowed}.button-primary{background:var(--mint);color:#06171a;box-shadow:0 8px 33px #5bdcbe15}.button-primary:hover{background:#8ff3d8}.button-outline{border:1px solid #506273;color:#d9e4e9;background:#1b2635}.button-outline:hover{background:#26364a}.button-xl{padding:15px 22px;font-size:13px;min-height:52px}.button-small{padding:10px 12px;background:var(--mint);color:#092021;font-size:11px;white-space:nowrap}.intro-meta{color:var(--dim);display:flex;flex-wrap:wrap;gap:20px;margin-top:22px;font:500 11px var(--mono)}.hero-scene{height:560px;position:relative;border:1px solid #29404c;border-radius:25px;background:linear-gradient(180deg,#0f2134 0%,#121e2b 60%,#10181f 100%);overflow:hidden;box-shadow:0 30px 140px #0007}.scene-halo{position:absolute;inset:0;background:radial-gradient(circle at 70% 46%,#267b8060,transparent 44%);opacity:.6}.scene-window{position:absolute;top:62px;right:45px;width:44%;height:235px;background:linear-gradient(180deg,#172a46 0%,#27304c 100%);border:14px solid #34404b;border-bottom-width:18px;box-shadow:0 12px 65px #10161c;border-radius:7px;overflow:hidden}.scene-window:before{content:'';position:absolute;left:50%;height:100%;width:8px;background:#34404b;z-index:1}.scene-window:after{content:'';position:absolute;top:50%;width:100%;height:8px;background:#34404b;z-index:1}.scene-moon{position:absolute;top:19px;right:47px;width:46px;height:46px;border-radius:50%;background:#e1eddd;box-shadow:0 0 48px #d4ebff6b}.scene-city{position:absolute;bottom:0;background:#0e1c29}.scene-city.one{left:0;width:30%;height:80px;box-shadow:70px -12px 0 #16273a,140px 9px 0 #0c1b2c}.scene-city.two{left:27%;height:129px;width:24%;box-shadow:104px 30px 0 #13263a}.scene-city.three{right:0;width:18%;height:65px}.rain{position:absolute;inset:0;opacity:.48;background-image:repeating-linear-gradient(120deg,transparent 0 9px,#a2b5d1aa 10px,transparent 12px,transparent 22px);background-size:70px 70px;transform:scale(1.3);animation:rainfall 4s linear infinite}.rain-two{animation-duration:2.4s;opacity:.22}.scene-desk{position:absolute;bottom:86px;left:7%;right:5%;height:35px;background:#333a42;box-shadow:0 13px 0 #22262f,0 24px 50px #02080d;transform:skewX(-13deg);border-radius:5px}.scene-monitor{position:absolute;width:49%;height:256px;left:8%;bottom:105px;filter:drop-shadow(0 8px 48px #48e6db42)}.monitor-bezel{height:205px;border:12px solid #323a44;background:#0a1722;border-radius:13px;padding:14px;box-shadow:0 0 0 1px #617384,0 0 56px #31bfa741 inset}.monitor-heading{display:flex;justify-content:space-between;font:600 9px var(--mono);color:#5de9bf;border-bottom:1px solid #395a5d;padding-bottom:12px;margin-bottom:14px}.terminal-quiet{color:#b7c5cb}.terminal-red{color:#f38b8b}.terminal-line{height:5px;background:#4cb79f;margin:12px 0;border-radius:3px;width:84%}.terminal-line.muted{background:#446578;opacity:.65}.terminal-line.cyan{background:#57d4cf}.terminal-line.danger{background:#eb647d}.terminal-line.short{width:55%}.terminal-line.half{width:39%}.terminal-cursor{height:8px;width:8px;background:#75e9d1;animation:blink 1s infinite}.monitor-stand{position:absolute;bottom:0;left:45%;width:13%;height:52px;background:#303946;border-bottom:10px solid #44515a}.scene-phone{position:absolute;right:15%;bottom:121px;width:88px;height:160px;border-radius:14px;border:7px solid #242c38;transform:rotate(15deg);background:linear-gradient(155deg,#173c4b,#102932);box-shadow:0 0 45px #81edbd44,0 12px 20px #0009;animation:ring 2s ease infinite}.phone-speaker{position:absolute;top:5px;left:23px;width:28px;height:3px;border-radius:8px;background:#657c86}.phone-face{font-size:9px;text-align:center;padding-top:25px;color:#b9e9db}.phone-face strong{font-size:12px;display:block;margin:6px 0;color:white}.phone-face span{font-size:8px;opacity:.75}.phone-answer{margin:10px auto 0;width:28px;height:28px;border-radius:50%;background:#53d2ac;color:#14352e;display:grid;place-items:center;font-size:11px}.scene-mug{position:absolute;bottom:120px;left:70%;height:45px;width:45px;background:#556576;border-radius:0 0 13px 13px;box-shadow:17px 4px 0 -8px #556576}.scene-caption{position:absolute;bottom:23px;left:29px;right:29px;border-top:1px solid #65748244;padding-top:13px;display:flex;align-items:center;gap:12px;font:600 10px var(--mono);color:#8da7ad;letter-spacing:.08em}.scene-no{margin-left:auto}.blink-dot{margin:0}.site-footer{max-width:1440px;margin:0 auto;padding:24px 32px 34px;border-top:1px solid #1f2b38;color:#677f8c;display:flex;gap:12px;justify-content:space-between;font:500 10px var(--mono);letter-spacing:.05em}.game-screen{padding-top:39px;padding-bottom:65px}.game-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}.game-heading .eyebrow{margin:0 0 8px}.game-heading h1,.report-header h1{font-size:clamp(22px,2.2vw,33px);letter-spacing:-.04em;line-height:1.35;margin:0}.game-settings{display:flex;align-items:center;gap:13px}.quiet-button{border:0;background:transparent;color:#b5c7d0;font-size:12px;font-weight:600;text-decoration:none}.quiet-button:hover{color:var(--mint)}.hud{display:grid;grid-template-columns:1.15fr 1fr 1fr 1fr;border:1px solid var(--line);background:#151d29;border-radius:14px;overflow:hidden;margin-bottom:19px}.hud>div{min-height:106px;padding:18px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;position:relative}.hud>div:last-child{border-right:0}.hud-kicker{font-size:10px;color:#92adba}.hud-time strong,.hud-stat strong{font:600 33px/1.25 var(--mono);letter-spacing:-.06em;margin-top:5px}.hud-time strong{color:#f4f5f0}.hud-stat strong span{font-size:18px;color:#b9c2cd}.hud-stat small{font-size:10px;color:#8da2b1}.hud-timer-bar{height:3px;border-radius:2px;background:#293f4b;position:relative;margin-top:8px}.hud-timer-bar>div{height:100%;width:100%;background:var(--mint);transition:width .3s}.hud.warn-time strong{color:var(--rose)}.game-layout{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(340px,.93fr);align-items:stretch;gap:18px}.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(140deg,#17212d,#121a26);box-shadow:0 8px 35px #0002}.panel-top{display:flex;align-items:start;justify-content:space-between;gap:12px}.panel-top .panel-label{margin:0 0 8px}.panel-label{font-size:10px}.panel-label span{color:#839baa}.panel-top h2,.timeline-panel h2,.lesson-panel h2,.report-sections h2{font-size:16px;letter-spacing:-.015em;margin:0;font-weight:800}.map-panel{padding:23px;display:flex;flex-direction:column;min-height:630px}.status-badge{padding:6px 10px;border-radius:5px;font:600 10px var(--mono);white-space:nowrap}.status-danger{color:#ffa6ab;background:#70394744;border:1px solid #b4596377}.status-safe{color:#90efd5;background:#28594744;border:1px solid #52958077}.status-warn{color:#ffd392;background:#5a452b66;border:1px solid #a87d4777}.map-subhead{display:flex;gap:17px;flex-wrap:wrap;color:#8b9dac;font-size:10px;margin:24px 0 5px}.legend{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.legend-safe{background:var(--mint)}.legend-hostile{background:var(--rose)}.legend-issue{background:var(--amber)}.map-viewport{background:radial-gradient(ellipse at 55% 45%,#182c39aa,#0a141d);border-radius:10px;border:1px solid #243747;overflow:hidden;margin:auto 0;min-height:310px;display:grid;place-items:center}.map-viewport svg{display:block;width:100%;height:auto}.network-edges path{stroke-width:3.5;fill:none;stroke-linecap:round}.link-safe{stroke:url(#edgeNormal);opacity:.66}.link-risk{stroke:url(#edgeRisk);opacity:.72;stroke-dasharray:9 9}.node{outline:none;cursor:pointer}.node rect{fill:#1e3040;stroke:#486474;stroke-width:1.7;transition:stroke .15s,fill .15s}.node:hover rect,.node:focus rect,.node.active rect{fill:#2b4651;stroke:var(--mint);stroke-width:2.5}.node-risk rect{stroke:#b56c70;fill:#3a2a37}.node-risk.active rect,.node-risk:hover rect{stroke:#ef96a0;fill:#4b303f}.node.patched rect{stroke:#46a78d;fill:#203e3e}.node.alerting rect{stroke:#d18d61;fill:#412c30}.node-symbol{fill:#85dccc;font:700 32px var(--mono);text-anchor:middle}.node-title{fill:#e2f0ee;font:700 15px var(--sans);text-anchor:middle}.node-sub{fill:#8fadb8;font:500 10px var(--mono);text-anchor:middle}.node-alert{fill:#ff8994;stroke:#eeb5b5;stroke-width:2;animation:blink 1.1s infinite}.node.patched .node-alert{fill:#65e2c3;stroke:#65e2c3;animation:none}.new-feature{opacity:.4;transition:opacity .3s}.new-feature.revealed{opacity:1}.map-watermark,.map-coordinates{font:600 11px var(--mono);fill:#6c9eab;letter-spacing:.07em}.map-coordinates{font-size:9px;fill:#617985}.node-inspector{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:15px;border:1px solid #32414c;background:#151f2b;padding:13px 16px;border-radius:9px}.node-inspector>div{display:flex;flex-direction:column;min-width:0}.inspector-kicker{font:600 10px var(--mono);color:var(--mint)}.node-inspector strong{font-size:11px;font-weight:600;line-height:1.7}.inspector-right{font-size:10px;color:#94a7b4;white-space:nowrap}.decision-panel{padding:23px;min-height:630px}.pulse-pill{font:700 10px var(--mono);color:var(--rose);display:flex;align-items:center;gap:7px;border:1px solid #743e4a;padding:5px 10px;border-radius:20px}.pulse-pill span{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:blink 1s infinite}.phase-tracker{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:22px}.phase{padding:10px 8px;border:1px solid #2c3945;background:#171d29;border-radius:7px;font:600 10px var(--mono);color:#6f8190;text-align:center}.phase.current{background:#1b433f;border-color:#3b9e89;color:#aeefe1}.phase.done{color:#8de2c6}.incident-copy{margin:18px 0 20px}.incident-copy>p{font-size:12px;color:#cfdae1;line-height:1.9;margin:0 0 12px}.evidence-box{display:flex;flex-direction:column;gap:6px;padding:11px 14px;border-radius:7px;border-left:3px solid var(--amber);background:#352f273d;font-size:11px;color:#f3d8b9;line-height:1.7}.action-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.action-heading strong{font-size:13px}.action-heading small{font:600 10px var(--mono);color:var(--dim)}.action-cards{display:grid;gap:8px}.action-btn{width:100%;border:1px solid #334653;background:#1b2734;text-align:left;color:var(--text);border-radius:10px;padding:11px 13px;display:flex;gap:11px;align-items:center;transition:border .2s,background .2s,transform .2s}.action-btn:hover{background:#253747;border-color:#65bbac;transform:translateX(2px)}.action-icon{width:34px;height:34px;border-radius:8px;border:1px solid #47636b;background:#253d46;color:#8ee8d4;display:grid;place-items:center;flex:none;font:600 17px var(--mono)}.action-text{display:flex;flex-direction:column;gap:1px;flex:1}.action-text b{font-size:12px;font-weight:800;line-height:1.5}.action-text small{color:#9fafbb;font-size:10px;line-height:1.6}.action-time{font:600 11px var(--mono);color:var(--amber);white-space:nowrap}.custom-response{border-top:1px solid #2e3d47;margin-top:17px;padding-top:14px}.custom-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;gap:7px}.custom-heading>span:first-child{font-size:12px;font-weight:700}.engine-chip{border:1px solid #45535f;border-radius:5px;color:#b6c3ca;font:600 9px var(--mono);padding:3px 7px;white-space:nowrap}.custom-response textarea{color:#e4f2f0;background:#0e1824;border:1px solid #344858;outline:none;resize:vertical;width:100%;min-height:65px;border-radius:8px;padding:11px;font-size:11px;line-height:1.7}.custom-response textarea:focus{border-color:var(--mint)}.custom-response textarea::placeholder{color:#718b9c}.custom-footer{display:flex;justify-content:space-between;align-items:center;gap:11px;margin-top:8px}.custom-footer small{font-size:9px;color:#88a0ad;line-height:1.6}.custom-result{background:#1b3039;border:1px solid #4d8f83;border-radius:9px;margin-top:12px;padding:12px;font-size:11px;line-height:1.9}.custom-result strong{color:var(--mint)}.custom-result.error{background:#392c34;border-color:#b06e76}.result-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.result-actions button{font-size:11px;padding:7px 12px;min-height:34px}.bottom-layout{display:grid;grid-template-columns:1.4fr .93fr;gap:18px;margin-top:18px}.timeline-panel,.lesson-panel{padding:22px 24px}.timeline-list{max-height:185px;overflow:auto;margin-top:15px;display:flex;flex-direction:column;gap:13px}.timeline-event{display:grid;grid-template-columns:62px 1fr;gap:13px}.timeline-event time{font:600 10px var(--mono);color:#89acb5;padding-top:2px}.timeline-event span{font-size:11px;color:#c1cdd6;line-height:1.65}.timeline-event strong{color:#f1f3f5}.lesson-panel .panel-label{margin:0 0 11px}.lesson-panel p:not(.panel-label){font-size:12px;color:#b1c2ce;line-height:1.95;margin:14px 0}.plain-link{font-size:12px;color:var(--mint);border:0;padding:0;background:none;font-weight:700}.plain-link:hover{text-decoration:underline}.report-screen{padding:62px 0 82px}.report-wrap{max-width:1230px;padding:0 28px;margin:0 auto}.report-header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:30px}.report-header .eyebrow{margin:0 0 12px}.report-header p:not(.eyebrow){color:var(--muted);font-size:13px;margin:9px 0 0}.report-actions{display:flex;gap:10px;flex-wrap:wrap}.report-actions .button{padding:12px 17px;font-size:11px}.report-score{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;padding:24px 30px;border:1px solid #42655e;border-radius:14px;background:linear-gradient(115deg,#193d39,#182632)}.score-row{display:flex;align-items:center;gap:20px}.score-row strong{font:700 90px/1.05 var(--mono);color:var(--mint);letter-spacing:-.06em}.score-row span{font-weight:700;font-size:15px}.report-metrics{display:flex;align-items:center;gap:35px;flex-wrap:wrap}.report-metrics div{display:flex;flex-direction:column;gap:4px}.report-metrics div span{color:#aec2c7;font-size:11px}.report-metrics strong{font:700 22px var(--mono)}.report-sections{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:18px}.report-sections .panel{padding:26px 30px}.report-sections .panel-label{margin:0 0 10px}.report-sections h2{font-size:19px;margin-bottom:20px}.report-main{grid-row:span 2}.report-list{border-left:1px solid #425665;margin-left:8px;padding-left:20px;display:flex;flex-direction:column;gap:19px}.report-list-item{position:relative}.report-list-item:before{content:'';position:absolute;width:9px;height:9px;border-radius:50%;background:var(--mint);left:-25px;top:7px}.report-list-item.is-risk:before{background:var(--amber)}.report-list-item time{color:var(--mint);font:600 10px var(--mono)}.report-list-item h3{font-size:13px;margin:4px 0 5px}.report-list-item p{font-size:12px;color:#afc0cb;line-height:1.8;margin:0}.report-conclusion{border-top:1px solid #334453;padding-top:21px;font-size:13px;color:#dce6ed;line-height:1.9}.report-learn p,.report-cve p{font-size:12px;color:#b2c4ce;line-height:1.9}.report-learn ul{padding-left:21px;color:#bfced7;font-size:12px;line-height:2.1}.cve-id{font:700 24px var(--mono)!important;color:var(--amber)!important;margin:0!important}.cve-note{border-left:3px solid var(--amber);padding:10px 13px;background:#5b482b3a;border-radius:5px}.cve-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.cve-links a{font-size:11px;color:#a9f3df;text-decoration:none;border:1px solid #3f6969;padding:9px 12px;border-radius:6px}.cve-links a:hover{background:#1a4b46}.report-endnote{font:500 10px var(--mono);color:#8298a6;text-align:center;margin:25px 0}.help-dialog{border:1px solid #52756f;border-radius:16px;background:#172330;color:var(--text);max-width:570px;width:calc(100% - 30px);padding:26px 30px;box-shadow:0 30px 160px #000a;line-height:1.9}.help-dialog::backdrop{background:#030910bb;backdrop-filter:blur(5px)}.dialog-header{display:flex;align-items:center;justify-content:space-between}.dialog-header .eyebrow{margin:0}.help-dialog h2{font-size:22px;line-height:1.5}.help-dialog p,.help-dialog li{font-size:12px;color:#c6d6de}.help-dialog ol{padding-left:22px}.hint-panel{padding:12px 14px;background:#263746;border-radius:8px}.warning-text{color:var(--rose)!important}.ui-toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:10;background:#233a42;border:1px solid #52a58b;border-radius:8px;padding:11px 18px;color:#e2fff2;box-shadow:0 14px 40px #0008;font-size:12px;text-align:center;max-width:calc(100vw - 25px)}@keyframes blink{50%{opacity:.2}}@keyframes ring{0%,100%{transform:rotate(0)}10%,30%{transform:rotate(-7deg)}20%,40%{transform:rotate(8deg)}50%{transform:rotate(0)}}@keyframes rainfall{from{background-position:0 0}to{background-position:0 160px}}
+@media (max-width:1140px){.intro-layout{gap:3%}.hero-scene{height:510px}.game-layout{grid-template-columns:1fr}.map-panel,.decision-panel{min-height:initial}.map-viewport{margin:16px 0 0}.bottom-layout{grid-template-columns:1fr 1fr}.game-heading{align-items:start}.report-metrics{gap:20px}}
+@media(max-width:760px){.topbar{height:65px;padding:0 17px}.brand{font-size:13px;gap:7px}.brand-symbol{width:30px;height:30px;font-size:23px}.nav-right .tag{display:none}.prototype-chip{font-size:8px}.screen{padding-left:16px;padding-right:16px}.intro-layout{display:flex;flex-direction:column;align-items:stretch;min-height:unset;padding:39px 0 35px}.intro-content{order:2}.hero-scene{order:1;height:260px;margin-bottom:32px}.scene-window{top:25px;right:20px;width:46%;height:130px;border-width:8px}.scene-monitor{height:165px;bottom:50px;left:8%;width:50%}.monitor-bezel{height:130px;border-width:7px;padding:8px}.monitor-heading{font-size:6px;padding-bottom:5px;margin-bottom:6px}.terminal-line{height:3px;margin:8px 0}.monitor-stand{height:35px}.scene-desk{bottom:48px;height:16px}.scene-phone{right:15%;bottom:70px;width:52px;height:92px;border-width:4px;border-radius:10px}.phone-face{padding-top:9px;font-size:7px}.phone-face strong{font-size:8px;margin:2px 0}.phone-answer{width:15px;height:15px;font-size:8px;margin:6px auto}.scene-mug{bottom:65px;left:70%;height:25px;width:25px}.scene-caption{bottom:12px;left:14px;right:14px;font-size:7px}.intro-content .eyebrow{margin-bottom:12px}.timecode-big{font-size:83px}.intro-content h1{font-size:32px;line-height:1.4}.intro-lead{font-size:12px}.intro-call{padding:11px;gap:10px}.call-copy p{font-size:11px}.avatar{width:39px;height:39px}.intro-actions .button{width:100%}.intro-meta{gap:13px;font-size:9px}.game-screen{padding-top:28px}.game-heading h1{font-size:20px}.game-heading{align-items:flex-start;flex-direction:column;gap:11px}.game-settings{width:100%;justify-content:space-between}.hud{grid-template-columns:1fr 1fr}.hud>div{padding:13px;border-bottom:1px solid var(--line);min-height:83px}.hud>div:nth-child(2){border-right:0}.hud>div:nth-child(3),.hud>div:nth-child(4){border-bottom:0}.hud-time strong,.hud-stat strong{font-size:25px}.hud-stat strong span{font-size:13px}.hud-kicker{font-size:8px}.hud-stat small{font-size:8px}.map-panel,.decision-panel,.timeline-panel,.lesson-panel{padding:16px}.panel-top h2,.timeline-panel h2{font-size:14px}.map-subhead{margin:14px 0 9px;gap:9px;font-size:9px}.map-viewport{min-height:230px}.node-inspector{align-items:flex-start;flex-direction:column;padding:11px}.inspector-right{font-size:9px}.bottom-layout{grid-template-columns:1fr}.decision-panel{min-height:auto}.action-btn{padding:12px}.custom-footer{flex-wrap:wrap}.custom-footer small{flex:1}.report-screen{padding:37px 0 50px}.report-wrap{padding:0 15px}.report-header{flex-direction:column;align-items:flex-start}.report-score{padding:20px;gap:10px}.score-row strong{font-size:63px}.report-metrics{gap:18px}.report-metrics strong{font-size:17px}.report-sections{grid-template-columns:1fr}.report-main{grid-row:auto}.report-sections .panel{padding:21px}.site-footer{padding:22px 16px;flex-direction:column;gap:7px;font-size:8px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+@media print{body{color:#111;background:#fff}.topbar,.site-footer,.report-actions,.global-noise{display:none!important}.report-screen{display:block!important;padding:0}.report-score,.report-sections .panel{background:white;color:#111;border-color:#aaa}.report-main,.report-learn,.report-cve{break-inside:avoid}.report-screen .panel-label,.report-header .eyebrow{color:#555}.report-sections p,.report-list-item p,.report-learn ul,.report-header p:not(.eyebrow){color:#222!important}.report-wrap{max-width:100%;padding:0}.cve-links a{color:#222;border-color:#bbb}.score-row strong{color:#222}.report-metrics span{color:#222!important}#intro-screen,#game-screen{display:none!important}}
+/* Inspector text must wrap on narrow layouts; never force horizontal scroll. */
+.inspector-right{white-space:normal;max-width:47%;text-align:right;line-height:1.65}
+@media(max-width:760px){.inspector-right{max-width:100%;text-align:left}}
+
+</style>
+  <script>
+/* 03:17 — ON CALL / non-public prototype. No real systems are scanned. */
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const safe = (input) => String(input).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const stages = [
+    {
+      title: '不審な閲覧を検知',
+      text: '架空サービス HARBOR の共有機能で、他人の資料を閲覧できる疑いが出ています。最初の30秒、何から始めますか？',
+      evidence: ['観測：一般ユーザーが許可外の資料ページへ到達', '未確定：どの範囲まで閲覧されたか'],
+      noteTitle: '脆弱性と攻撃は、別のもの。',
+      note: '不審なアクセスを止めても、共有機能に権限確認の抜けが残っていれば、別の経路から同じ問題が再発する可能性があります。',
+      actions: [
+        {id:'inspect', icon:'⌕',title:'アクセスログを調査',desc:'事実と影響範囲を確かめる。攻撃は進行する',time:17},
+        {id:'contain',icon:'⊘',title:'共有機能を一時停止',desc:'追加被害を抑えるが、正規利用にも影響',time:13},
+        {id:'block',icon:'⊞',title:'怪しい接続元を遮断',desc:'目の前の通信だけ止める応急処置',time:9}
+      ]
+    },
+    {
+      title: '原因を修正する',
+      text: '調査により、資料のIDだけで閲覧できてしまう設計が疑われています。見た目の修正ではなく、本当に直すべき場所は？',
+      evidence: ['確認対象：/documents/:id の閲覧権限', '問題：ログイン状態と資料ごとの閲覧許可は別'],
+      noteTitle: '認証と認可は違う。',
+      note: '「誰なのか」を確かめるのが認証。「その資料を見てよいか」を確認するのが認可です。URLやボタンを隠すだけでは認可の代わりになりません。',
+      actions: [
+        {id:'patch',icon:'⬡',title:'サーバー側で閲覧権限を確認',desc:'資料の所有者・共有先をサーバー側で照合',time:25},
+        {id:'hide',icon:'◌',title:'共有リンクを画面から隠す',desc:'画面は変わるが、裏側のAPIは変わらない',time:8},
+        {id:'ratelimit',icon:'≋',title:'リクエストに回数制限を追加',desc:'試行頻度を減らすが、認可欠落は残る',time:12}
+      ]
+    },
+    {
+      title: '次の機能を公開する？',
+      text: 'チームが「管理者向けプレビュー機能」の公開を待っています。新しい機能には新しいアクセス経路が生まれます。どうリリースしますか？',
+      evidence: ['変更：管理画面への新しい経路が追加予定', '確認したい：権限のないユーザーを拒否するテスト'],
+      noteTitle: '開発は悪ではない。確認を省くのが危険。',
+      note: '機能追加そのものが必ず脆弱性を生むわけではありません。安全なリリースには、権限テスト・レビュー・必要なら延期という選択肢があります。',
+      actions: [
+        {id:'test',icon:'✓',title:'権限テストをしてから公開',desc:'安全確認に時間をかけ、問題時は公開を止める',time:24},
+        {id:'rush',icon:'➤',title:'確認を省いて今すぐ公開',desc:'機能は早く届くが、新しいリスクを残す',time:6},
+        {id:'postpone',icon:'Ⅱ',title:'公開を延期し、先に問題を解決',desc:'新機能は遅れるが、被害拡大を避ける',time:11}
+      ]
+    }
+  ];
+  const nodes = {
+    outside:{name:'外部ネットワーク',title:'利用者と不審なアクセス',detail:'正常なユーザーも、疑わしいリクエストも、入口から入ってきます。見た目だけでは区別できません。'},
+    gateway:{name:'入口 / GATEWAY',title:'通信の入口',detail:'遮断やレート制限はできても、資料単位の閲覧権限まで保証することはできません。'},
+    web:{name:'Webサーバー',title:'画面とAPIの処理',detail:'フロントエンドでボタンを隠しても、APIへの直接リクエストを必ずしも防げません。'},
+    auth:{name:'認証 / IDENTITY',title:'利用者の本人確認',detail:'ログインに成功しただけでは、他人の資料へのアクセスが許可されたことにはなりません。'},
+    share:{name:'共有機能 / SHARING',title:'資料ごとの閲覧権限が不足している疑い',detail:'本シナリオの根本原因は、資料ごとのアクセス許可をサーバーで確認していないことです。'},
+    database:{name:'データ保管庫 / STORE',title:'資料を保存する場所',detail:'大事なのは、アクセスを要求した人にその資料を見せてよいかどうかを、適切な箇所で確認することです。'},
+    preview:{name:'新機能 / ADMIN PREVIEW',title:'リリース待ちの管理プレビュー',detail:'新しい経路が増えるため、一般ユーザーからのアクセスを拒否するテストが必要です。'}
+  };
+  let game = null;
+  let timer = null;
+  let toastTimer = null;
+  let apiStatus = 'standalone';
+  let pendingAction = null;
+  const shownScreen = (screen) => {
+    for (const name of ['intro','game','report']) $(name+'-screen').classList.toggle('hidden', name !== screen);
+    window.scrollTo({top:0, behavior:'auto'});
+  };
+  const gameTime = () => {
+    if (!game) return '03:17';
+    const m = 17 + Math.floor(game.elapsed / 60);
+    const s = game.elapsed % 60;
+    return `03:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  };
+  const formatTime = (seconds) => `${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
+  const notify = (message) => {
+    document.querySelector('.ui-toast')?.remove();
+    clearTimeout(toastTimer);
+    const el = document.createElement('div');
+    el.className = 'ui-toast'; el.role = 'status'; el.textContent = message;
+    document.body.appendChild(el); toastTimer = setTimeout(() => el.remove(), 3200);
+  };
+  function makeGame(training){
+    return {training, stage:0, elapsed:0, remaining:120, service:100, exposed:0, threat:25,
+      contained:false, investigated:false, blocked:false, patched:false, cosmetic:false, rateLimited:false,
+      tested:false, rushed:false, postponed:false, technicalDebt:1, timeout:false, completed:false,
+      log:[{when:'03:17:00',text:'<strong>着信を受理。</strong>共有機能で不審な閲覧を検知しました。'}], history:[], node:'share'};
+  }
+  function startGame(training=false){
+    clearInterval(timer);
+    game = makeGame(training); pendingAction = null;
+    $('custom-text').value=''; $('custom-result').classList.add('hidden');
+    shownScreen('game');
+    renderAll();
+    if(!training) timer = setInterval(tick,1000);
+  }
+  function tick(){
+    if(!game || game.completed || game.training) return;
+    game.remaining--;
+    game.elapsed++;
+    if(game.elapsed%7===0){
+      if(!game.patched){
+        game.threat=clamp(game.threat+(game.contained?2:5),0,100);
+        if(game.threat>=63 && !game.contained) game.exposed=clamp(game.exposed+3,0,100);
+      } else game.threat=clamp(game.threat-3,0,100);
+    }
+    renderHUD();
+    if(game.remaining<=0){ game.timeout=true; endGame(); }
+  }
+  function spend(amount){
+    game.elapsed+=amount;
+    if(!game.training) game.remaining=Math.max(0,game.remaining-amount);
+    if(!game.patched && !game.contained){
+      game.threat=clamp(game.threat+Math.round(amount/4),0,100);
+      if(game.threat>62) game.exposed=clamp(game.exposed+Math.round(amount/7),0,100);
+    }
+  }
+  function writeLog(html){
+    game.log.unshift({when:gameTime(),text:html});
+    if(game.log.length>6)game.log.length=6;
+  }
+  function performAction(id){
+    if(!game || game.completed)return;
+    const stage=stages[game.stage];
+    const action=stage.actions.find((a)=>a.id===id);
+    if(!action)return;
+    let result='',risk=false;
+    spend(action.time);
+    switch(id){
+      case 'inspect':game.investigated=true;game.threat=clamp(game.threat+5,0,100);result='閲覧ログで、許可されていない資料へのアクセスを確認。ただし調査中も不審なアクセスは続きました。';break;
+      case 'contain':game.contained=true;game.service=clamp(game.service-12,0,100);game.threat=clamp(game.threat-18,0,100);result='共有機能を一時停止。追加のアクセスを抑制しましたが、正規利用者も共有機能を使えません。';break;
+      case 'block':game.blocked=true;game.threat=clamp(game.threat+12,0,100);risk=true;result='特定の接続元を遮断。しかし別の接続元から再試行され、根本原因は残っています。';break;
+      case 'patch':game.patched=true;game.technicalDebt=Math.max(0,game.technicalDebt-1);game.threat=clamp(game.threat-42,0,100);if(game.contained)game.service=clamp(game.service+9,0,100);result='サーバー側の資料単位の認可チェックを追加しました。今回の侵入経路に対処できました。';break;
+      case 'hide':game.cosmetic=true;game.technicalDebt++;game.threat=clamp(game.threat+24,0,100);game.exposed=clamp(game.exposed+13,0,100);risk=true;result='共有リンクは非表示になりましたが、API経由ではアクセスが続きました。問題が再発しています。';break;
+      case 'ratelimit':game.rateLimited=true;game.technicalDebt++;game.threat=clamp(game.threat-9,0,100);risk=true;result='リクエスト頻度は抑えました。ただし、権限チェックの欠落は未解決です。';break;
+      case 'test':game.tested=true;if(game.patched){game.threat=clamp(game.threat-14,0,100);result='権限テストに成功し、プレビュー機能を安全に公開できました。';}else{game.postponed=true;game.threat=clamp(game.threat-5,0,100);result='権限テストで問題を発見。公開を取りやめましたが、共有機能の根本問題は残っています。';}break;
+      case 'rush':game.rushed=true;game.technicalDebt++;game.threat=clamp(game.threat+30,0,100);game.exposed=clamp(game.exposed+12,0,100);risk=true;result='テストを省いて新機能を公開。管理プレビューの権限不備という新たなリスクが加わりました。';break;
+      case 'postpone':game.postponed=true;game.threat=clamp(game.threat-6,0,100);result='公開を延期。機能提供は遅れますが、不確実なまま新しい経路を開かずに済みました。';break;
+    }
+    if(!game.patched && !game.contained && (id==='hide'||id==='rush'))game.exposed=clamp(game.exposed+7,0,100);
+    game.history.push({phase:game.stage,action:action.title,effect:result,risk,time:gameTime(),id});
+    writeLog(`<strong>${safe(action.title)}</strong> — ${safe(result)}`);
+    game.stage++;
+    pendingAction=null;
+    $('custom-result').classList.add('hidden');$('custom-text').value='';
+    if(game.stage>=stages.length || game.remaining<=0){if(game.remaining<=0)game.timeout=true;endGame();return;}
+    game.node=game.stage===2?'preview':'share';
+    renderAll();
+    notify(risk?'この対処だけでは危険が残ります。':'対応を記録しました。次の局面に進みます。');
+  }
+  function renderHUD(){
+    if(!game)return;
+    $('hud-time').textContent=game.training?'∞':formatTime(game.remaining);
+    $('hud-timer-fill').style.width=game.training?'100%':`${game.remaining/120*100}%`;
+    $('hud-timer-fill').style.background=game.remaining<30?'var(--rose)':'var(--mint)';
+    $('hud-uptime').innerHTML=`${Math.round(game.service)}<span>%</span>`;
+    $('hud-data').innerHTML=`${Math.round(game.exposed)}<span>%</span>`;
+    $('hud-threat').innerHTML=`${Math.round(game.threat)}<span>%</span>`;
+    $('game-mode-chip').textContent=game.training?'STUDY / NO TIMER':'STANDARD / 120 SEC';
+    const stamp=$('map-status');
+    stamp.className='status-badge '+(game.patched?'status-safe':game.contained?'status-warn':'status-danger');
+    stamp.textContent=game.patched?'認可チェック修正済':game.contained?'共有機能を停止中':'問題発生中';
+    $('threat-caption').textContent=game.patched?'侵入経路を封鎖':game.threat>68?'不正アクセスが進行':'経路を調査中';
+    $('uptime-caption').textContent=game.service<95?'一部機能を制限中':'サービス稼働中';
+    $('data-caption').textContent='影響度（演習用の架空値）';
+  }
+  function renderMap(){
+    const risk=document.querySelector('[data-node="share"]');
+    risk.classList.toggle('patched',game.patched);
+    risk.classList.toggle('node-risk',!game.patched);
+    document.querySelector('.node-alert').setAttribute('visibility',game.patched?'hidden':'visible');
+    document.querySelector('[data-node="preview"]').classList.toggle('revealed',game.stage===2||game.rushed||game.tested||game.postponed);
+    document.querySelector('[data-node="preview"]').classList.toggle('alerting',game.rushed);
+    document.querySelectorAll('[data-node]').forEach((el)=>{const selected=el.dataset.node===game.node;el.classList.toggle('active',selected);el.setAttribute('aria-pressed',selected?'true':'false');});
+    $('attack-dot').setAttribute('opacity',game.patched?'.15':'1');
+    const n=nodes[game.node];
+    $('node-inspector').innerHTML=`<div><span class="inspector-kicker">SELECTED NODE / ${safe(n.name)}</span><strong>${safe(n.title)}</strong></div><span class="inspector-right">${safe(n.detail)}</span>`;
+  }
+  function renderTimeline(){
+    $('game-timeline').innerHTML=game.log.map(item=>`<div class="timeline-event"><time>${safe(item.when)}</time><span>${item.text}</span></div>`).join('');
+  }
+  function renderStage(){
+    const stage=stages[game.stage];
+    $('incident-title').textContent=stage.title;
+    $('stage-number').textContent=`/ PHASE 0${game.stage+1}`;
+    $('incident-description').textContent=stage.text;
+    $('incident-evidence').innerHTML=stage.evidence.map(line=>`<span>◈ ${safe(line)}</span>`).join('');
+    $('action-count').textContent=`STEP ${game.stage+1} / 3`;
+    $('lesson-title').textContent=stage.noteTitle;
+    $('lesson-content').textContent=stage.note;
+    $('phase-tracker').innerHTML=['01  初動','02  原因修正','03  リリース'].map((label,i)=>`<div class="phase ${i===game.stage?'current':i<game.stage?'done':''}">${i<game.stage?'✓ ':''}${label}</div>`).join('');
+    $('action-cards').innerHTML=stage.actions.map((a)=>`<button class="action-btn" type="button" data-action="${a.id}" aria-label="${safe(a.title)}"><span class="action-icon">${safe(a.icon)}</span><span class="action-text"><b>${safe(a.title)}</b><small>${safe(a.desc)}</small></span><span class="action-time">${a.time} sec</span></button>`).join('');
+    $('custom-text').placeholder=game.stage===0?'例：まず共有機能を止めて被害を抑える':game.stage===1?'例：サーバー側で資料の閲覧権限を確認する':'例：公開前に権限テストを実行したい';
+  }
+  function renderAll(){renderHUD();renderMap();renderTimeline();renderStage();}
+  function selectNode(name){if(!game||game.completed||!nodes[name])return;game.node=name;renderMap();}
+  function grade(){
+    const protection=clamp(100-game.exposed,0,100), uptime=clamp(game.service,0,100);
+    const strategy=game.patched?100:10, release=game.tested||game.postponed?100:12;
+    const score=Math.round(.42*protection+.23*uptime+.25*strategy+.10*release-(game.rushed?12:0));
+    return {score,grade:score>=86?'A':score>=66?'B':score>=46?'C':'D',protection,uptime};
+  }
+  function endGame(){
+    if(!game||game.completed)return;
+    game.completed=true;clearInterval(timer);
+    const result=grade();
+    $('report-grade').textContent=result.grade;
+    $('report-grade-desc').textContent=game.timeout?'時間切れ：途中までの対応を記録':game.patched?'原因に対処できました':'根本的な問題が残っています';
+    $('report-protection').textContent=`${Math.round(result.protection)}%`;
+    $('report-service').textContent=`${Math.round(result.uptime)}%`;
+    $('report-fix').textContent=game.patched?'実施':'未実施';
+    $('report-timeline').innerHTML=game.history.length?game.history.map((item)=>`<article class="report-list-item ${item.risk?'is-risk':''}"><time>PHASE 0${item.phase+1} / ${safe(item.time)}</time><h3>${safe(item.action)}</h3><p>${safe(item.effect)}</p></article>`).join(''):'<p>意思決定を行う前に時間切れとなりました。</p>';
+    const takeaways=[];
+    if(game.patched)takeaways.push('資料を表示する前に、サーバー側で閲覧権限を確認することが有効です。');
+    else takeaways.push('画面上のリンク非表示や接続元の遮断だけでは、サーバー側の認可欠落は解消しません。');
+    if(game.contained)takeaways.push('機能の一時停止は被害拡大を抑えますが、正規利用者への影響も発生します。');
+    else takeaways.push('影響が分からないときは、初動でログ確認や一時的な制限を検討します。');
+    if(game.rushed)takeaways.push('検証せずに新経路を公開すると、新たなリスクを持ち込む可能性があります。');
+    else takeaways.push('リリース前の権限テストや延期は、状況に応じた適切な選択です。');
+    $('report-takeaways').innerHTML=`<ul>${takeaways.map(t=>`<li>${safe(t)}</li>`).join('')}</ul>`;
+    $('report-conclusion').textContent=game.timeout?'今回は時間切れです。次回は最初に被害を抑える方法と、根本原因を直す方法を考えてみましょう。':game.patched?'今回のシナリオでは根本原因に対処しました。ただし、実運用では追加テスト・監視・影響調査が必要です。':'今回のシナリオではアクセス制御の問題が残っています。次回は「サーバー側で誰がどの資料を見られるか」を確認してみましょう。';
+    shownScreen('report');
+  }
+  const responseMap = [
+    {investigate:'inspect',contain:'contain',monitor:'block'},
+    {root_fix:'patch',cosmetic:'hide',rate_limit:'ratelimit'},
+    {test:'test',rush:'rush',postpone:'postpone'}
+  ];
+  function offlineClassify(text){
+    const matches=[];
+    const tests=[
+      ['root_fix',/権限|認可|認証.*閲覧|所有者|共有先|サーバー側|サーバ側|権利|authorization/i],
+      ['cosmetic',/隠す|非表示|表示を消す|リンクを消す|UIだけ|ボタンを消す/i],
+      ['rate_limit',/レート|回数制限|頻度制限|リクエスト制限/i],
+      ['investigate',/ログ|調査|証拠|原因を調べ|監査/i],
+      ['contain',/一時停止|サービス停止|共有機能を止|一時遮断|機能を閉じ|機能停止/i],
+      ['monitor',/IP|接続元|通信を遮断|不審なアクセスを遮断/i],
+      ['test',/テスト|試験|検証|CI|レビュー|チェックしてから/i],
+      ['postpone',/延期|見送|保留|公開しない/i],
+      ['rush',/すぐ公開|今すぐ公開|急いで公開|そのまま公開|テストせず公開/i]
+    ];
+    for(const [kind,regex] of tests)if(regex.test(text))matches.push(kind);
+    return {category:matches.length===1?matches[0]:'unknown',mode:'offline',confidence:null};
+  }
+  async function evaluateText(){
+    if(!game||game.completed)return;
+    const text=$('custom-text').value.trim();
+    const div=$('custom-result');div.className='custom-result';pendingAction=null;
+    if(text.length<7||text.length>300){div.classList.add('error');div.textContent='7〜300文字で、具体的な対処案を入力してください。';return;}
+    const btn=$('evaluate-btn');btn.disabled=true;btn.textContent='判定中…';
+    let result=null;
+    if(window.location.protocol==='http:'||window.location.protocol==='https:'){
+      const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),9000);
+      try{
+        const response=await fetch('/api/evaluate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text,stage:game.stage}),signal:controller.signal});
+        if(!response.ok)throw Error('server error');
+        result=await response.json();
+      }catch(_e){result={...offlineClassify(text),mode:'offline-fallback'};}
+      finally{clearTimeout(timeout);}
+    }else result=offlineClassify(text);
+    btn.disabled=false;btn.textContent='対処案を判定 ↗';
+    if(!game||game.completed)return;
+    const source=result.mode==='live'?'Decisions APIで分類':result.mode==='offline-fallback'?'通信失敗 → ローカル判定（AI未使用）':'ローカルデモ判定（AI未使用）';
+    const category=result.category;
+    const actionId=responseMap[game.stage][category];
+    if(!actionId){
+      div.classList.add('error');
+      div.innerHTML=`<strong>${safe(source)}</strong><div>この局面で実行する対処を特定できませんでした。1つの操作を具体的に書くか、上の選択肢を使ってください。</div>`;
+      return;
+    }
+    const action=stages[game.stage].actions.find(a=>a.id===actionId);
+    pendingAction={id:actionId,stage:game.stage};
+    div.innerHTML=`<strong>${safe(source)}</strong><div>「${safe(action.title)}」として解釈しました。${safe(action.desc)}。</div><div class="result-actions"><button class="button button-primary" type="button" id="confirm-custom">この対応を実行</button><button class="button button-outline" type="button" id="cancel-custom">取り消す</button></div>`;
+    $('confirm-custom').addEventListener('click',()=>{if(pendingAction && pendingAction.stage===game.stage)performAction(pendingAction.id);});
+    $('cancel-custom').addEventListener('click',()=>{pendingAction=null;div.classList.add('hidden');});
+  }
+  async function loadStatus(){
+    if(window.location.protocol!=='http:'&&window.location.protocol!=='https:')return;
+    try{
+      const response=await fetch('/api/status',{cache:'no-store'});
+      if(!response.ok)return;
+      const status=await response.json();
+      apiStatus=status.mode==='live'?'live':'offline';
+      $('engine-chip').textContent=apiStatus==='live'?'Decisions API 利用可能':'ローカルデモ判定';
+    }catch(_){apiStatus='standalone';}
+  }
+  function showHelp(){const dialog=$('help-dialog');if(!dialog.open)dialog.showModal();}
+  $('start-btn').addEventListener('click',()=>startGame(false));
+  $('practice-btn').addEventListener('click',()=>startGame(true));
+  $('restart-btn').addEventListener('click',()=>startGame(false));
+  $('report-print').addEventListener('click',()=>window.print());
+  $('evaluate-btn').addEventListener('click',evaluateText);
+  $('custom-text').addEventListener('input',()=>{$('custom-result').classList.add('hidden');pendingAction=null;});
+  $('action-cards').addEventListener('click',event=>{const button=event.target.closest('button[data-action]');if(button)performAction(button.dataset.action);});
+  document.querySelectorAll('[data-node]').forEach(node=>{
+    node.addEventListener('click',()=>selectNode(node.dataset.node));
+    node.addEventListener('keydown',(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectNode(node.dataset.node);}});
+  });
+  $('help-btn').addEventListener('click',showHelp);$('lesson-help').addEventListener('click',showHelp);
+  $('close-help').addEventListener('click',()=>$('help-dialog').close());
+  $('brand-home').addEventListener('click',(event)=>{event.preventDefault();if(game&&!game.completed&&!window.confirm('対応中のゲームを終了してタイトルに戻りますか？'))return;clearInterval(timer);game=null;shownScreen('intro');});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&game&&!game.training&&!game.completed)clearInterval(timer);else if(!document.hidden&&game&&!game.training&&!game.completed){clearInterval(timer);timer=setInterval(tick,1000);}});
+  loadStatus();
+  window.__oncallTesting={ // local smoke-test hook; not used by the game itself
+    start:startGame,getState:()=>game?JSON.parse(JSON.stringify(game)):null,act:performAction,offlineClassify
+  };
+})();
+
+</script>
+</head>
+<body>
+  <div class="global-noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#" id="brand-home" aria-label="03:17 ON CALL — はじめから">
+      <span class="brand-symbol">↳</span>
+      <span>03:17 <b>/ ON CALL</b></span>
+    </a>
+    <div class="nav-right"><span class="tag tag-neutral">SECURITY EDUCATION</span><span class="prototype-chip">PRIVATE PROTOTYPE <span class="live-dot"></span></span></div>
+  </header>
+  <main id="app-root">
+    <section id="intro-screen" class="screen intro-screen" aria-labelledby="intro-title">
+      <div class="intro-layout">
+        <div class="intro-content">
+          <p class="eyebrow">EPISODE 01 / 深夜のリリース</p>
+          <div class="timecode"><span class="timecode-small">SUN. / 03:17 AM</span><span class="timecode-big">03<span class="punct">:</span>17</span></div>
+          <h1 id="intro-title">異常は、<br><span class="accent-text">眠っている間</span>に<br>増えていく。</h1>
+          <p class="intro-lead">新機能のリリース直後、誰かが「他人の資料」を見られるようになった。あなたは今夜の当番エンジニア。<strong>120秒</strong>で、サービスを守り抜け。</p>
+          <div class="intro-call" role="group" aria-label="入電の内容">
+            <div class="avatar"><span>運</span></div>
+            <div class="call-copy"><span class="call-label">着信 / 運用担当・ミナ</span><p>「ごめん、起きてる？ 本番で、他の人の資料が見えてるかも……」</p></div>
+            <span class="ring-icon" aria-hidden="true">☎</span>
+          </div>
+          <div class="intro-actions">
+            <button class="button button-primary button-xl" id="start-btn"><span>電話に出て、対応する</span><span aria-hidden="true">↗</span></button>
+            <button class="button button-outline button-xl" id="practice-btn">時間制限なしで学ぶ</button>
+          </div>
+          <p class="intro-meta"><span>◷ 1プレイ 1〜3分</span><span>◇ 13歳以上</span><span>◈ 架空の演習環境</span></p>
+        </div>
+        <div class="hero-scene" aria-label="暗い部屋で光るPCモニターと着信中のスマートフォンのイラスト">
+          <div class="scene-halo"></div><div class="scene-window"><div class="scene-moon"></div><div class="scene-city one"></div><div class="scene-city two"></div><div class="scene-city three"></div><div class="rain rain-one"></div><div class="rain rain-two"></div></div>
+          <div class="scene-monitor"><div class="monitor-bezel"><div class="monitor-heading"><span>● <span class="terminal-quiet">STAGING / PROD</span></span><span class="terminal-red">02 WARNINGS</span></div><div class="terminal-line muted short"></div><div class="terminal-line cyan"></div><div class="terminal-line muted"></div><div class="terminal-line danger half"></div><div class="terminal-line muted short"></div><div class="terminal-line cyan half"></div><div class="terminal-cursor"></div></div><div class="monitor-stand"></div></div>
+          <div class="scene-desk"></div><div class="scene-mug"></div><div class="scene-phone"><div class="phone-speaker"></div><div class="phone-face">緊急着信<br><strong>運用担当</strong><span>受信中…</span></div><div class="phone-answer">●</div></div>
+          <div class="scene-caption"><span class="blink-dot"></span> YOUR SHIFT STARTS NOW <span class="scene-no">01 / 03</span></div>
+        </div>
+      </div>
+    </section>
+    <section id="game-screen" class="screen game-screen hidden" aria-labelledby="game-title">
+      <div class="game-heading"><div><p class="eyebrow">SIMULATION / NIGHT SHIFT</p><h1 id="game-title">守るのは、コードだけじゃない。</h1></div><div class="game-settings"><span id="game-mode-chip" class="tag tag-neutral">STANDARD / 120 SEC</span><button class="quiet-button" id="help-btn" type="button">遊び方 <span aria-hidden="true">↗</span></button></div></div>
+      <div class="hud" aria-label="現在の状況">
+        <div class="hud-time"><span class="hud-kicker">TIME LEFT</span><strong id="hud-time">02:00</strong><div class="hud-timer-bar"><div id="hud-timer-fill"></div></div></div>
+        <div class="hud-stat"><span class="hud-kicker">SERVICE UPTIME</span><strong id="hud-uptime">100<span>%</span></strong><small id="uptime-caption">正常</small></div>
+        <div class="hud-stat"><span class="hud-kicker">DATA AT RISK</span><strong id="hud-data">0<span>%</span></strong><small id="data-caption">流出リスク（演習値）</small></div>
+        <div class="hud-stat"><span class="hud-kicker">THREAT PROGRESS</span><strong id="hud-threat">25<span>%</span></strong><small id="threat-caption">侵入経路を調査中</small></div>
+      </div>
+      <div class="game-layout">
+        <section class="map-panel panel" aria-label="ネットワーク防衛マップ">
+          <div class="panel-top"><div><p class="panel-label">FIELD VIEW <span>/ SERVICE NETWORK</span></p><h2>HARBOR / サービス全体図</h2></div><span id="map-status" class="status-badge status-danger">問題発生中</span></div>
+          <div class="map-subhead"><span><i class="legend legend-safe"></i> 正規のアクセス</span><span><i class="legend legend-hostile"></i> 不審なアクセス</span><span><i class="legend legend-issue"></i> 未修正の弱点</span></div>
+          <div class="map-viewport">
+            <svg id="network-map" viewBox="0 0 920 485" role="img" aria-label="入口、ゲートウェイ、Webサーバー、認証、共有機能、データ保管庫、新機能のつながりを表示します">
+              <defs>
+                <linearGradient id="edgeNormal" x1="0" x2="1"><stop offset="0" stop-color="#335a71"/><stop offset="1" stop-color="#44b2a4"/></linearGradient>
+                <linearGradient id="edgeRisk" x1="0" x2="1"><stop offset="0" stop-color="#a04f68"/><stop offset="1" stop-color="#eb7b79"/></linearGradient>
+                <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <pattern id="mapgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#2a3846" stroke-width=".7" opacity=".52"/></pattern>
+              </defs>
+              <rect width="920" height="485" fill="url(#mapgrid)"/>
+              <g class="network-edges">
+                <path d="M132 232 H206" class="link-safe"/>
+                <path d="M322 232 C345 232 345 181 382 181" class="link-safe"/>
+                <path d="M498 181 H553" class="link-safe"/>
+                <path id="attack-path" d="M132 232 H206 M322 232 C345 232 345 181 382 181 C500 181 500 335 552 335 H734" class="link-risk"/>
+                <path d="M498 181 C534 181 515 335 552 335 H734" class="link-risk"/>
+                <path d="M671 335 H734" class="link-risk"/>
+                <path d="M672 136 H734" class="link-safe"/>
+              </g>
+              <g class="particles" aria-hidden="true">
+                <circle r="4" fill="#55dbbd" filter="url(#glow)"><animateMotion dur="3.2s" repeatCount="indefinite" path="M132 232 H206 L322 232 C345 232 345 181 382 181 H553" /></circle>
+                <circle r="5" fill="#f17d8b" filter="url(#glow)" id="attack-dot"><animateMotion dur="4.5s" repeatCount="indefinite" path="M132 232 H206 L322 232 C345 232 345 181 382 181 C500 181 500 335 552 335 H734" /></circle>
+              </g>
+              <g class="node" data-node="outside" tabindex="0" role="button" aria-label="外部ネットワークを調べる" transform="translate(27 183)"><rect width="105" height="96" rx="14"/><text x="52" y="35" class="node-symbol">◎</text><text x="52" y="61" class="node-title">外部</text><text x="52" y="79" class="node-sub">TRAFFIC</text></g>
+              <g class="node" data-node="gateway" tabindex="0" role="button" aria-label="ゲートウェイを調べる" transform="translate(206 183)"><rect width="116" height="96" rx="14"/><text x="58" y="35" class="node-symbol">◇</text><text x="58" y="61" class="node-title">入口</text><text x="58" y="79" class="node-sub">GATEWAY</text></g>
+              <g class="node" data-node="web" tabindex="0" role="button" aria-label="Webサーバーを調べる" transform="translate(382 134)"><rect width="116" height="96" rx="14"/><text x="58" y="35" class="node-symbol">▣</text><text x="58" y="61" class="node-title">Web</text><text x="58" y="79" class="node-sub">APP SERVER</text></g>
+              <g class="node" data-node="auth" tabindex="0" role="button" aria-label="認証サーバーを調べる" transform="translate(553 88)"><rect width="119" height="96" rx="14"/><text x="59" y="35" class="node-symbol">⌁</text><text x="59" y="61" class="node-title">認証</text><text x="59" y="79" class="node-sub">IDENTITY</text></g>
+              <g class="node node-risk" data-node="share" tabindex="0" role="button" aria-label="共有機能の脆弱性を調べる" transform="translate(552 287)"><rect width="119" height="96" rx="14"/><circle cx="105" cy="13" r="8" class="node-alert"/><text x="59" y="35" class="node-symbol">▤</text><text x="59" y="61" class="node-title">共有機能</text><text x="59" y="79" class="node-sub">SHARING</text></g>
+              <g class="node" data-node="database" tabindex="0" role="button" aria-label="データ保管庫を調べる" transform="translate(734 287)"><rect width="151" height="96" rx="14"/><text x="75" y="35" class="node-symbol">▥</text><text x="75" y="61" class="node-title">データ保管庫</text><text x="75" y="79" class="node-sub">DOCUMENT STORE</text></g>
+              <g class="node new-feature" data-node="preview" tabindex="0" role="button" aria-label="新機能の管理プレビューを調べる" transform="translate(734 88)"><rect width="151" height="96" rx="14"/><text x="75" y="35" class="node-symbol">⬡</text><text x="75" y="61" class="node-title">新機能</text><text x="75" y="79" class="node-sub">ADMIN PREVIEW</text></g>
+              <text x="34" y="44" class="map-watermark">INCIDENT / 001</text>
+              <text x="34" y="460" class="map-coordinates">◈ MAP IS SIMULATED — NOT A REAL NETWORK SCAN</text>
+            </svg>
+          </div>
+          <div class="node-inspector" id="node-inspector" aria-live="polite"><div><span class="inspector-kicker">SELECTED NODE / 共有機能</span><strong>資料ごとの閲覧権限が不足している疑い</strong></div><span class="inspector-right">↗ 地図をクリックして調査</span></div>
+        </section>
+        <section class="decision-panel panel" aria-labelledby="incident-title">
+          <div class="panel-top"><div><p class="panel-label">INCIDENT BOARD <span id="stage-number">/ PHASE 01</span></p><h2 id="incident-title">不審な閲覧を検知</h2></div><span class="pulse-pill"><span></span> LIVE</span></div>
+          <div id="phase-tracker" class="phase-tracker" aria-label="進行状況"></div>
+          <div class="incident-copy"><p id="incident-description">一般ユーザーが、許可されていない資料を閲覧できる可能性があります。</p><div id="incident-evidence" class="evidence-box"></div></div>
+          <div class="action-heading"><strong>次の行動を選ぶ</strong><small id="action-count">STEP 1 / 3</small></div>
+          <div id="action-cards" class="action-cards"></div>
+          <div class="custom-response"><div class="custom-heading"><span>✦ 自分の言葉で提案する</span><span id="engine-chip" class="engine-chip">ローカルデモ判定</span></div><label for="custom-text" class="sr-only">対処案を自由に入力</label><textarea id="custom-text" maxlength="300" rows="2" placeholder="例：共有機能を一時停止して被害を抑える" aria-describedby="custom-hint"></textarea><div class="custom-footer"><small id="custom-hint">入力内容を対応カテゴリに分類し、実行前に確認します。</small><button id="evaluate-btn" class="button button-small">対処案を判定 ↗</button></div><div id="custom-result" class="custom-result hidden" aria-live="polite"></div></div>
+        </section>
+      </div>
+      <div class="bottom-layout"><section class="timeline-panel panel"><div class="panel-top"><div><p class="panel-label">AUDIT TRAIL</p><h2>対応ログ</h2></div><span class="tag tag-neutral">GAME EVENTS</span></div><div id="game-timeline" class="timeline-list" aria-live="polite"></div></section><section class="lesson-panel panel"><p class="panel-label">FIELD NOTE / 知っておきたいこと</p><h2 id="lesson-title">弱点と攻撃は違います。</h2><p id="lesson-content">脆弱性は、システムに残った弱点。不審なアクセスを追い払っても弱点が残っていれば、別の人が同じ経路から入れるかもしれません。</p><button class="plain-link" id="lesson-help">ルールと用語を見る <span>↗</span></button></section></div>
+    </section>
+    <section id="report-screen" class="screen report-screen hidden" aria-labelledby="report-title"><div class="report-wrap"><div class="report-header"><div><p class="eyebrow">POST-INCIDENT REVIEW / 09:00 AM</p><h1 id="report-title">インシデント事後報告書</h1><p>遊びはここまで。これからは、実際の現場で役立つ判断を振り返ります。</p></div><div class="report-actions"><button class="button button-outline" id="report-print">印刷 / PDF保存</button><button class="button button-primary" id="restart-btn">もう一度挑戦 ↗</button></div></div><div class="report-score"><div><span class="hud-kicker">DEFENSE RATING / 演習上の評価</span><div class="score-row"><strong id="report-grade">B</strong><span id="report-grade-desc">原因に近づけました</span></div></div><div class="report-metrics"><div><span>情報保護</span><strong id="report-protection">100%</strong></div><div><span>サービス稼働</span><strong id="report-service">100%</strong></div><div><span>根本対策</span><strong id="report-fix">未実施</strong></div></div></div><div class="report-sections"><section class="report-main panel"><p class="panel-label">01 / YOUR DECISIONS</p><h2>あなたの対応履歴</h2><div id="report-timeline" class="report-list"></div><p id="report-conclusion" class="report-conclusion"></p></section><section class="report-learn panel"><p class="panel-label">02 / TAKEAWAYS</p><h2>今回の学び</h2><div id="report-takeaways"></div></section><section class="report-cve panel"><p class="panel-label">03 / REAL-WORLD CASE STUDY</p><h2>実在する脆弱性と比較</h2><p class="cve-id">CVE-2023-22515</p><p>2023年に公表されたConfluence Data Center／Serverのアクセス制御に関する脆弱性。権限のない管理者アカウントが作成され、影響を受ける環境にアクセスされる可能性がありました。</p><p class="cve-note"><strong>混同に注意：</strong>ゲームは架空のファイル共有シナリオです。このCVEを再現したものではなく、「アクセス制御の欠陥」という共通テーマを持つ実例です。</p><div class="cve-links"><a target="_blank" rel="noopener noreferrer" href="https://confluence.atlassian.com/security/cve-2023-22515-broken-access-control-vulnerability-in-confluence-data-center-and-server-1295682276.html">Atlassianの一次情報 ↗</a><a target="_blank" rel="noopener noreferrer" href="https://cwe.mitre.org/data/definitions/862.html">CWE-862（認可チェックの欠落） ↗</a></div></section></div><div class="report-endnote">THIS IS A SIMULATED TRAINING EXERCISE · 実際のネットワーク検査・侵入試験・漏えい判定は実施していません。</div></div></section>
+  </main>
+  <footer class="site-footer"><span>03:17 / ON CALL — BUILD A SAFER RELEASE.</span><span>Non-public hackathon preparation prototype · © 2026</span></footer>
+  <dialog id="help-dialog" class="help-dialog"><div class="dialog-header"><p class="eyebrow">HOW TO PLAY</p><button type="button" id="close-help" aria-label="閉じる" class="quiet-button">閉じる ×</button></div><h2>弱点を直さなければ、また入られる。</h2><p>架空のネットワークを守る演習です。画面右の3つの候補から対応を選び、3局面を突破してください。</p><ol><li><strong>初動：</strong>不審なアクセスを調べるか、一時停止するか。</li><li><strong>原因：</strong>見た目の変更か、根本修正か。</li><li><strong>リリース：</strong>安全確認か、急いで公開か、延期か。</li></ol><p>マップの建物を選ぶと説明を読めます。時間切れになると、その時点の判断を報告書にまとめます。学習モードなら時間制限なし。</p><p class="hint-panel"><b>判定モードについて</b><br>API未接続時の自由記述は単純なキーワード分類（AI未使用）です。AI接続時も最終的なアクションは必ず確認してください。</p></dialog>
+</body>
+</html>
