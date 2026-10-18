@@ -334,10 +334,10 @@ BGMは進行中の侵入数（全領域の`attacks`合計）に応じて120〜18
 ### 観測・応答・接続
 
 - 正解と被害を確定するのは既存エンジン。相棒は結果を説明し、判定を代行しない。審査中の申請の正解・具体的な違反項目を観測へ含めず、判定前は照合手順のヒントに限定する。判定後の理由は既存の正解・理由を共有。
-- 同一オリジンの `POST /api/companion/message` に `{sessionId,requestId,kind,context}` を送信。`kind` は `consult` / `review`。サーバーで観測と出力構造を検証し、ブラウザでもmessageは600文字、reviewの3項目は各400文字までの構造を検証。表示は履歴を含めtextContentを使う。
+- 同一オリジンの `POST /api/companion/message` に `{sessionId,requestId,kind,context}` を送信。`kind` は `consult`（相談）/ `review`（振り返り）/ `support`（自動サポート）。サーバーで観測と出力構造を検証し、ブラウザでもmessageは600文字、reviewの3項目は各400文字までの構造を検証。表示は履歴を含めtextContentを使う。
 - `COMPANION_AI_ENABLED=true` とサーバー側 `OPENAI_API_KEY` がある場合にAgents APIを利用。Sitesは検証済みChatGPT利用者IDで認証し、未ログインは401とログインリンク。未設定・静的配信・失敗・期限超過・不正応答・上限到達は理由付き定型応答へ切り替え、AI返信と区別する。
 - メッセージごとにAgentsのhosted sessionを作成し、応答処理後に削除する。削除失敗はサーバー側へ記録。hosted sessionを当直全体で使い回さず、当直履歴と直近通信はブラウザのメモリ内で保持。サーバーの重複防止キャッシュは一時的で、プレイヤー履歴の永続保存はしない。
-- プロセス/WorkerインスタンスあたりAgentsは32回、Decisionsは64回。相棒は当直につき相談5回・review 1回。複数Workerや再起動を横断する全体予算ではない。今回作成したキーの有効期間は7日であり、期限後の稼働継続にはsecretの更新が必要。
+- プロセス/WorkerインスタンスあたりAgentsは32回、Decisionsは64回。相棒は当直につき相談5回・自動サポート6回・review 1回。複数Workerや再起動を横断する全体予算ではない。今回作成したキーの有効期間は7日であり、期限後の稼働継続にはsecretの更新が必要。
 
 ### 検証
 
