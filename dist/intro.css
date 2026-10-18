@@ -1,0 +1,7 @@
+#intro { box-sizing:border-box; width:min(1000px,96vw); max-width:96vw; max-height:96dvh; padding:12px; overflow:auto; }
+#intro::backdrop { background:rgba(0,0,0,.85); }
+#intro .dialogtop { margin:0; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+#intro h2 { font-size:clamp(16px,3vw,24px); margin:12px 0; }
+#introVideo { display:block; width:100%; max-height:70dvh; aspect-ratio:16/9; object-fit:contain; background:#000; }
+.introcontrols { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:12px; }
+#introStatus { flex:1; min-width:200px; margin:0; font-size:14px; }

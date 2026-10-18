@@ -1,3 +1,6 @@
+import {showIntro} from './intro.mjs';
+
+showIntro();
 try {
   await import('./app.mjs');
   document.querySelector('#startBtn').disabled = false;
