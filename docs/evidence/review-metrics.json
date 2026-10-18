@@ -430,9 +430,9 @@
   },
   "sourceHashEncoding": "UTF-8 text, CRLF normalized to LF, SHA-256",
   "sourceSha256": {
-    "dist/engine.mjs": "8ff86a33d09167baeb1c4caf8e103a20960943a01b7b2ff9d4b5101954de3066",
-    "dist/enemy.mjs": "e11e039ede1244d337c5286bbc33013a169dcc09b9ca0ac31c0d1b9581e216ae",
-    "dist/enemy-policy.mjs": "4f8daf5b6d95e3af2bb05aeca4262d7fb2f0f73c4cedfa765dd3bca047e2f784",
+    "dist/engine.mjs": "0f29d902de287e124dedfda3d07114a0e4bebc1fc033fc28aee7ad71f3c3bddc",
+    "dist/enemy.mjs": "b8e29c43e39fa795d3f12955c809943f55ce335ccd03a69a859d673c7671e033",
+    "dist/enemy-policy.mjs": "6eca1a2351afed2560865b89db610ce44b19fcb565a9b2e02bff0979d0927fa7",
     "dist/threats.mjs": "c4e014e1b25967c93bb2a453e3ffbd5be904fe9f40b50c6f3677a5d9137bffbd",
     "dist/catalog.mjs": "2d8f91b9ae6663ce9c39a7ba86f175ef37527e2bf005a3433e57d4154601eec5",
     "dist/data/incidents.csv": "bb5f52a3d229ccbd0e36c9d1227332c35d1a75760fbcbdf2720b6085c999f1ed",

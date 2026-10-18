@@ -1,5 +1,5 @@
 import {INCIDENTS} from './catalog.mjs';
-import {buildEnemyTurn, chooseLocal} from './enemy-policy.mjs';
+import {buildEnemyTurn, chooseLocal, validEnemyAction} from './enemy-policy.mjs';
 
 function observation(turn){
  return {time:turn.time,candidateCount:turn.candidateIds.length,
@@ -43,11 +43,13 @@ export class EnemyDirector {
     const prepared = preparedTurn?.result;
     this.ready = null;
     this.cancel();
-    const accepted = prepared && turn.candidateIds.includes(prepared.id);
+    const accepted = prepared && validEnemyAction(turn, prepared);
     const id = accepted && prepared.source === 'decisions' ? prepared.id : chooseLocal(turn);
     const result = {
       id,
       observation:accepted&&prepared.source==='decisions'?preparedTurn.observation:observation(turn),
+      interval: accepted && prepared.source === 'decisions' ? prepared.interval : 7,
+      tactic: accepted && prepared.source === 'decisions' ? prepared.tactic : 'local',
       source: accepted ? prepared.source : 'local',
       reason: id === null ? '防御状態に合う通信候補がなく待機。' : accepted ? prepared.reason : prepared ? '防御状態が変化：ローカルで経路を再選択。' : this.fallbackReason || (this.provider ? '観測した審査結果から次の通信を選択。' : 'API未設定：ローカル適応で選択。')
     };
@@ -59,7 +61,7 @@ export class EnemyDirector {
     if (this.disposed) return;
     this.bind(shift);
     if (!this.provider || !shift.running || shift.done || shift.serial === 0 || shift.serial >= INCIDENTS.length) return;
-    const remaining = shift.serial * 7 - shift.time;
+    const remaining = shift.nextArrival - shift.time;
     if (remaining > 2 || remaining <= 0 || this.attempted.has(shift.serial)) return;
     const turn = buildEnemyTurn(shift);
     if (!turn.candidateIds.length) return;
@@ -81,13 +83,13 @@ export class EnemyDirector {
       return this.provider.choose(turn, {signal: controller.signal});
     }).then(result => {
       if (this.disposed || this.version !== version || this.shift !== shift || shift.serial !== turn.round) return;
-      if (!result || !turn.candidateIds.includes(result.id) || !['decisions', 'local'].includes(result.source) || typeof result.reason !== 'string') {
+      if (!result || !validEnemyAction(turn, result) || !['decisions', 'local'].includes(result.source) || typeof result.reason !== 'string') {
         fail('API応答を検証できません：ローカル適応で継続。');
         return;
       }
       clearTimeout(timer);
       this.flight = null;
-      this.ready = {round: turn.round, observation:observation(turn), result: {id: result.id, source: result.source, reason: result.reason.slice(0, 160)}};
+      this.ready = {round: turn.round, observation:observation(turn), result: {id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
       this.status = {...this.status, pending: false};
     }).catch(() => fail('APIに接続できません：ローカル適応で継続。'));
   }

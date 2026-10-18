@@ -1,6 +1,6 @@
-import { chooseLocal, normalizeEnemyTurn } from './enemy-policy.mjs';
+import { chooseLocal, normalizeEnemyTurn, validEnemyAction } from './enemy-policy.mjs';
 
-const REASONS = new Set(['unconfigured', 'local-mode', 'timeout', 'api-error', 'invalid-response', 'refusal', 'budget', 'decisions', 'selected', 'cached', 'no-candidates']);
+const REASONS = new Set(['unconfigured', 'local-mode', 'timeout', 'api-error', 'invalid-response', 'refusal', 'budget', 'decisions', 'selected', 'cached', 'no-candidates', 'sign-in-required']);
 
 // A provider returns a validated CSV id. No credentials or model output reach the UI.
 export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 1600,
@@ -10,7 +10,7 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
   return {
     async choose(rawTurn, { signal } = {}) {
       const turn = normalizeEnemyTurn(rawTurn);
-      const fallback = reason => ({ id: chooseLocal(turn), source: 'local', reason });
+      const fallback = reason => ({ id: chooseLocal(turn), interval: 7, tactic: 'local', source: 'local', reason });
       if (unavailable || typeof fetchImpl !== 'function') return fallback(unavailableReason);
       if (signal?.aborted) return fallback('cancelled');
       const controller = new AbortController();
@@ -25,6 +25,11 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
             body: JSON.stringify({ sessionId, turn }), signal: controller.signal,
             credentials: 'same-origin', cache: 'no-store'
           });
+          if (response.status === 401) {
+            unavailable = true;
+            unavailableReason = 'sign-in-required';
+            return fallback(unavailableReason);
+          }
           if (!response.ok) {
             if (response.status === 404 || response.status === 405 || response.status === 501) {
               unavailable = true;
@@ -35,7 +40,7 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
           const length = Number(response.headers?.get?.('content-length') ?? 0);
           if (length > 4096) return fallback('invalid-response');
           const result = await response.json();
-          if (!result || !(Number.isSafeInteger(result.id) && turn.candidateIds.includes(result.id) || result.id === null && !turn.candidateIds.length) ||
+          if (!result || !validEnemyAction(turn, result) ||
               !['local', 'decisions'].includes(result.source) || !REASONS.has(result.reason)) {
             return fallback('invalid-response');
           }
@@ -43,7 +48,7 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
             unavailable = true;
             unavailableReason = result.reason;
           }
-          return { id: result.id, source: result.source, reason: result.reason };
+          return { id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason };
         })();
         const expired = new Promise(resolve => {
           timer = setTimeout(() => { controller.abort(); resolve(fallback('timeout')); }, timeoutMs);

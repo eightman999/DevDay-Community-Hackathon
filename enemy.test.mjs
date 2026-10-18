@@ -2,16 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Shift, expectedVerdict, ORDER, MAX_ROOT_REPAIRS} from './dist/engine.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
-import {buildEnemyTurn, normalizeEnemyTurn, chooseLocal} from './dist/enemy-policy.mjs';
+import {buildEnemyTurn, normalizeEnemyTurn, chooseLocal, enemyActions} from './dist/enemy-policy.mjs';
 import {EnemyDirector} from './dist/enemy.mjs';
 import {evidenceBot, simulate, summarize} from './scripts/verify-demo.mjs';
 
+const apiChoice = (turn,id,reason) => ({...enemyActions(turn).find(action=>action.id===id&&action.interval===7),source:'decisions',reason});
 const settle = () => new Promise(resolve => setImmediate(resolve));
-const preparedShift = director => {const shift = new Shift({director});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
+const preparedShift = director => {const shift = new Shift({director,seed:0});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
 
 test('choice traces retain the API observation, while local fallback records recalculated input',async()=>{
  for(const source of ['decisions','local']){
-  const director=new EnemyDirector({provider:{choose:async turn=>({id:turn.candidateIds[0],source,reason:source==='local'?'unconfigured':'selected'})}});
+  const director=new EnemyDirector({provider:{choose:async turn=>source==='decisions'?apiChoice(turn,2,'selected'):({id:turn.candidateIds[0],source,reason:'unconfigured'})}});
   const shift=new Shift({director,seed:42});shift.start();shift.advance(5.1);director.tick(shift);await settle();
   shift.decide(1,false);shift.advance(2.1);const next=shift.requests[1];
   assert.equal(next.enemySource,source);assert.equal(next.enemyObservation.recent.length,source==='decisions'?0:1);
@@ -155,7 +156,7 @@ test('server normalization restricts observation values and rederives CSV candid
 
 test('provider prefetch occurs once per round and a validated choice remains synchronous', async () => {
   let calls = 0;
-  const director = new EnemyDirector({provider:{choose:async turn => {calls++;return {id:turn.candidateIds.at(-1),source:'decisions',reason:'別の送信経路を選択。'};}}});
+  const director = new EnemyDirector({provider:{choose:async turn => {calls++;return apiChoice(turn,turn.candidateIds.at(-1),'別の送信経路を選択。');}}});
   const shift = preparedShift(director);
   director.tick(shift);director.tick(shift);await settle();
   assert.equal(calls,1);
@@ -177,7 +178,7 @@ test('invalid provider IDs and failures fall back to local without changing answ
 
 test('prepared API attacks are rechecked against changed repair and quarantine state at spawn', async () => {
   for (const defense of ['fixed','repairEnd','quarantineUntil']) {
-    const director = new EnemyDirector({provider:{choose:async turn => ({id:turn.candidateIds[0],source:'decisions',reason:'first'})}});
+    const director = new EnemyDirector({provider:{choose:async turn => apiChoice(turn,turn.candidateIds[0],'first')}});
     const shift = preparedShift(director);shift.advance(7);director.tick(shift);await settle();
     assert.equal(shift.serial,2);
     shift.zones.auth[defense] = defense === 'fixed' ? true : 30;
@@ -190,7 +191,7 @@ test('prepared API attacks are rechecked against changed repair and quarantine s
 
 test('slow provider never blocks arrivals, aborts on disposal, and late responses cannot affect a reset', async () => {
   let resolveChoice, oldSignal;
-  const director = new EnemyDirector({provider:{choose:(turn,{signal}) => {oldSignal=signal;return new Promise(resolve => {resolveChoice=() => resolve({id:turn.candidateIds[0],source:'decisions',reason:'late'});});}}});
+  const director = new EnemyDirector({provider:{choose:(turn,{signal}) => {oldSignal=signal;return new Promise(resolve => {resolveChoice=() => resolve(apiChoice(turn,turn.candidateIds[0],'late'));});}}});
   const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(2);
   assert.equal(shift.requests.length,2);
   assert.equal(shift.requests[1].enemySource,'local');
@@ -225,7 +226,7 @@ test('empty adaptive candidate slots still finish the bounded shift', () => {
 test('a pause or disposal before the provider microtask prevents a new network call', async () => {
   for (const stop of [shift=>{shift.running=false;}, (_shift,director)=>director.dispose()]) {
     let calls=0;
-    const director=new EnemyDirector({provider:{choose:async turn=>{calls++;return {id:turn.candidateIds[0],source:'decisions',reason:'selected'};}}});
+    const director=new EnemyDirector({provider:{choose:async turn=>{calls++;return apiChoice(turn,turn.candidateIds[0],'selected');}}});
     const shift=preparedShift(director);director.tick(shift);stop(shift,director);await settle();
     assert.equal(calls,0);director.dispose();
   }
