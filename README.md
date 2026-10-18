@@ -175,3 +175,7 @@ CELLWATCHをルートの作品として維持し、他ブランチの別案も�
 - [ON CALL](oncall-0317/README.md)
 - [BGM参考素材](references/2026-10-18/audio/README.md) / [3D参考素材](references/2026-10-18/3d/README.md)
 - [置き換え済みのDots審査案の差分](docs/archive/dots-review.patch)
+
+## 発表用イントロ動画
+
+30秒の動画と、終了後に実ページへ自動で切り替わる[発表ページ](presentation/README.md)を同梱しています。[発表セットZIP](presentation/cellwatch-presentation.zip)も利用できます。
