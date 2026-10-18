@@ -1,3 +1,4 @@
+import {LOCAL_INTERVAL} from './timing.mjs';
 import {INCIDENTS} from './catalog.mjs';
 import {buildEnemyTurn, chooseLocal, validEnemyAction} from './enemy-policy.mjs';
 
@@ -9,7 +10,7 @@ function observation(turn){
 
 // Selection is synchronous. The optional provider only prepares the next choice.
 export class EnemyDirector {
-  constructor({provider = null, timeoutMs = 1800} = {}) {
+  constructor({provider = null, timeoutMs = 3800} = {}) {
     this.provider = provider;
     this.timeoutMs = timeoutMs;
     this.status = {source: 'local', reason: provider ? '適応型の敵：ローカルで開始。' : 'API未設定：ローカル適応で稼働。', pending: false};
@@ -48,7 +49,7 @@ export class EnemyDirector {
     const result = {
       id,
       observation:accepted&&prepared.source==='decisions'?preparedTurn.observation:observation(turn),
-      interval: accepted && prepared.source === 'decisions' ? prepared.interval : 7,
+      interval: accepted && prepared.source === 'decisions' ? prepared.interval : LOCAL_INTERVAL,
       tactic: accepted && prepared.source === 'decisions' ? prepared.tactic : 'local',
       source: accepted ? prepared.source : 'local',
       reason: id === null ? '防御状態に合う通信候補がなく待機。' : accepted ? prepared.reason : prepared ? '防御状態が変化：ローカルで経路を再選択。' : this.fallbackReason || (this.provider ? '観測した審査結果から次の通信を選択。' : 'API未設定：ローカル適応で選択。')
@@ -62,7 +63,7 @@ export class EnemyDirector {
     this.bind(shift);
     if (!this.provider || !shift.running || shift.done || shift.serial === 0 || shift.serial >= INCIDENTS.length) return;
     const remaining = shift.nextArrival - shift.time;
-    if (remaining > 2 || remaining <= 0 || this.attempted.has(shift.serial)) return;
+    if (remaining > 4 || remaining <= 0 || this.attempted.has(shift.serial)) return;
     const turn = buildEnemyTurn(shift);
     if (!turn.candidateIds.length) return;
     this.attempted.add(turn.round);
@@ -89,7 +90,7 @@ export class EnemyDirector {
       }
       clearTimeout(timer);
       this.flight = null;
-      this.ready = {round: turn.round, observation:observation(turn), result: {id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
+      this.ready = {round: turn.round, observation:observation(turn), result: {id: result.id, interval: result.interval ?? LOCAL_INTERVAL, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
       this.status = {...this.status, pending: false};
     }).catch(() => fail('APIに接続できません：ローカル適応で継続。'));
   }

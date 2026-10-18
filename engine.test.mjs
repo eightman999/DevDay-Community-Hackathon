@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import {Shift,ORDER,lifeStep} from './dist/engine.mjs';
 const perfect=new Shift();perfect.start();for(let i=0;i<1200;i++){for(const r of perfect.pending())perfect.decide(r.id,r.valid);perfect.advance(.1);}perfect.advance(.1);assert.equal(perfect.data,100);assert.equal(perfect.trust,100);assert.equal(perfect.mistakes,0);assert.equal(perfect.requests.length,16);assert.equal(perfect.done,true);
 const wrong=new Shift();wrong.start();wrong.decide(1,true);assert.equal(wrong.zones.auth.attacks,1);const damaged=wrong.data;wrong.advance(4);assert(wrong.data<damaged);assert(wrong.repair('auth'));assert(!wrong.repair('share'));wrong.advance(10.1);assert(wrong.zones.auth.fixed);assert.equal(wrong.zones.auth.attacks,0);const protectedData=wrong.data;wrong.advance(1);assert.equal(wrong.data,protectedData);
-const denyGood=new Shift();denyGood.start();denyGood.decide(1,false);denyGood.advance(7.1);denyGood.decide(2,false);assert.equal(denyGood.trust,92);assert.equal(denyGood.data,100);
-const timeout=new Shift();timeout.start();timeout.advance(14.1);assert.equal(timeout.requests[0].status,'pending');timeout.advance(14);assert.equal(timeout.requests[0].status,'timeout');assert(timeout.data<100);
+const denyGood=new Shift();denyGood.start();denyGood.decide(1,false);denyGood.advance(3.6);denyGood.decide(2,false);assert.equal(denyGood.trust,92);assert.equal(denyGood.data,100);
+const timeout=new Shift();timeout.start();timeout.advance(13.9);assert.equal(timeout.requests[0].status,'pending');timeout.advance(.2);assert.equal(timeout.requests[0].status,'timeout');assert(timeout.data<100);
 const fix=new Shift();fix.start();fix.repair('auth');fix.decide(1,false);fix.advance(10.1);fix.advance(47);const auto=fix.requests.find(r=>r.id===9);assert.equal(auto.status,'auto');assert.equal(fix.zones.auth.defended,1);assert.equal(fix.zones.auth.attacks,0);
 const paused=new Shift();paused.start();paused.running=false;paused.advance(30);assert.equal(paused.time,0);assert(!paused.decide(1,false));assert(!paused.repair('share'));
 const cells=new Set([2*7+3,3*7+3,4*7+3]);const next=lifeStep(cells,7,7);assert.deepEqual([...next].sort(),[3*7+2,3*7+3,3*7+4].sort());assert.deepEqual([...lifeStep(next,7,7)].sort(),[...cells].sort());
@@ -18,7 +18,7 @@ const {TYPES,evaluatePolicy,INCIDENTS}=await import('./dist/catalog.mjs');
 
 test('repair completion rejects already-pending malicious traffic before manual or timed admission',()=>{
  for(const timed of [false,true]){
-  const shift=new Shift();shift.start();shift.repair('auth');shift.advance(10.1);
+  const shift=new Shift({director:{select:s=>({id:s.serial===0?1:null})}});shift.start();shift.repair('auth');shift.advance(10.1);
   assert.equal(shift.requests[0].status,'auto');assert.equal(shift.zones.auth.defended,1);
   if(timed)shift.advance(18);else assert.equal(shift.decide(1,true),false);
   assert.equal(shift.data,100);assert.equal(shift.zones.auth.attacks,0);assert.equal(shift.threatFields.size,0);
@@ -52,8 +52,8 @@ test('untimed practice advances one document only after judgment and explicit ne
 });
 
 test('a normal timeout supports work but is never counted as a manual correct review',()=>{
- const shift=new Shift();shift.start();shift.decide(1,false);shift.advance(35.1);
- const normal=shift.requests.find(r=>r.id===2);assert.equal(normal.status,'timeout');
+ const shift=new Shift({director:{select:()=>({id:2})}});shift.start();shift.advance(17.6);
+ const normal=shift.requests.find(r=>r.id===1);assert.equal(normal.status,'timeout');
  assert.equal(normal.correct,null);assert.equal(shift.zones.share.correct,0);
  assert.equal(shift.postponedAppointments,0);
 });
@@ -106,4 +106,19 @@ test('defenses and decisions use the inspection answer while logs name the concr
  assert.equal(corrected.requests[0].correct,true);
  assert.equal(corrected.mistakes,0);
  assert.equal(corrected.threatFields.size,0);
+});
+
+test('the real game clock ends at 60 seconds with 14-second reviews and unchanged defenses',()=>{
+ const shift=new Shift();shift.start();
+ assert.equal(shift.nextArrival,3.5);
+ assert.equal(shift.requests[0].deadline,14);
+ assert(shift.quarantine('auth'));assert.equal(shift.zones.auth.quarantineUntil,8);
+ assert(shift.repair('share'));assert.equal(shift.zones.share.repairEnd,10);
+ shift.advance(59.99);
+ assert.equal(shift.done,false);assert.equal(shift.running,true);assert.equal(shift.time,59.99);
+ shift.advance(.02);
+ assert.equal(shift.time,60);assert.equal(shift.done,true);assert.equal(shift.running,false);
+ assert.equal(shift.serial,16);
+ assert(shift.requests.at(-1).at<=52.61);
+ shift.advance(60);assert.equal(shift.time,60);
 });

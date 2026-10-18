@@ -31,7 +31,7 @@ test('pending requests approach for three game seconds and queue by arrival, ind
   assert.equal(board.update(shift).nodes[0].phase, 'approach');
   shift.advance(1.5);
   assert.ok(board.update(shift).nodes[0].x > 3 && board.update(shift).nodes[0].x < 40);
-  shift.advance(9.5);
+  shift.advance(5.1);
   const scene = board.update(shift);
   assert.deepEqual(scene.nodes.map(n => [n.id, n.x, n.phase]), [[1, 40, 'waiting'], [2, 32, 'waiting']]);
   assert.equal(shift.requests[0].valid, false);
@@ -68,7 +68,7 @@ test('queue closes the gap over .25 game seconds, with no teleport on a decision
 test('wrong approval and timeout create red intrusion from the same ID inside the 48×60 home', () => {
   for (const timeout of [false, true]) {
     const shift = new Shift(), board = new BoardState(); shift.start(); board.update(shift);
-    if (timeout) shift.advance(28.1); else shift.decide(1, true);
+    if (timeout) shift.advance(14.1); else shift.decide(1, true);
     const scene = board.update(shift), node = scene.nodes.find(n => n.id === 1);
     assert.equal(node.phase, 'intrusion');
     assert.equal(scene.threats.get(node.id).w, 48);
@@ -90,7 +90,7 @@ test('home coordinates preserve replication at generations 12 and 36, including 
 
 test('rejection and false rejection stay outside; existing unrelated intrusion remains', () => {
   const shift = new Shift(), board = new BoardState(); shift.start(); board.update(shift);
-  shift.decide(1, true); shift.advance(7.1); board.update(shift); shift.decide(2, false);
+  shift.decide(1, true); shift.advance(3.6); board.update(shift); shift.decide(2, false);
   const node = board.update(shift).nodes.find(n => n.id === 2);
   assert.equal(node.phase, 'rejected');
   assert.ok(node.x < 48);
@@ -105,7 +105,7 @@ test('pause freezes positions; isolation freezes only its red layer and extends 
   assert.deepEqual(board.update(shift).nodes[0], before);
   shift.running = true; shift.decide(1, true); shift.quarantine('auth');
   const generation = shift.threatFields.get(1).generation;
-  shift.advance(7.2);
+  shift.advance(3.6);
   assert.equal(shift.threatFields.get(1).generation, generation);
   assert.equal(board.update(shift).nodes.find(n => n.id === 2).phase, 'approach');
 });
@@ -115,7 +115,7 @@ test('repair clears its layer and new blocked requests skip the queue', () => {
   shift.decide(1, true); shift.repair('auth'); shift.advance(10.1);
   assert.equal(board.update(shift).threats.get(1).cells.size, 0);
   assert.ok(shift.data < 94);
-  shift.advance(46.1);
+  shift.advance(18.1);
   const request = shift.requests.find(r => r.type === 'auth' && r.status === 'auto');
   assert.ok(request);
   const node = board.update(shift).nodes.find(n => n.id === request.id);

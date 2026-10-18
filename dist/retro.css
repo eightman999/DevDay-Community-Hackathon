@@ -157,11 +157,11 @@ main { max-width: 1780px; padding: 12px; }
 .mapcaption { background: #c0c0c0; color: #333; font-size: 10px; padding: 3px 5px; }
 .patternfooter { color: #333; padding: 8px 10px; font-size: 12px; }
 .patternfooter span:last-child { color: #000080; }
-.actiondock { gap: 7px; }
-.actiondock button { background: #c0c0c0; min-height: 57px; }
-.actiondock button > span { color: #000080; font-size: 23px; }
-.actiondock b { font-size: 16px; font-weight: 400; }
-.actiondock small { color: #333; font-size: 12px; margin-top: 3px; }
+
+
+
+
+
 .statushead { padding: 8px 10px; gap: 10px; }
 .statushead h2 { font-size: 16px; }
 .statushead strong { font-size: 14px; }
@@ -304,8 +304,8 @@ dialog a { color: #000080; }
   .dashboard .zonepick b { font-size: 12px; }
   .dashboard .zonestatus { font-size: 10px; }
   .mapcaption { font-size: 8px; }
-  .actiondock b { font-size: 14px; }
-  .actiondock small { font-size: 12px; }
+
+
   .healthrows { gap: 8px; }
   .privacy-impact { gap: 6px; font-size: 12px; flex-wrap: wrap; }
   footer { font-size: 10px; }
@@ -353,3 +353,14 @@ dialog a { color: #000080; }
   .review-evidence { max-height: clamp(130px, calc(100dvh - 610px), 160px); }
   .comparison p { font-size: 12px; line-height: 1.4; }
 }
+
+/* Partner communications use the same classic terminal window. */
+.companion{background:#c0c0c0;color:#111;border:2px solid #dfdfdf;border-right-color:#404040;border-bottom-color:#404040;border-radius:0;box-shadow:var(--raised)}
+.companion .panelhead{background:#000080;color:#fff;margin:2px;padding:6px 8px;min-height:30px;border:0}
+.companion .panelhead h2{font-size:15px}.companion .panelhead small,.companion .panelhead>span{color:#fff;font-size:11px}
+.companion>p{background:#fff;box-shadow:var(--sunken);padding:10px;font-size:14px;line-height:1.6}
+.companioncontrols button{background:#c0c0c0;color:#111;box-shadow:var(--raised);border:0}.companioncontrols small,.companion details{color:#333;font-size:12px}
+.companion>a{color:#000080}.companionreview{background:#dfdfdf;border:0;box-shadow:var(--sunken)}
+.companionreview dt{color:#000080}.companionreview dd{font-size:14px}
+
+.companion>p.companionauto{background:transparent;box-shadow:none;min-height:0;margin:4px 14px;padding:0;font-size:12px;color:#000080}

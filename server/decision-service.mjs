@@ -1,3 +1,4 @@
+import {LOCAL_INTERVAL} from '../dist/timing.mjs';
 import { INCIDENTS } from '../dist/catalog.mjs';
 import { THREATS, makeInspection, inspectionChecks, inspectionIncident } from '../dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal, enemyActions, validEnemyAction } from '../dist/enemy-policy.mjs';
@@ -40,13 +41,13 @@ function selectedAction(result, actions) {
 }
 
 /** Runtime-neutral Decisions boundary, shared by Node and the Sites Worker. */
-export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 1200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
+export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThis.fetch, timeoutMs = 3200, maxCalls = 64, maxSessions = 128, sessionTtlMs = 15 * 60 * 1000, now = Date.now } = {}) {
   if (mode !== undefined && !['auto', 'local', 'decisions'].includes(mode)) throw new Error('Invalid enemy mode');
   const configured = typeof apiKey === 'string' && apiKey.length > 0;
   const activeMode = configured && mode !== 'local' ? 'decisions' : 'local';
   const sessions = new Map();
   let calls = 0;
-  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: 7, tactic: 'local', source: 'local', reason });
+  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: LOCAL_INTERVAL, tactic: 'local', source: 'local', reason });
 
   async function upstream(turn) {
     const actions = enemyActions(turn);

@@ -33,7 +33,7 @@ test('missing static-only API and unconfigured/local servers stay local without 
     const turn=makeTurn();
     const provider=createEnemyProvider({fetchImpl:async()=>{
       calls++;
-      return ['offline','static-post'].includes(mode)?new Response('',{status:mode==='offline'?404:501}):reply({id:chooseLocal(turn),interval:7,tactic:'local',source:'local',reason:mode});
+      return ['offline','static-post'].includes(mode)?new Response('',{status:mode==='offline'?404:501}):reply({id:chooseLocal(turn),interval:3.5,tactic:'local',source:'local',reason:mode});
     }});
     assert.equal((await provider.choose(turn)).source,'local');
     assert.equal((await provider.choose(turn)).source,'local');
@@ -94,7 +94,7 @@ test('authenticated AI endpoints keep anonymous games local and stop repeating u
     const result = await provider.choose({...makeTurn(),round});
     assert.equal(result.source,'local');
     assert.equal(result.reason,'sign-in-required');
-    assert.equal(result.interval,7);
+    assert.equal(result.interval,3.5);
   }
   assert.equal(calls,1);
 });

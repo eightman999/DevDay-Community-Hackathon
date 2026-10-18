@@ -1,3 +1,4 @@
+import {SHIFT_SECONDS, LOCAL_INTERVAL} from '../dist/timing.mjs';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
@@ -107,12 +108,12 @@ export async function verifyDemo() {
   results.repairOnly = summarize(repairRuns);
   assert(results.repairOnly.zeroDamageCompletionRate < 1, 'Repair-only must not guarantee a damage-free shift');
   const sourceFiles = ['dist/engine.mjs','dist/enemy.mjs','dist/enemy-policy.mjs','dist/threats.mjs',
-    'dist/catalog.mjs','dist/data/incidents.csv','dist/data/vulnerabilities.csv','dist/data/attack-patterns.csv','scripts/verify-demo.mjs'];
+    'dist/catalog.mjs','dist/data/incidents.csv','dist/data/vulnerabilities.csv','dist/data/attack-patterns.csv','scripts/verify-demo.mjs','dist/timing.mjs'];
   const sourceSha256 = Object.fromEntries(await Promise.all(sourceFiles.map(async file =>
     [file, createHash('sha256').update((await readFile(new URL(`../${file}`, import.meta.url), 'utf8')).replace(/\r\n/g, '\n'), 'utf8').digest('hex')])));
   return {
     schemaVersion:1, seeds:{first:1,last:128,count:128},
-    conditions:{durationSeconds:120, arrivalIntervalSeconds:7, decisionClockSeconds:.5,
+    conditions:{durationSeconds:SHIFT_SECONDS, arrivalIntervalSeconds:LOCAL_INTERVAL, decisionClockSeconds:.5,
       repairs:'idModulo/evidencePerfect: none; repairOnly: auth then share, at most two, one at a time',
       quarantine:false, provider:'local only; no external calls', initialData:100, initialAppointments:100},
     results, sourceHashEncoding:'UTF-8 text, CRLF normalized to LF, SHA-256', sourceSha256,

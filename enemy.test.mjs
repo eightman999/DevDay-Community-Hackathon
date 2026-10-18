@@ -6,22 +6,22 @@ import {buildEnemyTurn, normalizeEnemyTurn, chooseLocal, enemyActions} from './d
 import {EnemyDirector} from './dist/enemy.mjs';
 import {evidenceBot, simulate, summarize} from './scripts/verify-demo.mjs';
 
-const apiChoice = (turn,id,reason) => ({...enemyActions(turn).find(action=>action.id===id&&action.interval===7),source:'decisions',reason});
+const apiChoice = (turn,id,reason) => ({...enemyActions(turn).find(action=>action.id===id&&action.interval===3.5),source:'decisions',reason});
 const settle = () => new Promise(resolve => setImmediate(resolve));
-const preparedShift = director => {const shift = new Shift({director,seed:0});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
+const preparedShift = director => {const shift = new Shift({director,seed:0});shift.start();shift.decide(1,false);shift.advance(2.55);return shift;};
 
 test('choice traces retain the API observation, while local fallback records recalculated input',async()=>{
  for(const source of ['decisions','local']){
   const director=new EnemyDirector({provider:{choose:async turn=>source==='decisions'?apiChoice(turn,2,'selected'):({id:turn.candidateIds[0],source,reason:'unconfigured'})}});
-  const shift=new Shift({director,seed:42});shift.start();shift.advance(5.1);director.tick(shift);await settle();
-  shift.decide(1,false);shift.advance(2.1);const next=shift.requests[1];
+  const shift=new Shift({director,seed:42});shift.start();shift.advance(2.55);director.tick(shift);await settle();
+  shift.decide(1,false);shift.advance(1.05);const next=shift.requests[1];
   assert.equal(next.enemySource,source);assert.equal(next.enemyObservation.recent.length,source==='decisions'?0:1);
   assert.equal(next.enemyObservation.candidateCount,16);assert(!('seed' in next.enemyObservation));
   director.dispose();
  }
 });
 
-test('local adaptive shift keeps 16 CSV communications, seven-second arrivals, and perfect verdicts', () => {
+test('local adaptive shift keeps 16 CSV communications, 3.5-second arrivals, and perfect verdicts', () => {
   const director = new EnemyDirector();
   const shift = new Shift({director});
   shift.start();
@@ -39,7 +39,7 @@ test('local adaptive shift keeps 16 CSV communications, seven-second arrivals, a
   for (const [index, r] of shift.requests.entries()) {
     assert.equal(r.a, INCIDENTS[r.templateId - 1].a);
     assert.equal(r.b, INCIDENTS[r.templateId - 1].b);
-    assert(Math.abs(r.at - index * 7) < .11);
+    assert(Math.abs(r.at - index * 3.5) < .11);
     assert.equal(r.valid,expectedVerdict(r));
   }
   director.dispose();
@@ -149,7 +149,8 @@ test('server normalization restricts observation values and rederives CSV candid
   const shift = new Shift();shift.serial = 2;
   const turn = buildEnemyTurn(shift);
   assert.deepEqual(normalizeEnemyTurn({...turn,candidateIds:[999],secret:'ignored'}),turn);
-  for (const change of [{round:-1},{round:INCIDENTS.length},{time:Infinity},{time:121},{zones:{}},{recent:[{type:'unknown',status:'allow',valid:false}]},{recent:Array(25).fill({type:'auth',status:'allow',valid:false})}]) {
+  assert.equal(normalizeEnemyTurn({...turn,time:60}).time,60);
+  for (const change of [{round:-1},{round:INCIDENTS.length},{time:Infinity},{time:60.001},{zones:{}},{recent:[{type:'unknown',status:'allow',valid:false}]},{recent:Array(25).fill({type:'auth',status:'allow',valid:false})}]) {
     assert.throws(() => normalizeEnemyTurn({...turn,...change}));
   }
 });
@@ -160,7 +161,7 @@ test('provider prefetch occurs once per round and a validated choice remains syn
   const shift = preparedShift(director);
   director.tick(shift);director.tick(shift);await settle();
   assert.equal(calls,1);
-  shift.advance(2);
+  shift.advance(1);
   assert.equal(shift.requests[1].enemySource,'decisions');
   assert.equal(shift.requests[1].templateId,16);
   director.dispose();
@@ -169,7 +170,7 @@ test('provider prefetch occurs once per round and a validated choice remains syn
 test('invalid provider IDs and failures fall back to local without changing answer policy', async () => {
   for (const choose of [async () => ({id:999,source:'decisions',reason:'bad'}), async () => {throw Error('offline');}]) {
     const director = new EnemyDirector({provider:{choose}});
-    const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(2);
+    const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(1);
     assert.equal(shift.requests[1].enemySource,'local');
     assert.equal(shift.requests[1].valid,expectedVerdict(shift.requests[1]));
     director.dispose();
@@ -179,10 +180,10 @@ test('invalid provider IDs and failures fall back to local without changing answ
 test('prepared API attacks are rechecked against changed repair and quarantine state at spawn', async () => {
   for (const defense of ['fixed','repairEnd','quarantineUntil']) {
     const director = new EnemyDirector({provider:{choose:async turn => apiChoice(turn,turn.candidateIds[0],'first')}});
-    const shift = preparedShift(director);shift.advance(7);director.tick(shift);await settle();
+    const shift = preparedShift(director);shift.advance(3.5);director.tick(shift);await settle();
     assert.equal(shift.serial,2);
     shift.zones.auth[defense] = defense === 'fixed' ? true : 30;
-    shift.advance(2);
+    shift.advance(1);
     assert.equal(shift.requests[2].enemySource,'local');
     assert.notEqual(shift.requests[2].type,'auth');
     director.dispose();
@@ -192,12 +193,12 @@ test('prepared API attacks are rechecked against changed repair and quarantine s
 test('slow provider never blocks arrivals, aborts on disposal, and late responses cannot affect a reset', async () => {
   let resolveChoice, oldSignal;
   const director = new EnemyDirector({provider:{choose:(turn,{signal}) => {oldSignal=signal;return new Promise(resolve => {resolveChoice=() => resolve(apiChoice(turn,turn.candidateIds[0],'late'));});}}});
-  const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(2);
+  const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(1);
   assert.equal(shift.requests.length,2);
   assert.equal(shift.requests[1].enemySource,'local');
   assert.equal(oldSignal.aborted,true);
   director.dispose();resolveChoice();await settle();
-  const fresh = new Shift({director:new EnemyDirector()});fresh.start();fresh.advance(7.1);
+  const fresh = new Shift({director:new EnemyDirector()});fresh.start();fresh.advance(3.55);
   assert.equal(fresh.requests[1].enemySource,'local');
   assert.equal(director.ready,null);
   fresh.director.dispose();
@@ -209,7 +210,7 @@ test('deadline and paused state keep the local game usable with no repeated API 
   const shift = preparedShift(director);shift.running=false;director.tick(shift);await settle();assert.equal(calls,0);
   shift.running=true;director.tick(shift);await new Promise(resolve=>setTimeout(resolve,15));
   assert.equal(signal.aborted,true);director.tick(shift);assert.equal(calls,1);
-  shift.advance(2);assert.equal(shift.requests[1].enemySource,'local');director.dispose();
+  shift.advance(1);assert.equal(shift.requests[1].enemySource,'local');director.dispose();
 });
 
 
@@ -234,9 +235,9 @@ test('a pause or disposal before the provider microtask prevents a new network c
 
 test('local fallback recalculates from judgments made after prefetch', async () => {
   const director=new EnemyDirector({provider:{choose:async turn=>({id:turn.candidateIds[0],source:'local',reason:'unconfigured'})}});
-  const shift=preparedShift(director);shift.advance(7);director.tick(shift);await settle();
+  const shift=preparedShift(director);shift.advance(3.5);director.tick(shift);await settle();
   shift.record.push({type:'exfil',a:'社内資料',b:'外部',status:'allow'},{type:'auth',a:'AOI',b:'UNKNOWN',status:'deny'});
   const id=chooseLocal(buildEnemyTurn(shift));
   assert.equal(INCIDENTS[id-1].type,'exfil');
-  shift.advance(2);assert.equal(shift.requests[2].templateId,id);assert.equal(shift.requests[2].enemySource,'local');director.dispose();
+  shift.advance(1);assert.equal(shift.requests[2].templateId,id);assert.equal(shift.requests[2].enemySource,'local');director.dispose();
 });
