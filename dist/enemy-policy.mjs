@@ -1,3 +1,4 @@
+import {SHIFT_SECONDS,ARRIVAL_INTERVALS,LOCAL_INTERVAL} from './timing.mjs';
 // CSV-backed, deterministic rules shared by the browser and the API boundary.
 import {INCIDENTS, ORDER, TYPES, evaluatePolicy} from './catalog.mjs';
 
@@ -32,7 +33,7 @@ export function normalizeEnemyTurn(raw) {
   const fail = () => { throw new Error('Invalid enemy observation'); };
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) fail();
   if (!Number.isInteger(raw.round) || raw.round < 0 || raw.round >= INCIDENTS.length) fail();
-  if (!Number.isFinite(raw.time) || raw.time < 0 || raw.time > 120) fail();
+  if (!Number.isFinite(raw.time) || raw.time < 0 || raw.time > SHIFT_SECONDS) fail();
   if (!raw.zones || typeof raw.zones !== 'object' || Array.isArray(raw.zones)) fail();
   const zones = Object.fromEntries(ORDER.map(type => {
     const z = raw.zones[type];
@@ -80,7 +81,7 @@ export function enemyActions(turn) {
     switch: switching.length ? switching : attacks,
     pressure: pressure.length ? pressure : attacks
   };
-  return Object.entries(groups).flatMap(([tactic, rows]) => rows.flatMap(row => [4, 7, 10].map(interval => ({
+  return Object.entries(groups).flatMap(([tactic, rows]) => rows.flatMap(row => ARRIVAL_INTERVALS.map(interval => ({
     value: `action_${row.id}_${interval}_${tactic}`, id: row.id, interval, tactic
   }))));
 }
@@ -88,6 +89,6 @@ export function enemyActions(turn) {
 export function validEnemyAction(turn, action) {
   if (!action) return false;
   if (action.source === 'local') return (action.id === null && !turn.candidateIds.length || turn.candidateIds.includes(action.id)) &&
-    (action.interval === undefined || action.interval === 7) && (action.tactic === undefined || action.tactic === 'local');
+    (action.interval === undefined || action.interval === LOCAL_INTERVAL) && (action.tactic === undefined || action.tactic === 'local');
   return enemyActions(turn).some(item => item.id === action.id && item.interval === action.interval && item.tactic === action.tactic);
 }

@@ -1,4 +1,4 @@
-import {env} from 'cloudflare:workers';
+import {env, waitUntil} from 'cloudflare:workers';
 // Shared with the local Node server; CSV imports are embedded by cellwatchData().
 import {createDecisionService} from '../../server/decision-service.mjs';
 import {createCompanionService} from '../../server/companion-service.mjs';
@@ -13,7 +13,7 @@ export function companionService() {
   const key = enabled ? settings.OPENAI_API_KEY ?? '' : '';
   if (!companion || companionKey !== key) {
     companionKey = key;
-    companion = createCompanionService({apiKey:key,enabled});
+    companion = createCompanionService({apiKey:key,enabled,defer:waitUntil});
   }
   return companion;
 }

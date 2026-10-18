@@ -1,3 +1,4 @@
+import {LOCAL_INTERVAL} from './timing.mjs';
 import { chooseLocal, normalizeEnemyTurn, validEnemyAction } from './enemy-policy.mjs';
 
 const REASONS = new Set(['unconfigured', 'local-mode', 'timeout', 'api-error', 'invalid-response', 'refusal', 'budget', 'decisions', 'selected', 'cached', 'no-candidates', 'sign-in-required']);
@@ -10,7 +11,7 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
   return {
     async choose(rawTurn, { signal } = {}) {
       const turn = normalizeEnemyTurn(rawTurn);
-      const fallback = reason => ({ id: chooseLocal(turn), interval: 7, tactic: 'local', source: 'local', reason });
+      const fallback = reason => ({ id: chooseLocal(turn), interval: LOCAL_INTERVAL, tactic: 'local', source: 'local', reason });
       if (unavailable || typeof fetchImpl !== 'function') return fallback(unavailableReason);
       if (signal?.aborted) return fallback('cancelled');
       const controller = new AbortController();
@@ -48,7 +49,7 @@ export function createEnemyProvider({ fetchImpl = globalThis.fetch, timeoutMs = 
             unavailable = true;
             unavailableReason = result.reason;
           }
-          return { id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason };
+          return { id: result.id, interval: result.interval ?? LOCAL_INTERVAL, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason };
         })();
         const expired = new Promise(resolve => {
           timer = setTimeout(() => { controller.abort(); resolve(fallback('timeout')); }, timeoutMs);

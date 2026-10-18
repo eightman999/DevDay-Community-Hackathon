@@ -1,5 +1,6 @@
 import {INCIDENTS, ORDER, TYPES, expectedVerdict, verdictReason} from './engine.mjs';
 import {makeInspection} from './threats.mjs';
+import {SHIFT_SECONDS} from './timing.mjs';
 
 const statuses = new Set(['pending','allow','deny','timeout','auto']);
 const number = (v, max) => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= max;
@@ -9,26 +10,26 @@ const invalid = () => { throw new Error('invalid-context'); };
 export function companionSnapshot(shift, selectedId = null) {
   if(!shift.requests.some(r=>r.id===selectedId&&r.status==='pending'))selectedId=null;
   return normalizeCompanionContext({time:shift.time, done:shift.done, selectedId,
-    requests:shift.requests.map(r=>({id:r.id,templateId:r.templateId,type:r.type,status:r.status,deadline:Math.min(160,r.deadline)})),
+    requests:shift.requests.map(r=>({id:r.id,templateId:r.templateId,type:r.type,status:r.status,deadline:Math.min(SHIFT_SECONDS+16,r.deadline)})),
     zones:ORDER.map(type=>({type,fixed:shift.zones[type].fixed,repairEnd:shift.zones[type].repairEnd,
       quarantineUntil:shift.zones[type].quarantineUntil,attacks:shift.zones[type].attacks})),
     metrics:{unavailable:shift.unavailableRecords,exposed:shift.exposedRecords,altered:shift.alteredRecords,postponed:shift.postponedAppointments,repaired:shift.repaired,quarantineUses:shift.quarantineUses}});
 }
 
 export function normalizeCompanionContext(raw) {
-  if (!raw || !number(raw.time,120) || typeof raw.done !== 'boolean' || (raw.done && raw.time !== 120) ||
+  if (!raw || !number(raw.time,SHIFT_SECONDS) || typeof raw.done !== 'boolean' || (raw.done && raw.time !== SHIFT_SECONDS) ||
       !Array.isArray(raw.requests) || raw.requests.length>16 || !Array.isArray(raw.zones) || raw.zones.length!==4 || !raw.metrics) invalid();
   const seen=new Set();
   const requests=raw.requests.map(r=>{
     const template=INCIDENTS.find(t=>t.id===r?.templateId);
-    if(!r || !Number.isInteger(r.id) || r.id<1 || r.id>16 || seen.has(r.id) || !template || r.type!==template.type || !statuses.has(r.status) || !number(r.deadline,160)) invalid();
+    if(!r || !Number.isInteger(r.id) || r.id<1 || r.id>16 || seen.has(r.id) || !template || r.type!==template.type || !statuses.has(r.status) || !number(r.deadline,SHIFT_SECONDS+16)) invalid();
     seen.add(r.id);
     return {id:r.id,templateId:r.templateId,type:r.type,status:r.status,deadline:r.deadline};
   });
   if(raw.selectedId!==null && (!Number.isInteger(raw.selectedId)||!requests.some(r=>r.id===raw.selectedId&&r.status==='pending'))) invalid();
   const zoneTypes=new Set();
   const zones=raw.zones.map(z=>{
-    if(!z || !ORDER.includes(z.type)||zoneTypes.has(z.type)||typeof z.fixed!=='boolean'||!number(z.repairEnd,130)||!number(z.quarantineUntil,128)||!Number.isInteger(z.attacks)||!number(z.attacks,16)) invalid();
+    if(!z || !ORDER.includes(z.type)||zoneTypes.has(z.type)||typeof z.fixed!=='boolean'||!number(z.repairEnd,SHIFT_SECONDS+10)||!number(z.quarantineUntil,SHIFT_SECONDS+8)||!Number.isInteger(z.attacks)||!number(z.attacks,16)) invalid();
     zoneTypes.add(z.type);
     return {type:z.type,fixed:z.fixed,repairEnd:z.repairEnd,quarantineUntil:z.quarantineUntil,attacks:z.attacks};
   });

@@ -1,3 +1,4 @@
+import {LOCAL_INTERVAL} from './timing.mjs';
 import {INCIDENTS} from './catalog.mjs';
 import {buildEnemyTurn, chooseLocal, validEnemyAction} from './enemy-policy.mjs';
 
@@ -40,7 +41,7 @@ export class EnemyDirector {
     const id = accepted && prepared.source === 'decisions' ? prepared.id : chooseLocal(turn);
     const result = {
       id,
-      interval: accepted && prepared.source === 'decisions' ? prepared.interval : 7,
+      interval: accepted && prepared.source === 'decisions' ? prepared.interval : LOCAL_INTERVAL,
       tactic: accepted && prepared.source === 'decisions' ? prepared.tactic : 'local',
       source: accepted ? prepared.source : 'local',
       reason: id === null ? '防御状態に合う通信候補がなく待機。' : accepted ? prepared.reason : prepared ? '防御状態が変化：ローカルで経路を再選択。' : this.fallbackReason || (this.provider ? '観測した審査結果から次の通信を選択。' : 'API未設定：ローカル適応で選択。')
@@ -81,7 +82,7 @@ export class EnemyDirector {
       }
       clearTimeout(timer);
       this.flight = null;
-      this.ready = {round: turn.round, result: {id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
+      this.ready = {round: turn.round, result: {id: result.id, interval: result.interval ?? LOCAL_INTERVAL, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
       this.status = {...this.status, pending: false};
     }).catch(() => fail('APIに接続できません：ローカル適応で継続。'));
   }

@@ -43,7 +43,7 @@ async function readThreats() {
 
 export const THREATS = parseThreats(await readThreats());
 
-export const REVIEW_SECONDS = 28;
+export {REVIEW_SECONDS} from './timing.mjs';
 export const TRANSFER_LIMITS = Object.freeze({auth:20, share:40, flood:80, exfil:30});
 const ROLE_OPERATIONS = Object.freeze({
   '診療担当': Object.freeze(['参照', '更新']),

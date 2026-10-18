@@ -1,3 +1,4 @@
+import {LOCAL_INTERVAL} from '../dist/timing.mjs';
 import { INCIDENTS } from '../dist/catalog.mjs';
 import { THREATS, makeInspection, inspectionChecks } from '../dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal, enemyActions, validEnemyAction } from '../dist/enemy-policy.mjs';
@@ -46,7 +47,7 @@ export function createDecisionService({ apiKey = '', mode, fetchImpl = globalThi
   const activeMode = configured && mode !== 'local' ? 'decisions' : 'local';
   const sessions = new Map();
   let calls = 0;
-  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: 7, tactic: 'local', source: 'local', reason });
+  const local = (turn, reason) => ({ id: chooseLocal(turn), interval: LOCAL_INTERVAL, tactic: 'local', source: 'local', reason });
 
   async function upstream(turn) {
     const actions = enemyActions(turn);
