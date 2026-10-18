@@ -1,0 +1,217 @@
+{
+  "m4a_files": 12,
+  "wav_files": 12,
+  "decode_and_pcm_checks": [
+    {
+      "file": "audio/byte-bounce-128/compressed/ByteBounce_128_chase.m4a",
+      "codec": "aac",
+      "duration_seconds": 60.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-128/compressed/ByteBounce_128_normal.m4a",
+      "codec": "aac",
+      "duration_seconds": 60.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-128/compressed/ByteBounce_128_suspicious.m4a",
+      "codec": "aac",
+      "duration_seconds": 60.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-128/stems/01_normal_groove.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 60.0,
+      "decode_pass": true,
+      "samples": 2880000,
+      "peak_pcm": 17805
+    },
+    {
+      "file": "audio/byte-bounce-128/stems/02_suspicion_ticks.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 60.0,
+      "decode_pass": true,
+      "samples": 2880000,
+      "peak_pcm": 3918
+    },
+    {
+      "file": "audio/byte-bounce-128/stems/03_chase_drive.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 60.0,
+      "decode_pass": true,
+      "samples": 2880000,
+      "peak_pcm": 6377
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/audio/ByteBounce_Alarm_128_oneshot.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 1.875,
+      "decode_pass": true,
+      "samples": 90000,
+      "peak_pcm": 10393
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/audio/ByteBounce_Countdown_128_4beats.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 1.875,
+      "decode_pass": true,
+      "samples": 90000,
+      "peak_pcm": 10027
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/audio/ByteBounce_Normal_128_context_2bars.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 3.75,
+      "decode_pass": true,
+      "samples": 180000,
+      "peak_pcm": 13837
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/audio/ByteBounce_Success_128_jingle.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 3.75,
+      "decode_pass": true,
+      "samples": 180000,
+      "peak_pcm": 10281
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/audio/ByteBounce_Tension_128_loop_8bars.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 15.0,
+      "decode_pass": true,
+      "samples": 720000,
+      "peak_pcm": 15329
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_Alarm_128_oneshot.m4a",
+      "codec": "aac",
+      "duration_seconds": 1.875,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_AlarmRun_128_demo.m4a",
+      "codec": "aac",
+      "duration_seconds": 30.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_Countdown_128_4beats.m4a",
+      "codec": "aac",
+      "duration_seconds": 1.875,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_Normal_128_context_2bars.m4a",
+      "codec": "aac",
+      "duration_seconds": 3.75,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_Success_128_jingle.m4a",
+      "codec": "aac",
+      "duration_seconds": 3.75,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/compressed/ByteBounce_Tension_128_loop_8bars.m4a",
+      "codec": "aac",
+      "duration_seconds": 15.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/byte-bounce-alarm-run-128/mixes/ByteBounce_AlarmRun_128_demo.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 30.0,
+      "decode_pass": true,
+      "samples": 1440000,
+      "peak_pcm": 20643
+    },
+    {
+      "file": "audio/pocket-directory-96/compressed/chase.m4a",
+      "codec": "aac",
+      "duration_seconds": 80.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/pocket-directory-96/compressed/normal.m4a",
+      "codec": "aac",
+      "duration_seconds": 80.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/pocket-directory-96/compressed/suspicious.m4a",
+      "codec": "aac",
+      "duration_seconds": 80.0,
+      "decode_pass": true
+    },
+    {
+      "file": "audio/pocket-directory-96/stems/01_normal_base.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 80.0,
+      "decode_pass": true,
+      "samples": 3840000,
+      "peak_pcm": 14955
+    },
+    {
+      "file": "audio/pocket-directory-96/stems/02_suspicion_add.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 80.0,
+      "decode_pass": true,
+      "samples": 3840000,
+      "peak_pcm": 3572
+    },
+    {
+      "file": "audio/pocket-directory-96/stems/03_chase_add.wav",
+      "codec": "pcm_s16le",
+      "duration_seconds": 80.0,
+      "decode_pass": true,
+      "samples": 3840000,
+      "peak_pcm": 13454
+    }
+  ],
+  "human_audition": false,
+  "real_phone_tested": false,
+  "result": "passed",
+  "pcm_stem_reconstruction_vs_original_mix": [
+    {
+      "work": "pocket-directory-96",
+      "state": "normal",
+      "max_pcm_reconstruction_error": 0,
+      "source_mix_samples": 3840000
+    },
+    {
+      "work": "pocket-directory-96",
+      "state": "suspicious",
+      "max_pcm_reconstruction_error": 1,
+      "source_mix_samples": 3840000
+    },
+    {
+      "work": "pocket-directory-96",
+      "state": "chase",
+      "max_pcm_reconstruction_error": 1,
+      "source_mix_samples": 3840000
+    },
+    {
+      "work": "byte-bounce-128",
+      "state": "ByteBounce_128_normal",
+      "max_pcm_reconstruction_error": 0,
+      "source_mix_samples": 2880000
+    },
+    {
+      "work": "byte-bounce-128",
+      "state": "ByteBounce_128_suspicious",
+      "max_pcm_reconstruction_error": 1,
+      "source_mix_samples": 2880000
+    },
+    {
+      "work": "byte-bounce-128",
+      "state": "ByteBounce_128_chase",
+      "max_pcm_reconstruction_error": 1,
+      "source_mix_samples": 2880000
+    }
+  ],
+  "source_archive_member_byte_matches": 36,
+  "source_scope": "Existing 3 music archives, including ByteBounce_AlarmRun_128_v1.zip; original audio and generation-code members matched byte-for-byte. No recomposition."
+}

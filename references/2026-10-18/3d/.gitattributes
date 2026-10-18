@@ -1,0 +1,2 @@
+# Preserve archived source line endings and terminal blank lines.
+* -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof

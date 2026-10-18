@@ -1,0 +1,62 @@
+[
+  {
+    "name": "cyber-d04-storage15-v1.zip",
+    "bytes": 30939451,
+    "sha256": "caafea892ff8f69983715ec0eb8e17b7ae1ea64de8e0ed2e82eb58e30255f192"
+  },
+  {
+    "name": "cyber-e05-02-network-interact10-v1.zip",
+    "bytes": 17699155,
+    "sha256": "6ab30dc3356c9e24074475f467452fa13319fc44a0030c6bbbedbc7d8059f876"
+  },
+  {
+    "name": "cyber-e05-05-transport-inspect10-v1.zip",
+    "bytes": 18165649,
+    "sha256": "175701976f3788b22e3519c9bb006220f49c89dc50c31b25af7777fd2d879a93"
+  },
+  {
+    "name": "cyber-f06-01-input-workbench10-v1.zip",
+    "bytes": 21359118,
+    "sha256": "da6f384c27cc1c0a414e9eea3016c373d94f2449d8b1b41fa508372e7bdfa552"
+  },
+  {
+    "name": "cyber-f06-03-storage-network10-v1.zip",
+    "bytes": 17263088,
+    "sha256": "857b1adad6e603bae2dd83302fdc99c45ab5e1be019f510a48afe90132111b67"
+  },
+  {
+    "name": "cyber-f06-04-service-security10-v1.zip",
+    "bytes": 18490290,
+    "sha256": "1f522a304b39c84f13536652d749259c450d77dcc1c990745c9a648f91bf06d6"
+  },
+  {
+    "name": "cyber-g07-02-formats-network10-v1.zip",
+    "bytes": 17691590,
+    "sha256": "6b961b64d2c538a7d900127ae35dbb28a2c9e7d6e292922dae3e206d381ea83e"
+  },
+  {
+    "name": "cyber-g07-03-settings-authentication10-v1.zip",
+    "bytes": 20605906,
+    "sha256": "23b2da0e8c9553338a63efae587ccf59c4dbbffa0b8023323a33779fa53a01dc"
+  },
+  {
+    "name": "cyber-g07-04-recovery-telemetry10-v1.zip",
+    "bytes": 19186214,
+    "sha256": "ae61c4fb70b161047c70a795e0973cba12d9d2a4d4eae94c794a301933d551c9"
+  },
+  {
+    "name": "cyber-loop20-onecycle-v1.zip",
+    "bytes": 46580386,
+    "sha256": "b6dbd7968d260b60897da7f2174ba53496cd4bb7f2f6ae72baa7a77e401d3900"
+  },
+  {
+    "name": "pcv-a01-desktop-5-normal-candidate.zip",
+    "bytes": 5607252,
+    "sha256": "1ff2d81eff6864849d371accec6a2a6951165f79fc5788a9c6a1e9124b0e0597"
+  },
+  {
+    "name": "pcv-a01-files-5-normal-candidate.zip",
+    "bytes": 5565172,
+    "sha256": "38ee63595c68677c51417860a18b57440d9fac09477d076398c12c1ce3df59ea"
+  }
+]
