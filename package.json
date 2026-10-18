@@ -1,13 +1,13 @@
 {
   "name": "cellwatch",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "description": "A cellular security board and document inspection game",
   "scripts": {
     "dev": "node --env-file-if-exists=.env server.mjs",
     "test": "node --test engine.test.mjs automata.test.mjs ui-wiring.test.mjs catalog.test.mjs enemy.test.mjs enemy-provider.test.mjs server.test.mjs hospital.test.mjs threats.test.mjs music.test.mjs dynamic-enemy.test.mjs board-state.test.mjs",
-    "check": "node --check dist/app.mjs && node --check dist/catalog.mjs && node --check dist/engine.mjs && node --check dist/bootstrap.mjs && node --check dist/enemy.mjs && node --check dist/enemy-policy.mjs && node --check dist/enemy-provider.mjs && node --check server.mjs && node --check dist/threats.mjs && node --check dist/music.mjs && node --check dist/music-renderer.mjs && node --check dist/music-worker.mjs && node --check dist/vendor/uzume.mjs && node --check dist/sound-effects.mjs && node --check server/decision-service.mjs && node --check dist/board-state.mjs && node --check dist/board-renderer.mjs",
+    "check": "node --check dist/app.mjs && node --check dist/catalog.mjs && node --check dist/engine.mjs && node --check dist/bootstrap.mjs && node --check dist/enemy.mjs && node --check dist/enemy-policy.mjs && node --check dist/enemy-provider.mjs && node --check server.mjs && node --check dist/threats.mjs && node --check dist/music.mjs && node --check dist/music-renderer.mjs && node --check dist/music-worker.mjs && node --check dist/vendor/uzume.mjs && node --check dist/sound-effects.mjs && node --check dist/board-state.mjs && node --check dist/board-renderer.mjs && node --check dist/textbook-page.mjs && node --check server/decision-service.mjs",
     "build": "node scripts/build-sites.mjs"
   }
 }

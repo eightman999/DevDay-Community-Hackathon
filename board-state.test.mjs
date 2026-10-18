@@ -19,6 +19,13 @@ test('initial scene has a blue home, no fabricated requests and no threats', () 
   assert.ok(!calls.some(([key, value]) => key === 'fillStyle' && value === '#f16c65'));
 });
 
+test('untimed practice shows a waiting packet without a fake countdown',()=>{
+ const shift=new Shift({practice:true});shift.start();const scene=new BoardState().update(shift);
+ assert.equal(scene.nodes[0].phase,'waiting');assert.equal(scene.nodes[0].untimed,true);assert.equal(scene.nodes[0].x,40);
+ const labels=[];const ctx=new Proxy({fillText:text=>labels.push(text),measureText:()=>({width:100})},{get:(target,key)=>target[key]??(()=>{})});
+ drawBoard(ctx,scene,new Set(),0);assert(labels.includes('時計なし'));assert(!labels.includes('28s'));
+});
+
 test('pending requests approach for three game seconds and queue by arrival, independent of validity', () => {
   const shift = new Shift(), board = new BoardState(); shift.start();
   assert.equal(board.update(shift).nodes[0].phase, 'approach');

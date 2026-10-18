@@ -45,7 +45,7 @@ export const THREATS = parseThreats(await readThreats());
 
 export const REVIEW_SECONDS = 28;
 export const TRANSFER_LIMITS = Object.freeze({auth:20, share:40, flood:80, exfil:30});
-const ROLE_OPERATIONS = Object.freeze({
+export const ROLE_OPERATIONS = Object.freeze({
   '診療担当': Object.freeze(['参照', '更新']),
   '連携担当': Object.freeze(['参照', '転送']),
   '閲覧担当': Object.freeze(['参照'])
@@ -112,6 +112,16 @@ export function inspectionChecks(inspection) {
 export function inspectionVerdict(inspection) {
   const checks = inspectionChecks(inspection);
   return checks.length === 6 && checks.every(check => check.passed);
+}
+
+export function inspectionIncident(inspection) {
+  const pattern=THREATS.find(row=>row.id===inspection?.patternId);
+  const failed=inspectionChecks(inspection).filter(check=>!check.passed);
+  if(!pattern)return {name:'検査情報の不足',impactKind:'availability'};
+  if(!failed.length)return {name:'規則を満たす通信',impactKind:null};
+  if(failed.some(check=>check.key==='a'||check.key==='b'))return {name:pattern.name,impactKind:pattern.impactKind};
+  const context={identity:{name:'認証主体の不一致',impactKind:'integrity'},permission:{name:'操作権限の逸脱',impactKind:inspection.operation==='更新'?'integrity':'confidentiality'},handling:{name:'情報送信規則の違反',impactKind:'confidentiality'},capacity:{name:'処理容量の超過',impactKind:'availability'}};
+  return context[failed[0].key]||{name:'検査情報の不足',impactKind:'availability'};
 }
 
 export function inspectionReason(inspection) {

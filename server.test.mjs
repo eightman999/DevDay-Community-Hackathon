@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { request as httpRequest } from 'node:http';
 import { createCellwatchServer } from './server.mjs';
 import { normalizeEnemyTurn, enemyActions } from './dist/enemy-policy.mjs';
-import {THREATS,makeInspection,inspectionChecks} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionChecks,inspectionIncident} from './dist/threats.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 
 const secret = 'mock-key-for-tests-only';
@@ -38,7 +38,7 @@ test('unknown enemy modes fail at server creation', () => {
 
 test('Decisions request uses fixed endpoint/model and only CSV-backed choices and bounded observations', async t => {
   let called = 0;
-  const observation = { ...turn(), candidateIds: [9999], secret: 'untrusted-client-extra' };
+  const observation = { ...turn(), seed: 0xffffffff, candidateIds: [9999], secret: 'untrusted-client-extra' };
   const { base, post } = await fixture(t, { apiKey: secret, fetchImpl: async (url, options) => {
     called++;
     assert.equal(url, 'https://api.openai.com/v1/decisions');
@@ -59,7 +59,8 @@ test('Decisions request uses fixed endpoint/model and only CSV-backed choices an
       const row=INCIDENTS.find(row=>row.id===info.id);
       const inspection=makeInspection({...row,templateId:row.id},observation.round);
       const pattern=THREATS.find(pattern=>pattern.id===inspection.patternId);
-      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),inspection,weakness:pattern.name,impact:pattern.impact,impactKind:pattern.impactKind});
+      const detected=inspectionIncident(inspection);
+      assert.deepEqual(info,{id:row.id,type:row.type,a:row.a,b:row.b,rule:inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '),inspection,profile:pattern.name,detected,weakness:detected.name,impact:pattern.impact,impactKind:detected.impactKind});
     }
     assert.ok(!options.body.includes('untrusted-client-extra'));
     return answer(1);

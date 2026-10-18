@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "seeds": {
+    "first": 1,
+    "last": 128,
+    "count": 128
+  },
+  "conditions": {
+    "durationSeconds": 120,
+    "arrivalIntervalSeconds": 7,
+    "decisionClockSeconds": 0.5,
+    "repairs": "idModulo/evidencePerfect: none; repairOnly: auth then share, at most two, one at a time",
+    "quarantine": false,
+    "provider": "local only; no external calls",
+    "initialData": 100,
+    "initialAppointments": 100
+  },
+  "results": {
+    "idModulo": {
+      "shifts": 128,
+      "requests": 2048,
+      "reviewed": 2048,
+      "correct": 1136,
+      "accuracy": 0.5546875,
+      "mistakes": 912,
+      "unreviewed": 0,
+      "completedRepairs": 0,
+      "repairRejections": 0,
+      "autoDefended": 0,
+      "timedOut": 0,
+      "zeroDamageShifts": 0,
+      "zeroDamageCompletionRate": 0,
+      "damage": {
+        "unavailableRecords": {
+          "total": 1750,
+          "meanPerShift": 13.671875,
+          "maxPerShift": 66
+        },
+        "exposedRecords": {
+          "total": 739,
+          "meanPerShift": 5.7734375,
+          "maxPerShift": 48
+        },
+        "alteredRecords": {
+          "total": 5641,
+          "meanPerShift": 44.0703125,
+          "maxPerShift": 100
+        },
+        "postponedAppointments": {
+          "total": 8628,
+          "meanPerShift": 67.40625,
+          "maxPerShift": 100
+        }
+      },
+      "couriers": [
+        {
+          "id": 1,
+          "name": "キーコ",
+          "normal": 34,
+          "malicious": 82
+        },
+        {
+          "id": 2,
+          "name": "カルテオ",
+          "normal": 44,
+          "malicious": 54
+        },
+        {
+          "id": 3,
+          "name": "ラボット",
+          "normal": 71,
+          "malicious": 106
+        },
+        {
+          "id": 4,
+          "name": "ヨヤクル",
+          "normal": 49,
+          "malicious": 69
+        },
+        {
+          "id": 5,
+          "name": "カルピ",
+          "normal": 48,
+          "malicious": 68
+        },
+        {
+          "id": 6,
+          "name": "マイカ",
+          "normal": 31,
+          "malicious": 85
+        },
+        {
+          "id": 7,
+          "name": "ヨテラ",
+          "normal": 54,
+          "malicious": 83
+        },
+        {
+          "id": 8,
+          "name": "ケンサン",
+          "normal": 69,
+          "malicious": 88
+        },
+        {
+          "id": 9,
+          "name": "レンキー",
+          "normal": 53,
+          "malicious": 79
+        },
+        {
+          "id": 10,
+          "name": "カルア",
+          "normal": 38,
+          "malicious": 68
+        },
+        {
+          "id": 11,
+          "name": "ラボクル",
+          "normal": 60,
+          "malicious": 81
+        },
+        {
+          "id": 12,
+          "name": "ナイヨウ",
+          "normal": 70,
+          "malicious": 48
+        },
+        {
+          "id": 13,
+          "name": "カルミ",
+          "normal": 52,
+          "malicious": 61
+        },
+        {
+          "id": 14,
+          "name": "キーレン",
+          "normal": 39,
+          "malicious": 90
+        },
+        {
+          "id": 15,
+          "name": "ヨヤミ",
+          "normal": 57,
+          "malicious": 53
+        },
+        {
+          "id": 16,
+          "name": "ラボミ",
+          "normal": 65,
+          "malicious": 99
+        }
+      ],
+      "everyCourierCarriesBoth": true,
+      "traceSha256": "7af9312b148ad1c6c29d1b81db6fbb1416d77a5f8c4f51911409f7944db36d6a"
+    },
+    "evidencePerfect": {
+      "shifts": 128,
+      "requests": 2048,
+      "reviewed": 2048,
+      "correct": 2048,
+      "accuracy": 1,
+      "mistakes": 0,
+      "unreviewed": 0,
+      "completedRepairs": 0,
+      "repairRejections": 0,
+      "autoDefended": 0,
+      "timedOut": 0,
+      "zeroDamageShifts": 128,
+      "zeroDamageCompletionRate": 1,
+      "damage": {
+        "unavailableRecords": {
+          "total": 0,
+          "meanPerShift": 0,
+          "maxPerShift": 0
+        },
+        "exposedRecords": {
+          "total": 0,
+          "meanPerShift": 0,
+          "maxPerShift": 0
+        },
+        "alteredRecords": {
+          "total": 0,
+          "meanPerShift": 0,
+          "maxPerShift": 0
+        },
+        "postponedAppointments": {
+          "total": 0,
+          "meanPerShift": 0,
+          "maxPerShift": 0
+        }
+      },
+      "couriers": [
+        {
+          "id": 1,
+          "name": "キーコ",
+          "normal": 38,
+          "malicious": 88
+        },
+        {
+          "id": 2,
+          "name": "カルテオ",
+          "normal": 56,
+          "malicious": 70
+        },
+        {
+          "id": 3,
+          "name": "ラボット",
+          "normal": 43,
+          "malicious": 78
+        },
+        {
+          "id": 4,
+          "name": "ヨヤクル",
+          "normal": 61,
+          "malicious": 75
+        },
+        {
+          "id": 5,
+          "name": "カルピ",
+          "normal": 54,
+          "malicious": 69
+        },
+        {
+          "id": 6,
+          "name": "マイカ",
+          "normal": 37,
+          "malicious": 100
+        },
+        {
+          "id": 7,
+          "name": "ヨテラ",
+          "normal": 65,
+          "malicious": 74
+        },
+        {
+          "id": 8,
+          "name": "ケンサン",
+          "normal": 46,
+          "malicious": 81
+        },
+        {
+          "id": 9,
+          "name": "レンキー",
+          "normal": 62,
+          "malicious": 74
+        },
+        {
+          "id": 10,
+          "name": "カルア",
+          "normal": 46,
+          "malicious": 80
+        },
+        {
+          "id": 11,
+          "name": "ラボクル",
+          "normal": 40,
+          "malicious": 64
+        },
+        {
+          "id": 12,
+          "name": "ナイヨウ",
+          "normal": 73,
+          "malicious": 58
+        },
+        {
+          "id": 13,
+          "name": "カルミ",
+          "normal": 60,
+          "malicious": 59
+        },
+        {
+          "id": 14,
+          "name": "キーレン",
+          "normal": 53,
+          "malicious": 85
+        },
+        {
+          "id": 15,
+          "name": "ヨヤミ",
+          "normal": 59,
+          "malicious": 72
+        },
+        {
+          "id": 16,
+          "name": "ラボミ",
+          "normal": 41,
+          "malicious": 87
+        }
+      ],
+      "everyCourierCarriesBoth": true,
+      "traceSha256": "d9aafd83cf6e4217822a617061ce9fd372c73917a028d8c66247d8683e0a5f35"
+    },
+    "repairOnly": {
+      "shifts": 128,
+      "requests": 2048,
+      "reviewed": 0,
+      "correct": 0,
+      "accuracy": null,
+      "mistakes": 1012,
+      "unreviewed": 1846,
+      "completedRepairs": 256,
+      "repairRejections": 25600,
+      "autoDefended": 202,
+      "timedOut": 1846,
+      "zeroDamageShifts": 0,
+      "zeroDamageCompletionRate": 0,
+      "damage": {
+        "unavailableRecords": {
+          "total": 3447,
+          "meanPerShift": 26.9296875,
+          "maxPerShift": 54
+        },
+        "exposedRecords": {
+          "total": 4423,
+          "meanPerShift": 34.5546875,
+          "maxPerShift": 67
+        },
+        "alteredRecords": {
+          "total": 5783,
+          "meanPerShift": 45.1796875,
+          "maxPerShift": 82
+        },
+        "postponedAppointments": {
+          "total": 7235,
+          "meanPerShift": 56.5234375,
+          "maxPerShift": 100
+        }
+      },
+      "couriers": [
+        {
+          "id": 1,
+          "name": "キーコ",
+          "normal": 0,
+          "malicious": 33
+        },
+        {
+          "id": 2,
+          "name": "カルテオ",
+          "normal": 20,
+          "malicious": 21
+        },
+        {
+          "id": 3,
+          "name": "ラボット",
+          "normal": 79,
+          "malicious": 144
+        },
+        {
+          "id": 4,
+          "name": "ヨヤクル",
+          "normal": 99,
+          "malicious": 113
+        },
+        {
+          "id": 5,
+          "name": "カルピ",
+          "normal": 25,
+          "malicious": 16
+        },
+        {
+          "id": 6,
+          "name": "マイカ",
+          "normal": 0,
+          "malicious": 30
+        },
+        {
+          "id": 7,
+          "name": "ヨテラ",
+          "normal": 88,
+          "malicious": 134
+        },
+        {
+          "id": 8,
+          "name": "ケンサン",
+          "normal": 89,
+          "malicious": 144
+        },
+        {
+          "id": 9,
+          "name": "レンキー",
+          "normal": 0,
+          "malicious": 32
+        },
+        {
+          "id": 10,
+          "name": "カルア",
+          "normal": 14,
+          "malicious": 17
+        },
+        {
+          "id": 11,
+          "name": "ラボクル",
+          "normal": 102,
+          "malicious": 114
+        },
+        {
+          "id": 12,
+          "name": "ナイヨウ",
+          "normal": 105,
+          "malicious": 113
+        },
+        {
+          "id": 13,
+          "name": "カルミ",
+          "normal": 16,
+          "malicious": 20
+        },
+        {
+          "id": 14,
+          "name": "キーレン",
+          "normal": 0,
+          "malicious": 33
+        },
+        {
+          "id": 15,
+          "name": "ヨヤミ",
+          "normal": 102,
+          "malicious": 148
+        },
+        {
+          "id": 16,
+          "name": "ラボミ",
+          "normal": 95,
+          "malicious": 102
+        }
+      ],
+      "everyCourierCarriesBoth": false,
+      "traceSha256": "db4a12b11a1fbbd5667bec4eb6e7fd335ab8c5054cfa0e5bfb2d3979cf23f0fd"
+    }
+  },
+  "sourceHashEncoding": "UTF-8 text, CRLF normalized to LF, SHA-256",
+  "sourceSha256": {
+    "dist/engine.mjs": "0f29d902de287e124dedfda3d07114a0e4bebc1fc033fc28aee7ad71f3c3bddc",
+    "dist/enemy.mjs": "b8e29c43e39fa795d3f12955c809943f55ce335ccd03a69a859d673c7671e033",
+    "dist/enemy-policy.mjs": "6eca1a2351afed2560865b89db610ce44b19fcb565a9b2e02bff0979d0927fa7",
+    "dist/threats.mjs": "c4e014e1b25967c93bb2a453e3ffbd5be904fe9f40b50c6f3677a5d9137bffbd",
+    "dist/catalog.mjs": "2d8f91b9ae6663ce9c39a7ba86f175ef37527e2bf005a3433e57d4154601eec5",
+    "dist/data/incidents.csv": "bb5f52a3d229ccbd0e36c9d1227332c35d1a75760fbcbdf2720b6085c999f1ed",
+    "dist/data/vulnerabilities.csv": "951ced78a9ae87375e5669d77893d32c00ed82173ff90522becc4825456bfbf5",
+    "dist/data/attack-patterns.csv": "41046925575f9100f5c19e500c14363bf8cf5105255b89b1cd3064c20bf51486",
+    "scripts/verify-demo.mjs": "3f86e3e0554bafc371e35d3fb3a1836f6d562cc26e5eabac74c4bce136c1d0dd"
+  },
+  "limitations": [
+    "同じseedと時計を各botに適用する。適応型のため判断履歴が異なると後続の投入経路も異なる。",
+    "最初の通信は意図的に固定のSMB不正。以降の伝票ID・配達員の見た目は正解キーとして使わない。",
+    "evidencePerfectは公開された6項目規則を完全に実行する理想bot。人間の読解速度や学習効果は測定していない。",
+    "repairOnlyは開始時auth、完了後shareを順次修復し、手動審査を一切しない。自動拒否と未審査通過を分けて記録する。他の修復戦略の網羅検証ではない。",
+    "API判断との優劣・品質・遅延・コストは未検証。外部API、外部サービス、実攻撃は実行しない。",
+    "被害は1当直100件を上限とするゲーム内指標の累計。各種類は独立で、実患者や実運用の被害ではない。",
+    "固定templateIdと内部seedを読むソース解析botへの耐性は保証しない。CSV番号は画面非表示だが内部正解は秘密ではない。"
+  ]
+}
