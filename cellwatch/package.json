@@ -1,0 +1,12 @@
+{
+  "name": "cellwatch",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "A cellular security board and document inspection game",
+  "scripts": {
+    "dev": "python3 -m http.server 8766 --bind 127.0.0.1 --directory dist",
+    "test": "node --test engine.test.mjs automata.test.mjs ui-wiring.test.mjs",
+    "check": "node --check dist/app.mjs"
+  }
+}
