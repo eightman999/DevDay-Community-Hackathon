@@ -1,13 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Shift, expectedVerdict, ORDER} from './dist/engine.mjs';
+import {Shift, expectedVerdict, ORDER, MAX_ROOT_REPAIRS} from './dist/engine.mjs';
 import {INCIDENTS} from './dist/catalog.mjs';
 import {buildEnemyTurn, normalizeEnemyTurn, chooseLocal, enemyActions} from './dist/enemy-policy.mjs';
 import {EnemyDirector} from './dist/enemy.mjs';
+import {evidenceBot, simulate, summarize} from './scripts/verify-demo.mjs';
 
 const apiChoice = (turn,id,reason) => ({...enemyActions(turn).find(action=>action.id===id&&action.interval===7),source:'decisions',reason});
 const settle = () => new Promise(resolve => setImmediate(resolve));
-const preparedShift = director => {const shift = new Shift({director});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
+const preparedShift = director => {const shift = new Shift({director,seed:0});shift.start();shift.decide(1,false);shift.advance(5.1);return shift;};
+
+test('choice traces retain the API observation, while local fallback records recalculated input',async()=>{
+ for(const source of ['decisions','local']){
+  const director=new EnemyDirector({provider:{choose:async turn=>source==='decisions'?apiChoice(turn,2,'selected'):({id:turn.candidateIds[0],source,reason:'unconfigured'})}});
+  const shift=new Shift({director,seed:42});shift.start();shift.advance(5.1);director.tick(shift);await settle();
+  shift.decide(1,false);shift.advance(2.1);const next=shift.requests[1];
+  assert.equal(next.enemySource,source);assert.equal(next.enemyObservation.recent.length,source==='decisions'?0:1);
+  assert.equal(next.enemyObservation.candidateCount,16);assert(!('seed' in next.enemyObservation));
+  director.dispose();
+ }
+});
 
 test('local adaptive shift keeps 16 CSV communications, seven-second arrivals, and perfect verdicts', () => {
   const director = new EnemyDirector();
@@ -28,9 +40,84 @@ test('local adaptive shift keeps 16 CSV communications, seven-second arrivals, a
     assert.equal(r.a, INCIDENTS[r.templateId - 1].a);
     assert.equal(r.b, INCIDENTS[r.templateId - 1].b);
     assert(Math.abs(r.at - index * 7) < .11);
-    if (index % 3 === 1) assert.equal(expectedVerdict(r), true);
+    assert.equal(r.valid,expectedVerdict(r));
   }
   director.dispose();
+});
+
+test('the old ID-modulo answer shortcut fails across independently seeded shifts', () => {
+  let correct=0,total=0;const secondAnswers=new Set();
+  for(let seed=1;seed<=64;seed++){
+    const director=new EnemyDirector(),shift=new Shift({director,seed});shift.start();
+    while(!shift.done){for(const request of shift.pending()){const allow=request.id%3===2;correct+=Number(allow===expectedVerdict(request));total++;shift.decide(request.id,allow);}shift.advance(.5);}
+    secondAnswers.add(expectedVerdict(shift.requests[1]));
+    director.dispose();
+  }
+  assert.equal(total,64*16);
+  assert.ok(correct/total<.75,`ID-only accuracy ${correct/total}`);
+  assert.equal(secondAnswers.size,2,'The same visible ID must have both outcomes in different runs');
+});
+
+test('every courier can carry normal and malicious evidence without becoming an answer key', () => {
+  const runs = Array.from({length:128}, (_, index) => simulate(index+1, request => {
+    // Fail immediately if the evidence bot starts using any hidden answer metadata.
+    const evidenceOnly = new Proxy({inspection:request.inspection}, {
+      get(target, key) {assert.equal(key, 'inspection');return target[key];}
+    });
+    const allow = evidenceBot(evidenceOnly);
+    assert.equal(allow, expectedVerdict(request));
+    return allow;
+  }));
+  const result = summarize(runs);
+  assert.equal(result.requests, 128*16);
+  assert.equal(result.accuracy, 1);
+  assert.equal(result.unreviewed, 0);
+  assert.equal(result.mistakes, 0);
+  assert(Object.values(result.damage).every(metric => metric.total === 0));
+  for (const courier of result.couriers) {
+    assert(courier.normal > 0, `${courier.name} must carry normal traffic`);
+    assert(courier.malicious > 0, `${courier.name} must carry malicious traffic`);
+  }
+  assert(runs.every(run => run.trace[0].patternId === 'smb_v1' && !run.trace[0].normal),
+    'Only the first teaching request intentionally fixes the malicious SMB example');
+});
+
+test('verification traces replay exactly under the same explicit seed and actions', () => {
+  for (const seed of [1, 128, 0xffffffff]) assert.deepEqual(simulate(seed, evidenceBot), simulate(seed, evidenceBot));
+});
+
+test('repair-only play exhausts two root repairs and leaves attacks requiring manual review', () => {
+  assert.equal(MAX_ROOT_REPAIRS, 2);
+  const runs = Array.from({length:128}, (_, index) =>
+    simulate(index+1, () => undefined, new EnemyDirector(), {repairOnly:true}));
+  assert(runs.every(run => run.reviewed === 0 && run.completedRepairs === 2 && run.repairRejections > 0));
+  assert(runs.every(run => run.timedOut > 0), 'Unfixed routes must continue requiring review');
+  for (const seed of [1,2,3,42]) {
+    const run = runs[seed-1];
+    assert(Object.values(run.damage).some(value => value > 0), `Repair-only seed ${seed} must not bypass inspection`);
+  }
+  const shift = new Shift({director:new EnemyDirector(),seed:1});
+  shift.start();
+  assert.equal(shift.repair('auth'), true);
+  assert.equal(shift.repair('share'), false, 'Only one repair can run at a time');
+  shift.advance(10.1);
+  assert.equal(shift.repair('share'), true);
+  shift.advance(10.1);
+  assert.equal(shift.repaired, 2);
+  for (const type of ['flood','exfil']) {
+    assert.equal(shift.repair(type), false, 'Exhausted capacity must reject further repair requests');
+    assert.equal(shift.zones[type].repairEnd, 0);
+    assert.equal(shift.zones[type].fixed, false);
+  }
+  shift.director.dispose();
+});
+
+test('selection seeds replay choices, change on a new run, and cannot expand the server observation', () => {
+  const paths=seed=>{const shift=new Shift({director:new EnemyDirector(),seed});shift.start();while(!shift.done){for(const r of shift.pending())shift.decide(r.id,expectedVerdict(r));shift.advance(.5);}return shift.requests.map(r=>r.templateId);};
+  assert.deepEqual(paths(12345),paths(12345));
+  assert.notDeepEqual(paths(12345),paths(67890));
+  const shift=new Shift();shift.serial=2;const turn=buildEnemyTurn(shift);
+  for(const seed of [-1,1.5,Infinity,'123',0x100000000])assert.throws(()=>normalizeEnemyTurn({...turn,seed}));
 });
 
 test('candidates exclude repaired, repairing, and quarantined attack routes; all protected routes use normal traffic', () => {
@@ -41,7 +128,7 @@ test('candidates exclude repaired, repairing, and quarantined attack routes; all
   shift.zones.flood.quarantineUntil = 20;
   let turn = buildEnemyTurn(shift);
   assert(turn.candidateIds.length);
-  assert(turn.candidateIds.every(id => INCIDENTS[id - 1].type === 'exfil'));
+  assert(turn.candidateIds.every(id => expectedVerdict(INCIDENTS[id-1]) || INCIDENTS[id-1].type === 'exfil'));
   shift.zones.exfil.fixed = true;
   turn = buildEnemyTurn(shift);
   assert(turn.candidateIds.every(id => expectedVerdict(INCIDENTS[id - 1])));
@@ -84,7 +171,7 @@ test('invalid provider IDs and failures fall back to local without changing answ
     const director = new EnemyDirector({provider:{choose}});
     const shift = preparedShift(director);director.tick(shift);await settle();shift.advance(2);
     assert.equal(shift.requests[1].enemySource,'local');
-    assert.equal(expectedVerdict(shift.requests[1]),true);
+    assert.equal(shift.requests[1].valid,expectedVerdict(shift.requests[1]));
     director.dispose();
   }
 });

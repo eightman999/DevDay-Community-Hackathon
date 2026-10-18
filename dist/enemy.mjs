@@ -1,6 +1,12 @@
 import {INCIDENTS} from './catalog.mjs';
 import {buildEnemyTurn, chooseLocal, validEnemyAction} from './enemy-policy.mjs';
 
+function observation(turn){
+ return {time:turn.time,candidateCount:turn.candidateIds.length,
+  zones:Object.fromEntries(Object.entries(turn.zones).map(([type,zone])=>[type,{...zone}])),
+  recent:turn.recent.slice(-3).map(item=>({...item}))};
+}
+
 // Selection is synchronous. The optional provider only prepares the next choice.
 export class EnemyDirector {
   constructor({provider = null, timeoutMs = 1800} = {}) {
@@ -33,13 +39,15 @@ export class EnemyDirector {
   select(shift) {
     this.bind(shift);
     const turn = buildEnemyTurn(shift);
-    const prepared = this.ready?.round === turn.round ? this.ready.result : null;
+    const preparedTurn = this.ready?.round === turn.round ? this.ready : null;
+    const prepared = preparedTurn?.result;
     this.ready = null;
     this.cancel();
     const accepted = prepared && validEnemyAction(turn, prepared);
     const id = accepted && prepared.source === 'decisions' ? prepared.id : chooseLocal(turn);
     const result = {
       id,
+      observation:accepted&&prepared.source==='decisions'?preparedTurn.observation:observation(turn),
       interval: accepted && prepared.source === 'decisions' ? prepared.interval : 7,
       tactic: accepted && prepared.source === 'decisions' ? prepared.tactic : 'local',
       source: accepted ? prepared.source : 'local',
@@ -81,7 +89,7 @@ export class EnemyDirector {
       }
       clearTimeout(timer);
       this.flight = null;
-      this.ready = {round: turn.round, result: {id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
+      this.ready = {round: turn.round, observation:observation(turn), result: {id: result.id, interval: result.interval ?? 7, tactic: result.tactic ?? 'local', source: result.source, reason: result.reason.slice(0, 160)}};
       this.status = {...this.status, pending: false};
     }).catch(() => fail('APIに接続できません：ローカル適応で継続。'));
   }

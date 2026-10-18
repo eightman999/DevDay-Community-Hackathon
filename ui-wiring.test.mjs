@@ -5,11 +5,11 @@ element('#startBtn').onclick();element('#bookBtn').onclick();assert.equal(elemen
 
 element('#catalogBtn').onclick();assert.equal(element('#catalog').open,true);assert.equal(element('#allowBtn').disabled,true);assert.equal((element('#catalogRows').innerHTML.match(/<tr>/g)||[]).length,16);assert.equal((element('#vulnerabilityRows').innerHTML.match(/<article>/g)||[]).length,4);element('#closeCatalog').onclick();assert.equal(element('#catalog').open,false);assert.equal(element('#allowBtn').disabled,false);console.log('PASS: 通信フィールド照合 / CSV由来の4ポリシー・16通信一覧 / 一覧開閉での停止・再開 (DOM stub)');
 
-element('#resetBtn').onclick();element('#enemyMode').value='scripted';element('#enemyMode').onchange();assert.equal(element('#enemySource').textContent,'CSV順の練習モード');element('#startBtn').onclick();assert.equal(element('#enemyMode').disabled,true);element('#resetBtn').onclick();element('#enemyMode').value='adaptive';element('#enemyMode').onchange();assert(element('#enemySource').textContent.includes('ローカル'));element('#startBtn').onclick();assert(element('#paper').innerHTML.includes('CSV #001'));console.log('PASS: 適応型/CSV順の切替・当直中の固定・CSVテンプレート表示 (DOM stub)');
+element('#resetBtn').onclick();element('#enemyMode').value='scripted';element('#enemyMode').onchange();assert.equal(element('#enemySource').textContent,'CSV順の練習モード');element('#startBtn').onclick();assert.equal(element('#enemyMode').disabled,true);element('#resetBtn').onclick();element('#enemyMode').value='adaptive';element('#enemyMode').onchange();assert(element('#enemySource').textContent.includes('ローカル'));element('#startBtn').onclick();assert(!element('#paper').innerHTML.includes('CSV #'));assert(element('#paper').innerHTML.includes('審査改善版 0.3.1'));console.log('PASS: 適応型/CSV順の切替・当直中の固定・発行元番号の非表示 (DOM stub)');
 
 assert.equal((element('#paper').innerHTML.match(/data-field=/g)||[]).length,10);
-assert(element('#paper').innerHTML.includes('RECEPTION-03'));
-assert(element('#paper').innerHTML.includes('TLS 1.2'));
+assert(element('#paper').innerHTML.includes('送信元端末'));
+assert(element('#paper').innerHTML.includes('申請の暗号化'));
 const selectField=(key,label,value)=>element('#paper').onclick({target:{closest:()=>({dataset:{field:key},classList:{toggle(){}},setAttribute(){},querySelector:selector=>({textContent:selector==='span'?label:value})})}});
 selectField('sourceSystem','送信元端末','RECEPTION-03');
 selectField('transport','通信方式','TLS 1.2');

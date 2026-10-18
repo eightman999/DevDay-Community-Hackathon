@@ -39,10 +39,10 @@ test('switch changes the latest route and pressure targets the latest missed att
   assert(enemyActions(turn).every(action=>expectedVerdict(INCIDENTS[action.id-1])||INCIDENTS[action.id-1].type!=='exfil'));
 });
 
-test('joint API selection can choose normal traffic outside the local attack cycle', async () => {
+test('joint API selection can choose normal traffic and a bounded feint interval', async () => {
   const turn=observation();
   const action=enemyActions(turn).find(action=>action.tactic==='feint'&&action.interval===4);
-  assert(action);assert(!turn.candidateIds.includes(action.id));
+  assert(action);assert(turn.candidateIds.includes(action.id));assert(expectedVerdict(INCIDENTS[action.id-1]));
   const service=createDecisionService({apiKey:'mock-key',fetchImpl:async(_url,init)=>{
     const body=JSON.parse(init.body);
     assert.equal(body.questions.length,1);

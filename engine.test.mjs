@@ -16,6 +16,48 @@ const {expectedVerdict,verdictReason}=await import('./dist/engine.mjs');
 const {THREATS,inspectionVerdict,inspectionReason,makeInspection}=await import('./dist/threats.mjs');
 const {TYPES,evaluatePolicy,INCIDENTS}=await import('./dist/catalog.mjs');
 
+test('repair completion rejects already-pending malicious traffic before manual or timed admission',()=>{
+ for(const timed of [false,true]){
+  const shift=new Shift();shift.start();shift.repair('auth');shift.advance(10.1);
+  assert.equal(shift.requests[0].status,'auto');assert.equal(shift.zones.auth.defended,1);
+  if(timed)shift.advance(18);else assert.equal(shift.decide(1,true),false);
+  assert.equal(shift.data,100);assert.equal(shift.zones.auth.attacks,0);assert.equal(shift.threatFields.size,0);
+ }
+ const normal=new Shift({director:{select:()=>({id:2})}});normal.start();normal.repair('share');normal.advance(10.1);
+ assert.equal(normal.requests[0].status,'pending');assert.equal(normal.decide(1,true),true);assert.equal(normal.mistakes,0);
+ const damaged=new Shift();damaged.start();damaged.decide(1,true);damaged.repair('auth');damaged.advance(10.1);
+ assert(damaged.data<100);assert.equal(damaged.threatFields.get(1).cells.size,0);
+ const guarded=new Shift();guarded.start();guarded.zones.auth.fixed=true;guarded.decide(1,true);
+ assert.equal(guarded.requests[0].status,'auto');assert.equal(guarded.data,100);
+});
+
+test('context-only violations name and damage the violated rule, not a safe technical control',()=>{
+ const shift=new Shift();shift.start();const request=shift.requests[0];
+ const profile=THREATS.find(row=>row.id===request.inspection.patternId);
+ request.inspection={...request.inspection,a:profile.safeA,b:profile.safeB,credentialSubject:'JOB-99'};
+ shift.decide(request.id,true);assert.match(shift.lastLog,/認証主体の不一致/);assert(!shift.lastLog.includes(profile.name));
+ assert.equal(shift.data,100);assert.equal(shift.alteredRecords,6);assert.equal(shift.exposedRecords,0);
+});
+
+test('untimed practice advances one document only after judgment and explicit next action',()=>{
+ const shift=new Shift({practice:true});shift.start();shift.advance(120);
+ assert.equal(shift.time,0);assert.equal(shift.requests.length,1);assert.equal(shift.requests[0].status,'pending');
+ assert.equal(shift.nextPractice(),false);assert.equal(shift.repair('auth'),false);assert.equal(shift.quarantine('auth'),false);
+ for(let id=1;id<=16;id++){
+  const request=shift.pending()[0];assert.equal(request.id,id);shift.decide(id,expectedVerdict(request));
+  assert.equal(shift.nextPractice(),true);shift.advance(120);
+ }
+ assert.equal(shift.done,true);assert.equal(shift.running,false);assert.equal(shift.mistakes,0);
+ assert.equal(shift.requests.length,16);assert.equal(shift.time,0);
+});
+
+test('a normal timeout supports work but is never counted as a manual correct review',()=>{
+ const shift=new Shift();shift.start();shift.decide(1,false);shift.advance(35.1);
+ const normal=shift.requests.find(r=>r.id===2);assert.equal(normal.status,'timeout');
+ assert.equal(normal.correct,null);assert.equal(shift.zones.share.correct,0);
+ assert.equal(shift.postponedAppointments,0);
+});
+
 test('first finding is SMBv1; all 16 arrivals preserve their CSV verdict and route',()=>{
  const shift=new Shift();shift.start();
  assert.equal(shift.requests[0].inspection.patternId,'smb_v1');
