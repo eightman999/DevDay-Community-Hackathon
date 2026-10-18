@@ -1,21 +1,42 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const html=fs.readFileSync(new URL('./dist/index.html',import.meta.url),'utf8'),ids=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1])),elements=new Map();let frame;const ctx=new Proxy({},{get:()=>()=>{}});function element(key){if(!elements.has(key))elements.set(key,{textContent:'',innerHTML:'',dataset:{},style:{},classList:{add(){},remove(){},toggle(){}},setAttribute(){},addEventListener(){},close(){this.open=false},showModal(){this.open=true},getContext:()=>ctx});return elements.get(key)}
-globalThis.document={body:{dataset:{}},activeElement:null,querySelector:s=>{if(s.startsWith('#')&&!ids.has(s.slice(1))&&!/^#(zone-|status-|hint-)/.test(s)&&s!=='#deadline')throw Error('Unknown element '+s);return element(s)},querySelectorAll:()=>[],addEventListener(){}};globalThis.requestAnimationFrame=fn=>frame=fn;globalThis.matchMedia=()=>({matches:false});await import('./dist/app.mjs');assert.equal(element('#clock').textContent,'02:00');element('#startBtn').onclick();assert.equal(element('#allowBtn').disabled,false);assert(element('#paper').innerHTML.includes('SMBv1'));element('#inspectBtn').onclick();assert(element('#comparisonHint').textContent.includes('必要な条件を満たしていません'));const decidedPaper=element('#paper').innerHTML;assert(element('#deskRule').innerHTML.includes('通過条件'));element('#allowBtn').onclick();assert.equal(element('#paper').innerHTML,decidedPaper);assert.equal(element('#stamp').textContent,'TRANSIT ALLOWED');assert.equal(element('#integrity').textContent,6);assert(element('#incidents').innerHTML.includes('SMBv1'));element('#rootFixBtn').onclick();assert(element('#worker').textContent.includes('あと10秒'));frame(performance.now()+500);assert(element('#generation').textContent.startsWith('世代'));element('#resetBtn').onclick();assert.equal(element('#integrity').textContent,0);assert(element('#startBtn').hidden===false);console.log('PASS: 画面要素の接続 / 開始 / 伝票の生成 / 承認と盤面の状態連動 / 修復 / Canvas描画処理 / リセット (DOM stub, 実ブラウザではない)');
-element('#startBtn').onclick();element('#bookBtn').onclick();assert.equal(element('#textbook').open,true);assert.equal(element('#allowBtn').disabled,true);assert(element('#currentAnswer').innerHTML.includes('正解：拒否'));assert(element('#answerRows').innerHTML.includes('未審査'));element('#labTwelve').onclick();assert.equal(element('#labStatus').textContent,'世代 12 / 生存セル 24');element('#labReset').onclick();assert.equal(element('#labStatus').textContent,'世代 0 / 生存セル 12');element('#closeBook').onclick();assert.equal(element('#textbook').open,false);assert.equal(element('#allowBtn').disabled,false);console.log('PASS: 教科書と正解理由 / 履歴 / 開閉時の一時停止・再開 / 実験台の自己複製・リセット (DOM stub)');
+globalThis.document={body:{dataset:{}},activeElement:null,querySelector:s=>{if(s.startsWith('#')&&!ids.has(s.slice(1))&&!/^#(zone-|status-|hint-)/.test(s)&&s!=='#deadline')throw Error('Unknown element '+s);return element(s)},querySelectorAll:()=>[],addEventListener(){}};globalThis.requestAnimationFrame=fn=>frame=fn;globalThis.matchMedia=()=>({matches:false});await import('./dist/app.mjs');assert.equal(element('#clock').textContent,'02:00');element('#startBtn').onclick();assert.equal(element('#allowBtn').disabled,false);assert(element('#paper').innerHTML.includes('SMBv1'));element('#inspectBtn').onclick();assert(element('#comparisonHint').textContent.includes('確認メモ'));const decidedPaper=element('#paper').innerHTML;assert(element('#deskRule').innerHTML.includes('通過条件'));element('#allowBtn').onclick();assert.equal(element('#paper').innerHTML,decidedPaper);assert.equal(element('#stamp').textContent,'TRANSIT ALLOWED');assert.equal(element('#integrity').textContent,6);assert(element('#incidents').innerHTML.includes('SMBv1'));element('#rootFixBtn').onclick();assert(element('#worker').textContent.includes('あと10秒'));frame(performance.now()+500);assert(element('#generation').textContent.startsWith('世代'));element('#resetBtn').onclick();assert.equal(element('#integrity').textContent,0);assert(element('#startBtn').hidden===false);console.log('PASS: 画面要素の接続 / 開始 / 伝票の生成 / 承認と盤面の状態連動 / 修復 / Canvas描画処理 / リセット (DOM stub, 実ブラウザではない)');
+element('#startBtn').onclick();element('#bookBtn').onclick();assert.equal(element('#textbook').open,true);assert.equal(element('#allowBtn').disabled,true);assert(element('#currentAnswer').innerHTML.includes('判定後'));assert(element('#answerRows').innerHTML.includes('未審査'));element('#labTwelve').onclick();assert.equal(element('#labStatus').textContent,'世代 12 / 生存セル 24');element('#labReset').onclick();assert.equal(element('#labStatus').textContent,'世代 0 / 生存セル 12');element('#closeBook').onclick();assert.equal(element('#textbook').open,false);assert.equal(element('#allowBtn').disabled,false);console.log('PASS: 教科書と正解理由 / 履歴 / 開閉時の一時停止・再開 / 実験台の自己複製・リセット (DOM stub)');
 
 element('#catalogBtn').onclick();assert.equal(element('#catalog').open,true);assert.equal(element('#allowBtn').disabled,true);assert.equal((element('#catalogRows').innerHTML.match(/<tr>/g)||[]).length,16);assert.equal((element('#vulnerabilityRows').innerHTML.match(/<article>/g)||[]).length,4);element('#closeCatalog').onclick();assert.equal(element('#catalog').open,false);assert.equal(element('#allowBtn').disabled,false);console.log('PASS: 通信フィールド照合 / CSV由来の4ポリシー・16通信一覧 / 一覧開閉での停止・再開 (DOM stub)');
 
 element('#resetBtn').onclick();element('#enemyMode').value='scripted';element('#enemyMode').onchange();assert.equal(element('#enemySource').textContent,'CSV順の練習モード');element('#startBtn').onclick();assert.equal(element('#enemyMode').disabled,true);element('#resetBtn').onclick();element('#enemyMode').value='adaptive';element('#enemyMode').onchange();assert(element('#enemySource').textContent.includes('ローカル'));element('#startBtn').onclick();assert(element('#paper').innerHTML.includes('CSV #001'));console.log('PASS: 適応型/CSV順の切替・当直中の固定・CSVテンプレート表示 (DOM stub)');
 
-assert.equal((element('#paper').innerHTML.match(/data-field=/g)||[]).length,6);
+assert.equal((element('#paper').innerHTML.match(/data-field=/g)||[]).length,10);
 assert(element('#paper').innerHTML.includes('RECEPTION-03'));
 assert(element('#paper').innerHTML.includes('TLS 1.2'));
 const selectField=(key,label,value)=>element('#paper').onclick({target:{closest:()=>({dataset:{field:key},classList:{toggle(){}},setAttribute(){},querySelector:selector=>({textContent:selector==='span'?label:value})})}});
 selectField('sourceSystem','送信元端末','RECEPTION-03');
 selectField('transport','通信方式','TLS 1.2');
-assert(!element('#comparisonHint').textContent.includes('必要な条件を満たしていません'));
-assert(element('#comparisonHint').textContent.includes('通過条件が求める項目'));
+assert(!element('#comparisonHint').textContent.includes('拒否：'));
+assert(element('#comparisonHint').textContent.includes('参考情報'));
 selectField('a','通信方式','SMBv1');
 selectField('b','対象端末の更新','未適用');
-assert(element('#comparisonHint').textContent.includes('必要な条件を満たしていません'));
-console.log('PASS: 補助項目2欄のみでは判定せず、規則の照合欄で理由を表示 (DOM stub)');
+assert(element('#comparisonHint').textContent.includes('確認メモ'));
+console.log('PASS: 補助項目は参考、チェックと確認メモで判定前の答えは開示しない (DOM stub)');
+
+assert.equal((element('#paper').innerHTML.match(/<tr>/g)||[]).length,7);
+assert(!element('#paper').innerHTML.match(/<h3>[^<]*脆弱性/));
+for(const key of ['identity','permission','handling','capacity'])selectField(key,key,'example');
+assert(element('#comparisonHint').textContent.includes('6/6'));
+assert(!element('#comparisonHint').textContent.includes('拒否：'));
+selectField('identity','主体','example');
+assert(element('#comparisonHint').textContent.includes('5/6'));
+element('#inspectBtn').onclick();
+assert(element('#comparisonHint').textContent.includes('5/6'));
+element('#bookBtn').onclick();
+assert(!element('#currentAnswer').innerHTML.includes('正解：拒否'));
+assert(!element('#answerRows').innerHTML.includes('必要な条件を満たしていません'));
+assert(element('#answerRows').innerHTML.includes('判定後'));
+element('#closeBook').onclick();
+element('#denyBtn').onclick();
+assert(element('#memo').textContent.includes('拒否：'));
+element('#bookBtn').onclick();
+assert(element('#answerRows').innerHTML.includes('通信方式'));
+assert(element('#answerRows').innerHTML.includes('規則：'));
+console.log('PASS: 6項目の確認メモ / 審査中の解答非表示 / 判定後の違反根拠と履歴 (DOM stub)');

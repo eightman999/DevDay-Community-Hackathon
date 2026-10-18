@@ -3,13 +3,13 @@ import { readFile, realpath } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { INCIDENTS, TYPES } from './dist/catalog.mjs';
-import {THREATS,makeInspection} from './dist/threats.mjs';
+import {THREATS,makeInspection,inspectionChecks} from './dist/threats.mjs';
 import { normalizeEnemyTurn, chooseLocal } from './dist/enemy-policy.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('./dist/', import.meta.url)));
 const ENDPOINT = 'https://api.openai.com/v1/decisions';
 const BODY_LIMIT = 32768;
-const MIME = { '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.csv': 'text/csv; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.csv': 'text/csv; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon' };
 
 function json(response, status, value) {
   response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
@@ -90,7 +90,7 @@ export function createCellwatchServer({ apiKey = '', mode, fetchImpl = globalThi
                   const incident = INCIDENTS.find(item => item.id === id);
                   const inspection=makeInspection({...incident,templateId:incident.id},turn.round);
                   const pattern=THREATS.find(p=>p.id===inspection.patternId);
-                  return { value: `incident_${id}`, description: JSON.stringify({ type: incident.type, a: incident.a, b: incident.b, rule: pattern.fieldA+'='+pattern.safeA+' かつ '+pattern.fieldB+'='+pattern.safeB, inspection, weakness:pattern.name, impact:pattern.impact, impactKind:pattern.impactKind }) };
+                  return { value: `incident_${id}`, description: JSON.stringify({ type: incident.type, a: incident.a, b: incident.b, rule: inspectionChecks(inspection).map(check=>check.label+'：'+check.rule).join(' / '), inspection, weakness:pattern.name, impact:pattern.impact, impactKind:pattern.impactKind }) };
                 })
               }]
             })
