@@ -5,8 +5,8 @@
   "type": "module",
   "description": "A cellular security board and document inspection game",
   "scripts": {
-    "dev": "python3 -m http.server 8766 --bind 127.0.0.1 --directory dist",
-    "test": "node --test engine.test.mjs automata.test.mjs ui-wiring.test.mjs",
-    "check": "node --check dist/app.mjs"
+    "dev": "node --env-file-if-exists=.env server.mjs",
+    "test": "node --test engine.test.mjs automata.test.mjs ui-wiring.test.mjs catalog.test.mjs enemy-provider.test.mjs server.test.mjs threats.test.mjs",
+    "check": "node --check dist/app.mjs && node --check dist/catalog.mjs && node --check dist/engine.mjs && node --check dist/bootstrap.mjs && node --check dist/enemy.mjs && node --check dist/enemy-policy.mjs && node --check dist/enemy-provider.mjs && node --check server.mjs && node --check dist/threats.mjs"
   }
 }
