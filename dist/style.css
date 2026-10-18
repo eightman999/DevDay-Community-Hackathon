@@ -111,7 +111,7 @@
 .request-fields .comparison-value strong,.request-fields .comparison-value strong.jp{font-size:13px;line-height:1.7}
 .request-fields .comparison-value{padding:8px 16px 8px 8px;min-height:44px}
 @media(min-width:951px) and (max-height:950px){
-  .review-evidence{max-height:clamp(200px,calc(100dvh - 550px),400px)}
+  .review-evidence{max-height:clamp(200px,calc(100dvh - 590px),400px)}
   .request-summary{padding-block:5px}
   .inspection-instruction{font-size:11px;margin-bottom:6px}
   .inspection-table th,.inspection-table td{padding:7px}

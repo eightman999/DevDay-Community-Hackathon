@@ -66,7 +66,7 @@ CSVは`dist/`配下に含まれるため、静的配信時もCSVファイルを�
 | weakness / impact / patch | 弱点 / 起こり得る影響 / 根本修正の説明（各300文字以内） |
 | source | MicrosoftまたはMITRE CWEの公式資料URL |
 | fieldA / fieldB | 監視装置が確認する検査項目名 |
-| safeA / safeB | 通過に必要な二つの所見（両方の完全一致が必要） |
+| safeA / safeB | 技術所見2項目の条件（両方の完全一致に加え、共通4規則も必要） |
 | attackA / attackB | 仮想の不正通信に対する検査所見 |
 | impactKind | ゲームが表す主な被害: availability（利用不能）/ confidentiality（機密性）/ integrity（完全性） |
 

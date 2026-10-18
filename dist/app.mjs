@@ -5,7 +5,7 @@ import { EnemyDirector } from './enemy.mjs';
 import { createEnemyProvider } from './enemy-provider.mjs';
 import {THREATS,makeInspection,inspectionChecks} from './threats.mjs';
 const threatFor=r=>THREATS.find(p=>p.id===r?.inspection?.patternId);
-const inspectionRule=p=>p.fieldA+'は「'+p.safeA+'」、'+p.fieldB+'は「'+p.safeB+'」の両方を満たす通信だけ通す。';
+const inspectionRule=p=>p.fieldA+'は「'+p.safeA+'」、'+p.fieldB+'は「'+p.safeB+'」。この2項目に加え、主体・権限・送信条件・処理量の4規則も満たす必要がある。';
 const threatCards=()=>THREATS.map((p,index)=>`<article><code>${String(index+1).padStart(2,'0')} / ${esc(p.id)}</code><b>${esc(p.name)}</b><p>${esc(p.weakness)}</p><p><strong>病院で起こり得る影響</strong><br>${esc(p.impact)}</p><small>演習の通過条件：${esc(inspectionRule(p))}<br>根本対策：${esc(p.patch)}</small><a href="${esc(p.source)}" target="_blank" rel="noopener">一次資料 ↗</a></article>`).join('');
 import {highLifeStep,seedReplicator} from './automata.mjs';
 import {BoardState,hitTest,boardPoint} from './board-state.mjs';
