@@ -26,6 +26,8 @@ export class BoardState {
     const pending = shift.requests.filter(r => r.status === 'pending')
       .sort((a, b) => a.at - b.at || a.id - b.id);
     const ranks = new Map(pending.map((r, i) => [r.id, i]));
+    const remaining = pending.length ? Math.min(...pending.map(r => r.deadline - time)) : 6;
+    const waitingUrgency = ease(clamp((6 - remaining) / 6));
     const nodes = [];
 
     for (const request of shift.requests) {
@@ -96,7 +98,7 @@ export class BoardState {
 
     return {
       time, started: shift.started, running: shift.running, done: shift.done,
-      nodes, overflow: Math.max(0, pending.length - 5), selectedId, filter,
+      nodes, overflow: Math.max(0, pending.length - 5), selectedId, filter, waitingUrgency,
       zones: shift.zones, threats: shift.threatFields, reducedMotion,
       attacks: Object.values(shift.zones).reduce((sum, z) => sum + z.attacks, 0),
     };

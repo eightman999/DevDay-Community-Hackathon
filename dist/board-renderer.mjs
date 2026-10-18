@@ -17,8 +17,14 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
     ctx.shadowBlur = 0;
   };
   // Dead home cells stay blue, even if all the living cells disappear.
-  for (let y = 0; y < 60; y++) for (let x = 0; x < 96; x++) {
-    cell(x, y, x < 48 ? '#18262b' : (x + y) % 3 ? '#17344b' : '#1a3e58');
+  for (let y = 0; y < 60; y++) {
+    // A soft lift around the queue builds over the final six seconds to auto-pass.
+    // It follows game time, so pauses and extended deadlines also affect the light.
+    const lift = scene.waitingUrgency * Math.max(0, 1 - Math.abs(y + .5 - 30) / 13) ** 2;
+    const waitingColor = `rgb(${Math.round(24 + 26 * lift)},${Math.round(38 + 20 * lift)},${Math.round(43 + 8 * lift)})`;
+    for (let x = 0; x < 96; x++) {
+      cell(x, y, x < 48 ? waitingColor : (x + y) % 3 ? '#17344b' : '#1a3e58');
+    }
   }
   for (const n of life) {
     const x = n % 48, y = Math.floor(n / 48);
@@ -88,7 +94,6 @@ export function drawBoard(ctx, scene, life, generation, { labelScale = 1 } = {})
   }
   label('外部 / EXTERNAL', 22, 12, '#a8b8bf');
   label('自陣 / BLUE', 73, 12, '#8bd5ff');
-  label('審査待ち →', 23, 20, '#f2c65b');
   if (scene.overflow) label('ほか ' + scene.overflow + ' 件', 8, 45, '#f2c65b');
   label(scene.attacks ? '! 侵入 ' + scene.attacks + '件' : '● 正常サービス', 73, 52,
     scene.attacks ? '#f16c65' : '#8bd5ff');
