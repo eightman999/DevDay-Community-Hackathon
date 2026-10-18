@@ -179,3 +179,5 @@ CELLWATCHをルートの作品として維持し、他ブランチの別案も�
 ## 発表用イントロ動画
 
 30秒の動画と、終了後に実ページへ自動で切り替わる[発表ページ](presentation/README.md)を同梱しています。[発表セットZIP](presentation/cellwatch-presentation.zip)も利用できます。
+
+制作クレジット: BGM『TACTICAL BREACH : OVERDRIVE』はChatGPT 6 Proと6.1solによる制作。日本語フォントの字形はDotsによる制作で、同梱版の出典とライセンスは[フォント資料](dist/assets/fonts/README.md)を参照してください。
