@@ -1,0 +1,545 @@
+// ============================================
+// TACTICAL BREACH : OVERDRIVE
+// PERCUSSION EDITION
+// 176 BPM / D minor / 4/4 / 96 bars
+// Loop-ready tactical action soundtrack
+// ============================================
+
+set tempo(176);
+set beat(4/4);
+set volume(78);
+set wave(sawtooth);
+
+// ============================================
+// BASS ENGINE
+// ============================================
+
+bd = measure[
+  acc nD2-0.5, stc nD2-0.5,
+  nD3-0.5, stc nD2-0.5,
+  acc nD2-0.5, nA2-0.5,
+  stc nC3-0.5, nD3-0.5
+];
+
+bb = measure[
+  acc nBb2-0.5, stc nBb2-0.5,
+  nF3-0.5, stc nBb2-0.5,
+  acc nBb2-0.5, nF2-0.5,
+  nA2-0.5, nBb2-0.5
+];
+
+bf = measure[
+  acc nF2-0.5, stc nF2-0.5,
+  nC3-0.5, stc nF2-0.5,
+  acc nF2-0.5, nA2-0.5,
+  nC3-0.5, nE3-0.5
+];
+
+ba = measure[
+  acc nA2-0.5, stc nA2-0.5,
+  nE3-0.5, stc nA2-0.5,
+  acc nA2-0.5, nG2-0.5,
+  nC#3-0.5, nE3-0.5
+];
+
+// ============================================
+// OFFBEAT CHORD STABS
+// ============================================
+
+od = measure[
+  R-0.5, [nD4-0.5,nF4-0.5,nA4-0.5],
+  R-0.5, [nD4-0.5,nF4-0.5,nA4-0.5],
+  R-0.5, [nD4-0.5,nF4-0.5,nA4-0.5],
+  R-0.5, [nD4-0.5,nF4-0.5,nA4-0.5]
+];
+
+ob = measure[
+  R-0.5, [nBb3-0.5,nD4-0.5,nF4-0.5],
+  R-0.5, [nBb3-0.5,nD4-0.5,nF4-0.5],
+  R-0.5, [nBb3-0.5,nD4-0.5,nF4-0.5],
+  R-0.5, [nBb3-0.5,nD4-0.5,nF4-0.5]
+];
+
+of = measure[
+  R-0.5, [nF4-0.5,nA4-0.5,nC5-0.5],
+  R-0.5, [nF4-0.5,nA4-0.5,nC5-0.5],
+  R-0.5, [nF4-0.5,nA4-0.5,nC5-0.5],
+  R-0.5, [nF4-0.5,nA4-0.5,nC5-0.5]
+];
+
+oa = measure[
+  R-0.5, [nA3-0.5,nC#4-0.5,nE4-0.5],
+  R-0.5, [nA3-0.5,nC#4-0.5,nE4-0.5],
+  R-0.5, [nA3-0.5,nC#4-0.5,nE4-0.5],
+  R-0.5, [nA3-0.5,nC#4-0.5,nE4-0.5]
+];
+
+// ============================================
+// SIXTEENTH-NOTE ARPEGGIO
+// ============================================
+
+xd = measure[
+  nD4-0.25,nA4-0.25,nF4-0.25,nA4-0.25,
+  nD5-0.25,nA4-0.25,nF4-0.25,nA4-0.25,
+  nD4-0.25,nA4-0.25,nF4-0.25,nA4-0.25,
+  nD5-0.25,nC5-0.25,nA4-0.25,nF4-0.25
+];
+
+xb = measure[
+  nBb3-0.25,nF4-0.25,nD4-0.25,nF4-0.25,
+  nBb4-0.25,nF4-0.25,nD4-0.25,nF4-0.25,
+  nBb3-0.25,nF4-0.25,nD4-0.25,nF4-0.25,
+  nBb4-0.25,nA4-0.25,nF4-0.25,nD4-0.25
+];
+
+xf = measure[
+  nF4-0.25,nC5-0.25,nA4-0.25,nC5-0.25,
+  nF5-0.25,nC5-0.25,nA4-0.25,nC5-0.25,
+  nF4-0.25,nC5-0.25,nA4-0.25,nC5-0.25,
+  nF5-0.25,nE5-0.25,nC5-0.25,nA4-0.25
+];
+
+xa = measure[
+  nA3-0.25,nE4-0.25,nC#4-0.25,nE4-0.25,
+  nA4-0.25,nE4-0.25,nC#4-0.25,nE4-0.25,
+  nA3-0.25,nE4-0.25,nC#4-0.25,nE4-0.25,
+  nA4-0.25,nG4-0.25,nE4-0.25,nC#4-0.25
+];
+
+// ============================================
+// A MELODY - ORIGINAL
+// ============================================
+
+a1 = measure[
+  stc nA5-0.5,stc nA5-0.5,
+  stc nC6-0.5,acc nD6-1,
+  nC6-0.5,nA5-0.5,nF5-0.5
+];
+
+a2 = measure[
+  stc nF5-0.25,nG5-0.25,
+  nA5-0.25,nC6-0.25,
+  acc nBb5-1,
+  nA5-0.5,nF5-0.5,nD5-1
+];
+
+a3 = measure[
+  stc nA5-0.5,stc nC6-0.5,
+  acc nD6-0.5,nC6-0.5,
+  nA5-0.25,nG5-0.25,
+  nF5-0.25,nG5-0.25,nA5-1
+];
+
+a4 = measure[
+  stc nE5-0.25,nF5-0.25,
+  nG5-0.25,nA5-0.25,
+  nBb5-0.5,nA5-0.5,
+  acc nC#6-0.5,nA5-0.5,nG5-1
+];
+
+// ============================================
+// A MELODY VARIATION - ORIGINAL
+// ============================================
+
+v1 = measure[
+  acc nD6-0.5,nC6-0.25,nA5-0.25,
+  nF5-0.5,nA5-0.5,
+  nC6-0.25,nD6-0.25,
+  nC6-0.25,nA5-0.25,nF5-1
+];
+
+v2 = measure[
+  nF5-0.25,nG5-0.25,
+  nA5-0.25,nBb5-0.25,
+  acc nD6-0.5,nC6-0.5,
+  nBb5-0.5,nA5-0.5,nF5-1
+];
+
+v3 = measure[
+  stc nC6-0.5,stc nC6-0.5,
+  acc nA5-0.5,nF5-0.5,
+  nA5-0.25,nC6-0.25,
+  nD6-0.25,nC6-0.25,nA5-1
+];
+
+v4 = measure[
+  nE5-0.25,nF5-0.25,
+  nG5-0.25,nA5-0.25,
+  nC#6-0.25,nD6-0.25,
+  nE6-0.25,nC#6-0.25,
+  acc nD6-1,nA5-1
+];
+
+// ============================================
+// B MELODY - ORIGINAL
+// ============================================
+
+b1 = measure[
+  nA5-0.5,nBb5-0.5,
+  nC6-0.5,nD6-0.5,
+  nE6-0.5,nD6-0.5,nC6-1
+];
+
+b2 = measure[
+  nBb5-0.25,nC6-0.25,
+  nD6-0.25,nF6-0.25,
+  nE6-0.5,nD6-0.5,
+  nC6-0.5,nBb5-0.5,nA5-1
+];
+
+b3 = measure[
+  acc nC6-0.5,nD6-0.5,
+  nE6-0.5,nF6-0.5,
+  nE6-0.25,nD6-0.25,
+  nC6-0.25,nD6-0.25,nE6-1
+];
+
+b4 = measure[
+  nE6-0.25,nF6-0.25,
+  nG6-0.25,nA6-0.25,
+  acc nG6-0.5,nE6-0.5,
+  nC#6-0.5,nE6-0.5,nA5-1
+];
+
+// ============================================
+// CHORUS - ORIGINAL
+// ============================================
+
+c1 = measure[
+  acc nD6-0.5,stc nD6-0.5,
+  nC6-0.5,nA5-0.5,
+  nF5-0.25,nA5-0.25,
+  nC6-0.25,nD6-0.25,nA5-1
+];
+
+c2 = measure[
+  acc nF6-0.5,nD6-0.5,
+  nC6-0.25,nBb5-0.25,
+  nA5-0.5,
+  nBb5-0.25,nC6-0.25,
+  nD6-0.5,nF6-1
+];
+
+c3 = measure[
+  acc nC6-0.5,stc nC6-0.5,
+  nA5-0.25,nC6-0.25,
+  nD6-0.5,
+  nF6-0.5,nE6-0.5,nD6-1
+];
+
+c4 = measure[
+  nE6-0.25,nD6-0.25,
+  nC#6-0.25,nA5-0.25,
+  acc nC#6-0.5,nE6-0.5,
+  nG6-0.5,nE6-0.5,nC#6-1
+];
+
+c5 = measure[
+  acc nA6-1,nG6-0.5,
+  nF6-0.5,nD6-0.5,
+  nC6-0.5,nA5-0.5,nD6-0.5
+];
+
+c6 = measure[
+  nF6-0.25,nE6-0.25,
+  nD6-0.25,nC6-0.25,
+  acc nBb5-0.5,nD6-0.5,
+  nF6-0.5,nD6-0.5,nBb5-1
+];
+
+c7 = measure[
+  acc nA5-0.5,nC6-0.5,
+  nF6-0.5,nA6-0.5,
+  nG6-0.25,nF6-0.25,
+  nE6-0.25,nD6-0.25,nC6-1
+];
+
+c8 = measure[
+  nA5-0.25,nC#6-0.25,
+  nE6-0.25,nG6-0.25,
+  acc nA6-0.5,nG6-0.5,
+  nE6-0.5,nC#6-0.5,nA5-1
+];
+
+// ============================================
+// HIGH SPEED INSTRUMENTAL - ORIGINAL
+// ============================================
+
+i1 = measure[
+  nD5-0.25,nF5-0.25,
+  nA5-0.25,nD6-0.25,
+  nF6-0.25,nD6-0.25,
+  nA5-0.25,nF5-0.25,
+  nD5-0.25,nF5-0.25,
+  nA5-0.25,nD6-0.25,
+  nF6-0.25,nA6-0.25,
+  nF6-0.25,nD6-0.25
+];
+
+i2 = measure[
+  nBb4-0.25,nD5-0.25,
+  nF5-0.25,nBb5-0.25,
+  nD6-0.25,nF6-0.25,
+  nD6-0.25,nBb5-0.25,
+  nF5-0.25,nBb5-0.25,
+  nD6-0.25,nF6-0.25,
+  nA6-0.25,nF6-0.25,
+  nD6-0.25,nBb5-0.25
+];
+
+i3 = measure[
+  nF5-0.25,nA5-0.25,
+  nC6-0.25,nF6-0.25,
+  nA6-0.25,nF6-0.25,
+  nC6-0.25,nA5-0.25,
+  nF5-0.25,nA5-0.25,
+  nC6-0.25,nE6-0.25,
+  nF6-0.25,nE6-0.25,
+  nC6-0.25,nA5-0.25
+];
+
+i4 = measure[
+  nA4-0.25,nC#5-0.25,
+  nE5-0.25,nA5-0.25,
+  nC#6-0.25,nE6-0.25,
+  nG6-0.25,nE6-0.25,
+  nC#6-0.25,nA5-0.25,
+  nG5-0.25,nA5-0.25,
+  nC#6-0.25,nE6-0.25,
+  nC#6-0.25,nA5-0.25
+];
+
+// ============================================
+// CHORUS COUNTER MELODY - ORIGINAL
+// ============================================
+
+kd = measure[
+  R-0.5,nA4-0.5,
+  nD5-0.5,R-0.5,
+  nF5-0.5,nE5-0.5,
+  nD5-0.5,R-0.5
+];
+
+kb = measure[
+  R-0.5,nF4-0.5,
+  nBb4-0.5,R-0.5,
+  nD5-0.5,nC5-0.5,
+  nBb4-0.5,R-0.5
+];
+
+kf = measure[
+  R-0.5,nC5-0.5,
+  nF5-0.5,R-0.5,
+  nA5-0.5,nG5-0.5,
+  nF5-0.5,R-0.5
+];
+
+ka = measure[
+  R-0.5,nE5-0.5,
+  nA5-0.5,R-0.5,
+  nG5-0.5,nE5-0.5,
+  nC#5-0.5,R-0.5
+];
+
+// ============================================
+// PERCUSSION ENGINE
+// Synthesized using pitched notes
+// ============================================
+
+// Kick - syncopated low pulse
+dk = measure[
+  acc nC2-0.25,R-0.75,
+  acc nC2-0.25,R-0.25,
+  stc nC2-0.25,R-0.25,
+  acc nC2-0.25,R-0.75,
+  stc nC2-0.25,R-0.25,
+  stc nC2-0.25,R-0.25
+];
+
+// Chorus kick - denser attacks
+dkc = measure[
+  acc nC2-0.25,R-0.5,stc nC2-0.25,
+  acc nC2-0.25,R-0.5,stc nC2-0.25,
+  acc nC2-0.25,R-0.5,stc nC2-0.25,
+  acc nC2-0.25,R-0.25,
+  stc nC2-0.25,R-0.25
+];
+
+// Snare - beats 2 and 4
+ds = measure[
+  R-1,
+  acc nD4-0.125,R-0.875,
+  R-1,
+  acc nD4-0.125,R-0.875
+];
+
+// Eighth-note closed hat
+dh = measure[
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375,
+  stc nF#6-0.125,R-0.375
+];
+
+// Sixteenth-note rapid hat
+dhr = measure[
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25,
+  stc nF#6-0.25,stc nG6-0.25
+];
+
+// Ghost percussion
+dg = measure[
+  R-0.75,stc nA4-0.125,R-0.125,
+  R-0.75,stc nA4-0.125,R-0.125,
+  R-0.75,stc nA4-0.125,R-0.125,
+  R-0.75,stc nA4-0.125,R-0.125
+];
+
+// Tom-like descending fill
+dt = measure[
+  R-2,
+  stc nG3-0.25,stc nF3-0.25,
+  stc nE3-0.25,stc nD3-0.25,
+  stc nC3-0.25,stc nBb2-0.25,
+  acc nA2-0.25,acc nD3-0.25
+];
+
+// Crash-style short accent
+dc = measure[
+  acc nC7-0.125,R-3.875
+];
+
+// Snare roll / transition
+dr = measure[
+  R-2,
+  stc nD4-0.25,stc nD4-0.25,
+  stc nD4-0.25,stc nD4-0.25,
+  stc nD4-0.25,stc nD4-0.25,
+  acc nD4-0.25,acc nD4-0.25
+];
+
+// ============================================
+// A MELODY 1 - 16 BARS
+// Strong groove, eighth-note hats
+// ============================================
+
+loop 4 {
+  read(a1 & bd & od & xd & dk & ds & dh & dg);
+  read(a2 & bb & ob & xb & dk & ds & dh);
+  read(a3 & bf & of & xf & dk & ds & dh & dg);
+  read(a4 & ba & oa & xa & dk & ds & dh & dt);
+}
+
+// ============================================
+// B MELODY 1 - 8 BARS
+// More movement, 16th-note hats
+// ============================================
+
+loop 2 {
+  read(b1 & bd & od & xd & dk & ds & dhr);
+  read(b2 & bb & ob & xb & dk & ds & dhr & dg);
+  read(b3 & bf & of & xf & dkc & ds & dhr);
+  read(b4 & ba & oa & xa & dkc & ds & dhr & dr);
+}
+
+// ============================================
+// CHORUS 1 - 16 BARS
+// Full speed, percussion and counterline
+// ============================================
+
+loop 2 {
+  read(c1 & bd & od & xd & kd & dkc & ds & dhr & dc);
+  read(c2 & bb & ob & xb & kb & dkc & ds & dhr);
+  read(c3 & bf & of & xf & kf & dkc & ds & dhr & dg);
+  read(c4 & ba & oa & xa & ka & dkc & ds & dhr & dt);
+
+  read(c5 & bd & od & xd & kd & dkc & ds & dhr & dc);
+  read(c6 & bb & ob & xb & kb & dkc & ds & dhr);
+  read(c7 & bf & of & xf & kf & dkc & ds & dhr & dg);
+  read(c8 & ba & oa & xa & ka & dkc & ds & dhr & dr);
+}
+
+// ============================================
+// HIGH-SPEED BREAK - 8 BARS
+// No slowdown, 16th lead and hats
+// ============================================
+
+loop 2 {
+  read(i1 & bd & od & xd & dkc & ds & dhr & dc);
+  read(i2 & bb & ob & xb & dkc & ds & dhr & dg);
+  read(i3 & bf & of & xf & dkc & ds & dhr);
+  read(i4 & ba & oa & xa & dkc & ds & dhr & dt);
+}
+
+// ============================================
+// A MELODY 2 - 16 BARS
+// Modified melody, same running drums
+// ============================================
+
+loop 2 {
+  read(v1 & bd & od & xd & dk & ds & dh & dg);
+  read(v2 & bb & ob & xb & dk & ds & dh);
+  read(v3 & bf & of & xf & dkc & ds & dh & dg);
+  read(v4 & ba & oa & xa & dk & ds & dhr & dt);
+
+  read(a3 & bd & od & xd & dk & ds & dh & dg);
+  read(a4 & bb & ob & xb & dk & ds & dh);
+  read(v1 & bf & of & xf & dkc & ds & dhr);
+  read(v4 & ba & oa & xa & dkc & ds & dhr & dr);
+}
+
+// ============================================
+// B MELODY 2 - 8 BARS
+// Full percussion, rising pressure
+// ============================================
+
+loop 2 {
+  read(b3 & bd & od & xd & dkc & ds & dhr & dc);
+  read(b2 & bb & ob & xb & dkc & ds & dhr);
+  read(b1 & bf & of & xf & dkc & ds & dhr & dg);
+  read(b4 & ba & oa & xa & dkc & ds & dhr & dr);
+}
+
+// ============================================
+// FINAL CHORUS - 16 BARS
+// Maximum intensity
+// ============================================
+
+loop 2 {
+  read(c5 & bd & od & xd & kd & dkc & ds & dhr & dc);
+  read(c6 & bb & ob & xb & kb & dkc & ds & dhr & dg);
+  read(c7 & bf & of & xf & kf & dkc & ds & dhr);
+  read(c8 & ba & oa & xa & ka & dkc & ds & dhr & dt);
+
+  read(c1 & bd & od & xd & kd & dkc & ds & dhr & dc);
+  read(c2 & bb & ob & xb & kb & dkc & ds & dhr);
+  read(c3 & bf & of & xf & kf & dkc & ds & dhr & dg);
+  read(c4 & ba & oa & xa & ka & dkc & ds & dhr & dr);
+}
+
+// ============================================
+// LOOP BRIDGE - 8 BARS
+// Same tempo and pulse, no outro
+// ============================================
+
+read(i1 & bd & od & xd & dkc & ds & dhr & dc);
+read(i2 & bb & ob & xb & dkc & ds & dhr);
+read(i3 & bf & of & xf & dkc & ds & dhr & dg);
+read(i4 & ba & oa & xa & dkc & ds & dhr & dt);
+
+read(v1 & bd & od & xd & dk & ds & dh);
+read(v2 & bb & ob & xb & dk & ds & dh & dg);
+read(v3 & bf & of & xf & dkc & ds & dhr);
+read(v4 & ba & oa & xa & dkc & ds & dhr & dr);
+
+// LOOP POINT -> A MELODY 1
