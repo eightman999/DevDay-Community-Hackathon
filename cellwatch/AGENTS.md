@@ -6,4 +6,4 @@
 - HighLifeは `dist/automata.mjs`。見た目のコピー追加で自己複製を代用せず、12/36世代の検証を維持する。
 - 判定と教科書の正解は `expectedVerdict`、理由は `verdictReason` を共有する。
 - 既存Sites識別子を維持する。Sitesへのソース同期・公開はSitesスキルに従う。GitHubへのpushはユーザーが依頼した場合だけ。
-- API、実攻撃、認証情報、個人データの取得は実装していない。ゲーム状態はメモリ内。
+- この `master/cellwatch/` の試作にはAPI、実攻撃、認証情報、個人データの取得は実装していない。ゲーム状態はメモリ内。別ブランチ `main` のルートにはDecisions API連携があるため、作品全体の技術状態は `FEATURES.md` と該当ブランチのソースを確認する。
