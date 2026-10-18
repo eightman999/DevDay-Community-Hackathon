@@ -1,0 +1,332 @@
+{
+  "title": "Byte Bounce / バイト・バウンス",
+  "version": "1.0",
+  "bpm": 128,
+  "meter": "4/4",
+  "bars": 32,
+  "beats": 128,
+  "duration_seconds": 60.0,
+  "sample_rate_hz": 48000,
+  "channels": 1,
+  "pcm_bits": 16,
+  "samples_per_beat": 22500,
+  "samples_per_bar": 90000,
+  "samples_per_file": 2880000,
+  "loop_start_sample": 0,
+  "loop_end_sample_exclusive": 2880000,
+  "loop_start_seconds": 0,
+  "loop_end_seconds_exclusive": 60.0,
+  "key_center": "D major, with one brief chromatic neighbour in suspicion each 8 bars",
+  "seed": 508128,
+  "global_gain": 1.2712772975949322,
+  "mix_matrix": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "suspicious": [
+      1,
+      1,
+      0
+    ],
+    "chase": [
+      1,
+      1,
+      1
+    ]
+  },
+  "stem_files": [
+    "stems/01_normal_groove.wav",
+    "stems/02_suspicion_ticks.wav",
+    "stems/03_chase_drive.wav"
+  ],
+  "state_switch": "Keep all stems running on one transport; ramp additive gains over 0.25 s at the next beat. Never sum full state mixes.",
+  "sections": [
+    {
+      "bars": [
+        1,
+        8
+      ],
+      "name": "A: bounce / short call and response"
+    },
+    {
+      "bars": [
+        9,
+        16
+      ],
+      "name": "B: duck / lower register and gaps"
+    },
+    {
+      "bars": [
+        17,
+        24
+      ],
+      "name": "C: dash / hook with pickup answers"
+    },
+    {
+      "bars": [
+        25,
+        32
+      ],
+      "name": "A-prime: slip home / dominant turnaround"
+    }
+  ],
+  "arrangement": {
+    "normal": "quarter-note kick + offbeat chord stabs + six-note syncopated bass + new mallet hook",
+    "suspicious": "normal plus a three-sixteenth scanner pulse and soft ticks",
+    "chase": "suspicious plus gated sixteenth arpeggios, offbeat kick pickups and small backbeat rolls"
+  },
+  "synthesis_reuse": "Reuses v1 CPU oscillator/envelope/loop utility code, with new score, harmony, voices and rhythms. Original v1 files are preserved.",
+  "bar_grid": [
+    {
+      "bar": 1,
+      "start_beat": 0,
+      "start_sample": 0,
+      "start_seconds": 0.0,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 2,
+      "start_beat": 4,
+      "start_sample": 90000,
+      "start_seconds": 1.875,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 3,
+      "start_beat": 8,
+      "start_sample": 180000,
+      "start_seconds": 3.75,
+      "chord": "Bm7"
+    },
+    {
+      "bar": 4,
+      "start_beat": 12,
+      "start_sample": 270000,
+      "start_seconds": 5.625,
+      "chord": "Bm7"
+    },
+    {
+      "bar": 5,
+      "start_beat": 16,
+      "start_sample": 360000,
+      "start_seconds": 7.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 6,
+      "start_beat": 20,
+      "start_sample": 450000,
+      "start_seconds": 9.375,
+      "chord": "G6"
+    },
+    {
+      "bar": 7,
+      "start_beat": 24,
+      "start_sample": 540000,
+      "start_seconds": 11.25,
+      "chord": "A6"
+    },
+    {
+      "bar": 8,
+      "start_beat": 28,
+      "start_sample": 630000,
+      "start_seconds": 13.125,
+      "chord": "A6"
+    },
+    {
+      "bar": 9,
+      "start_beat": 32,
+      "start_sample": 720000,
+      "start_seconds": 15.0,
+      "chord": "Em7"
+    },
+    {
+      "bar": 10,
+      "start_beat": 36,
+      "start_sample": 810000,
+      "start_seconds": 16.875,
+      "chord": "Em7"
+    },
+    {
+      "bar": 11,
+      "start_beat": 40,
+      "start_sample": 900000,
+      "start_seconds": 18.75,
+      "chord": "F#m7"
+    },
+    {
+      "bar": 12,
+      "start_beat": 44,
+      "start_sample": 990000,
+      "start_seconds": 20.625,
+      "chord": "F#m7"
+    },
+    {
+      "bar": 13,
+      "start_beat": 48,
+      "start_sample": 1080000,
+      "start_seconds": 22.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 14,
+      "start_beat": 52,
+      "start_sample": 1170000,
+      "start_seconds": 24.375,
+      "chord": "G6"
+    },
+    {
+      "bar": 15,
+      "start_beat": 56,
+      "start_sample": 1260000,
+      "start_seconds": 26.25,
+      "chord": "A6"
+    },
+    {
+      "bar": 16,
+      "start_beat": 60,
+      "start_sample": 1350000,
+      "start_seconds": 28.125,
+      "chord": "A6"
+    },
+    {
+      "bar": 17,
+      "start_beat": 64,
+      "start_sample": 1440000,
+      "start_seconds": 30.0,
+      "chord": "Bm7"
+    },
+    {
+      "bar": 18,
+      "start_beat": 68,
+      "start_sample": 1530000,
+      "start_seconds": 31.875,
+      "chord": "Bm7"
+    },
+    {
+      "bar": 19,
+      "start_beat": 72,
+      "start_sample": 1620000,
+      "start_seconds": 33.75,
+      "chord": "G6"
+    },
+    {
+      "bar": 20,
+      "start_beat": 76,
+      "start_sample": 1710000,
+      "start_seconds": 35.625,
+      "chord": "G6"
+    },
+    {
+      "bar": 21,
+      "start_beat": 80,
+      "start_sample": 1800000,
+      "start_seconds": 37.5,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 22,
+      "start_beat": 84,
+      "start_sample": 1890000,
+      "start_seconds": 39.375,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 23,
+      "start_beat": 88,
+      "start_sample": 1980000,
+      "start_seconds": 41.25,
+      "chord": "A6"
+    },
+    {
+      "bar": 24,
+      "start_beat": 92,
+      "start_sample": 2070000,
+      "start_seconds": 43.125,
+      "chord": "A6"
+    },
+    {
+      "bar": 25,
+      "start_beat": 96,
+      "start_sample": 2160000,
+      "start_seconds": 45.0,
+      "chord": "Em7"
+    },
+    {
+      "bar": 26,
+      "start_beat": 100,
+      "start_sample": 2250000,
+      "start_seconds": 46.875,
+      "chord": "Em7"
+    },
+    {
+      "bar": 27,
+      "start_beat": 104,
+      "start_sample": 2340000,
+      "start_seconds": 48.75,
+      "chord": "G6"
+    },
+    {
+      "bar": 28,
+      "start_beat": 108,
+      "start_sample": 2430000,
+      "start_seconds": 50.625,
+      "chord": "G6"
+    },
+    {
+      "bar": 29,
+      "start_beat": 112,
+      "start_sample": 2520000,
+      "start_seconds": 52.5,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 30,
+      "start_beat": 116,
+      "start_sample": 2610000,
+      "start_seconds": 54.375,
+      "chord": "D6/9"
+    },
+    {
+      "bar": 31,
+      "start_beat": 120,
+      "start_sample": 2700000,
+      "start_seconds": 56.25,
+      "chord": "A6"
+    },
+    {
+      "bar": 32,
+      "start_beat": 124,
+      "start_sample": 2790000,
+      "start_seconds": 58.125,
+      "chord": "A6"
+    }
+  ],
+  "provenance": "New note/event arrangement and analytic sine/FM/noise synthesis written for this request. No external melodies, recordings, samples or model/service generation used. Similarity and legal clearance are not guaranteed.",
+  "listening_status": "Not human-auditioned by the agent. No real-smartphone test performed.",
+  "audition_files": [
+    "compressed/ByteBounce_128_chase.m4a",
+    "compressed/ByteBounce_128_normal.m4a",
+    "compressed/ByteBounce_128_suspicious.m4a"
+  ],
+  "mix_recipes": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "suspicious": [
+      1,
+      1,
+      0
+    ],
+    "chase": [
+      1,
+      1,
+      1
+    ]
+  },
+  "reference_subset_note": "Full PCM state mixes and embedded HTML are omitted to avoid duplicate audio. Original generate.py recreates them from the same score; the shipped PCM stems retain exact loop timing."
+}

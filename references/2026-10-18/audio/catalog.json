@@ -1,0 +1,32 @@
+[
+  {
+    "folder": "pocket-directory-96",
+    "title": "Pocket Directory",
+    "bpm": 96,
+    "duration_seconds": 80,
+    "m4a_files": 3,
+    "wav_files": 3,
+    "source_archive": "PocketDirectory_BGM_v1.zip",
+    "source_archive_sha256": "ffd34950dce84a84bced4cae4968968b723212832e9dda57373121cf300cb169"
+  },
+  {
+    "folder": "byte-bounce-128",
+    "title": "Byte Bounce",
+    "bpm": 128,
+    "duration_seconds": 60.0,
+    "m4a_files": 3,
+    "wav_files": 3,
+    "source_archive": "ByteBounce_128_BGM_v1.zip",
+    "source_archive_sha256": "4dbb41d97c4cdb744d346aff6cc7507511d59cf71777d52ced63457fa5badd80"
+  },
+  {
+    "folder": "byte-bounce-alarm-run-128",
+    "title": "Byte Bounce: Alarm Run",
+    "bpm": 128,
+    "duration_seconds": 30,
+    "m4a_files": 6,
+    "wav_files": 6,
+    "source_archive": "ByteBounce_AlarmRun_128_v1.zip",
+    "source_archive_sha256": "3f1d5ea5d46970a9f6dbfd8e38ac0acd72f108507abd1375e63f3ab92f8bb41d"
+  }
+]

@@ -1,0 +1,326 @@
+{
+  "title": "Pocket Directory / まるいディレクトリ",
+  "version": "1.0",
+  "bpm": 96,
+  "meter": "4/4",
+  "bars": 32,
+  "beats": 128,
+  "duration_seconds": 80,
+  "sample_rate_hz": 48000,
+  "channels": 1,
+  "pcm_bits": 16,
+  "samples_per_beat": 30000,
+  "samples_per_bar": 120000,
+  "samples_per_file": 3840000,
+  "loop_start_sample": 0,
+  "loop_end_sample_exclusive": 3840000,
+  "loop_start_seconds": 0,
+  "loop_end_seconds_exclusive": 80,
+  "key_center": "C major (one F# melodic passing colour in Em7)",
+  "seed": 508096,
+  "global_gain": 1.3373708963671134,
+  "mix_matrix": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "suspicious": [
+      1,
+      1,
+      0
+    ],
+    "chase": [
+      1,
+      1,
+      1
+    ]
+  },
+  "stem_files": [
+    "stems/01_normal_base.wav",
+    "stems/02_suspicion_add.wav",
+    "stems/03_chase_add.wav"
+  ],
+  "state_switch": "Keep all stems running on one transport; ramp additive gains over 0.25 s at the next beat. Never sum full state mixes.",
+  "sections": [
+    {
+      "bars": [
+        1,
+        8
+      ],
+      "name": "boot / find a disguise"
+    },
+    {
+      "bars": [
+        9,
+        16
+      ],
+      "name": "wander / folder corridors"
+    },
+    {
+      "bars": [
+        17,
+        24
+      ],
+      "name": "mirror / adapt"
+    },
+    {
+      "bars": [
+        25,
+        32
+      ],
+      "name": "return / seamless wrap"
+    }
+  ],
+  "bar_grid": [
+    {
+      "bar": 1,
+      "start_beat": 0,
+      "start_sample": 0,
+      "start_seconds": 0.0,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 2,
+      "start_beat": 4,
+      "start_sample": 120000,
+      "start_seconds": 2.5,
+      "chord": "Am9"
+    },
+    {
+      "bar": 3,
+      "start_beat": 8,
+      "start_sample": 240000,
+      "start_seconds": 5.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 4,
+      "start_beat": 12,
+      "start_sample": 360000,
+      "start_seconds": 7.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 5,
+      "start_beat": 16,
+      "start_sample": 480000,
+      "start_seconds": 10.0,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 6,
+      "start_beat": 20,
+      "start_sample": 600000,
+      "start_seconds": 12.5,
+      "chord": "Em7"
+    },
+    {
+      "bar": 7,
+      "start_beat": 24,
+      "start_sample": 720000,
+      "start_seconds": 15.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 8,
+      "start_beat": 28,
+      "start_sample": 840000,
+      "start_seconds": 17.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 9,
+      "start_beat": 32,
+      "start_sample": 960000,
+      "start_seconds": 20.0,
+      "chord": "Am9"
+    },
+    {
+      "bar": 10,
+      "start_beat": 36,
+      "start_sample": 1080000,
+      "start_seconds": 22.5,
+      "chord": "Em7"
+    },
+    {
+      "bar": 11,
+      "start_beat": 40,
+      "start_sample": 1200000,
+      "start_seconds": 25.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 12,
+      "start_beat": 44,
+      "start_sample": 1320000,
+      "start_seconds": 27.5,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 13,
+      "start_beat": 48,
+      "start_sample": 1440000,
+      "start_seconds": 30.0,
+      "chord": "Dm9"
+    },
+    {
+      "bar": 14,
+      "start_beat": 52,
+      "start_sample": 1560000,
+      "start_seconds": 32.5,
+      "chord": "Em7"
+    },
+    {
+      "bar": 15,
+      "start_beat": 56,
+      "start_sample": 1680000,
+      "start_seconds": 35.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 16,
+      "start_beat": 60,
+      "start_sample": 1800000,
+      "start_seconds": 37.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 17,
+      "start_beat": 64,
+      "start_sample": 1920000,
+      "start_seconds": 40.0,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 18,
+      "start_beat": 68,
+      "start_sample": 2040000,
+      "start_seconds": 42.5,
+      "chord": "Am9"
+    },
+    {
+      "bar": 19,
+      "start_beat": 72,
+      "start_sample": 2160000,
+      "start_seconds": 45.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 20,
+      "start_beat": 76,
+      "start_sample": 2280000,
+      "start_seconds": 47.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 21,
+      "start_beat": 80,
+      "start_sample": 2400000,
+      "start_seconds": 50.0,
+      "chord": "Am9"
+    },
+    {
+      "bar": 22,
+      "start_beat": 84,
+      "start_sample": 2520000,
+      "start_seconds": 52.5,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 23,
+      "start_beat": 88,
+      "start_sample": 2640000,
+      "start_seconds": 55.0,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 24,
+      "start_beat": 92,
+      "start_sample": 2760000,
+      "start_seconds": 57.5,
+      "chord": "G6"
+    },
+    {
+      "bar": 25,
+      "start_beat": 96,
+      "start_sample": 2880000,
+      "start_seconds": 60.0,
+      "chord": "Dm9"
+    },
+    {
+      "bar": 26,
+      "start_beat": 100,
+      "start_sample": 3000000,
+      "start_seconds": 62.5,
+      "chord": "Em7"
+    },
+    {
+      "bar": 27,
+      "start_beat": 104,
+      "start_sample": 3120000,
+      "start_seconds": 65.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 28,
+      "start_beat": 108,
+      "start_sample": 3240000,
+      "start_seconds": 67.5,
+      "chord": "Cmaj9"
+    },
+    {
+      "bar": 29,
+      "start_beat": 112,
+      "start_sample": 3360000,
+      "start_seconds": 70.0,
+      "chord": "Dm9"
+    },
+    {
+      "bar": 30,
+      "start_beat": 116,
+      "start_sample": 3480000,
+      "start_seconds": 72.5,
+      "chord": "Em7"
+    },
+    {
+      "bar": 31,
+      "start_beat": 120,
+      "start_sample": 3600000,
+      "start_seconds": 75.0,
+      "chord": "Fmaj9"
+    },
+    {
+      "bar": 32,
+      "start_beat": 124,
+      "start_sample": 3720000,
+      "start_seconds": 77.5,
+      "chord": "G6"
+    }
+  ],
+  "provenance": "New note/event arrangement and analytic sine/FM/noise synthesis written for this request. No external melodies, recordings, samples or model/service generation used. Similarity and legal clearance are not guaranteed.",
+  "listening_status": "Not human-auditioned by the agent. No real-smartphone test performed.",
+  "audition_files": [
+    "compressed/chase.m4a",
+    "compressed/normal.m4a",
+    "compressed/suspicious.m4a"
+  ],
+  "mix_recipes": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "suspicious": [
+      1,
+      1,
+      0
+    ],
+    "chase": [
+      1,
+      1,
+      1
+    ]
+  },
+  "reference_subset_note": "Full PCM state mixes and embedded HTML are omitted to avoid duplicate audio. Original generate.py recreates them from the same score; the shipped PCM stems retain exact loop timing."
+}

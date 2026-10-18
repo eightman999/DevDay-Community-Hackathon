@@ -1,0 +1,200 @@
+{
+  "title": "Byte Bounce: Alarm Run / 擬態デッドライン",
+  "version": "1.0",
+  "bpm": 128,
+  "meter": "4/4",
+  "sample_rate_hz": 48000,
+  "pcm_bits": 16,
+  "channels": 1,
+  "samples_per_beat": 22500,
+  "samples_per_bar": 90000,
+  "master_gain": 1.2262366442173929,
+  "tension_rms_match_gain": 1.0887663110171997,
+  "assets": {
+    "normal": {
+      "file": "audio/ByteBounce_Normal_128_context_2bars.wav",
+      "beats": 8,
+      "bars": 2.0,
+      "samples": 180000,
+      "duration_seconds": 3.75,
+      "one_shot": false,
+      "loop_start_sample": 0,
+      "loop_end_sample_exclusive": 180000,
+      "loop_start_seconds": 0,
+      "loop_end_seconds_exclusive": 3.75,
+      "local_downbeat_sample": 0,
+      "recommended_gain": 1
+    },
+    "alarm": {
+      "file": "audio/ByteBounce_Alarm_128_oneshot.wav",
+      "beats": 4,
+      "bars": 1.0,
+      "samples": 90000,
+      "duration_seconds": 1.875,
+      "one_shot": true,
+      "loop_start_sample": null,
+      "loop_end_sample_exclusive": null,
+      "loop_start_seconds": null,
+      "loop_end_seconds_exclusive": null,
+      "local_downbeat_sample": 0,
+      "recommended_gain": 1
+    },
+    "countdown": {
+      "file": "audio/ByteBounce_Countdown_128_4beats.wav",
+      "beats": 4,
+      "bars": 1.0,
+      "samples": 90000,
+      "duration_seconds": 1.875,
+      "one_shot": true,
+      "loop_start_sample": null,
+      "loop_end_sample_exclusive": null,
+      "loop_start_seconds": null,
+      "loop_end_seconds_exclusive": null,
+      "local_downbeat_sample": 0,
+      "recommended_gain": 1
+    },
+    "tension": {
+      "file": "audio/ByteBounce_Tension_128_loop_8bars.wav",
+      "beats": 32,
+      "bars": 8.0,
+      "samples": 720000,
+      "duration_seconds": 15.0,
+      "one_shot": false,
+      "loop_start_sample": 0,
+      "loop_end_sample_exclusive": 720000,
+      "loop_start_seconds": 0,
+      "loop_end_seconds_exclusive": 15.0,
+      "local_downbeat_sample": 0,
+      "recommended_gain": 1
+    },
+    "success": {
+      "file": "audio/ByteBounce_Success_128_jingle.wav",
+      "beats": 8,
+      "bars": 2.0,
+      "samples": 180000,
+      "duration_seconds": 3.75,
+      "one_shot": true,
+      "loop_start_sample": null,
+      "loop_end_sample_exclusive": null,
+      "loop_start_seconds": null,
+      "loop_end_seconds_exclusive": null,
+      "local_downbeat_sample": 0,
+      "recommended_gain": 1
+    }
+  },
+  "demo": {
+    "file": "mixes/ByteBounce_AlarmRun_128_demo.wav",
+    "beats": 64,
+    "bars": 16,
+    "samples": 1440000,
+    "duration_seconds": 30.0,
+    "loop": false
+  },
+  "demo_timeline": [
+    {
+      "section": "normal",
+      "start_beat": 0,
+      "end_beat_exclusive": 8,
+      "start_sample": 0,
+      "end_sample_exclusive": 180000,
+      "start_seconds": 0.0,
+      "end_seconds_exclusive": 3.75
+    },
+    {
+      "section": "alarm",
+      "start_beat": 8,
+      "end_beat_exclusive": 12,
+      "start_sample": 180000,
+      "end_sample_exclusive": 270000,
+      "start_seconds": 3.75,
+      "end_seconds_exclusive": 5.625
+    },
+    {
+      "section": "countdown",
+      "start_beat": 12,
+      "end_beat_exclusive": 16,
+      "start_sample": 270000,
+      "end_sample_exclusive": 360000,
+      "start_seconds": 5.625,
+      "end_seconds_exclusive": 7.5
+    },
+    {
+      "section": "tension",
+      "start_beat": 16,
+      "end_beat_exclusive": 48,
+      "start_sample": 360000,
+      "end_sample_exclusive": 1080000,
+      "start_seconds": 7.5,
+      "end_seconds_exclusive": 22.5
+    },
+    {
+      "section": "success",
+      "start_beat": 48,
+      "end_beat_exclusive": 56,
+      "start_sample": 1080000,
+      "end_sample_exclusive": 1260000,
+      "start_seconds": 22.5,
+      "end_seconds_exclusive": 26.25
+    },
+    {
+      "section": "normal_return",
+      "start_beat": 56,
+      "end_beat_exclusive": 64,
+      "start_sample": 1260000,
+      "end_sample_exclusive": 1440000,
+      "start_seconds": 26.25,
+      "end_seconds_exclusive": 30.0
+    }
+  ],
+  "countdown": [
+    {
+      "count_remaining": 4,
+      "local_beat": 0,
+      "local_sample": 0,
+      "demo_beat": 12,
+      "demo_sample": 270000
+    },
+    {
+      "count_remaining": 3,
+      "local_beat": 1,
+      "local_sample": 22500,
+      "demo_beat": 13,
+      "demo_sample": 292500
+    },
+    {
+      "count_remaining": 2,
+      "local_beat": 2,
+      "local_sample": 45000,
+      "demo_beat": 14,
+      "demo_sample": 315000
+    },
+    {
+      "count_remaining": 1,
+      "local_beat": 3,
+      "local_sample": 67500,
+      "demo_beat": 15,
+      "demo_sample": 337500
+    }
+  ],
+  "deadline": {
+    "local_countdown_beat": 4,
+    "local_countdown_sample": 90000,
+    "demo_beat": 16,
+    "demo_sample": 360000
+  },
+  "integration": {
+    "clock": "Schedule from one audio clock; beat n starts at origin+n*60/128.",
+    "normal": "The normal context is a 2-bar D-major reference using our own Byte Bounce score.",
+    "alarm": "One-shot, 4 beats; the background is ducked smoothly to 0.55 in this demo.",
+    "countdown": "One-shot of 4 beats. Main ticks at beats 0,1,2,3 represent 4,3,2,1; deadline at 4.",
+    "tension": "Complete 8-bar music loop; replace the normal BGM rather than summing two full mixes.",
+    "success": "One-shot, 8 beats; fade tension over 0.25 beat (0.1171875 s), then return to normal.",
+    "phase": "All assets start on their own beat 0. Trigger on a scheduled beat; reset tension to its bar 1.",
+    "compression": "AAC is for audition; use PCM WAV for sample-accurate loops and cues."
+  },
+  "provenance": "Original code-synthesized game cue. Reuses our own Byte Bounce utilities and normal motif; newly written warning, countdown, D-minor tension and D-major success. No third-party samples, songs, speech or emergency alert recording/melody used. Legal clearance is not guaranteed.",
+  "subdivision_rounding": "Nearest PCM sample, at most 0.5 sample; all main beat and state-start samples are exact.",
+  "event_count": 565,
+  "human_audition": false,
+  "real_smartphone_test": false
+}

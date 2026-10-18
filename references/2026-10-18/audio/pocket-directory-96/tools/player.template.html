@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#eef4ed">
+<title>Pocket Directory — BGM試聴</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef4ed;color:#253c37;font:16px/1.6 system-ui,-apple-system,sans-serif}main{max-width:720px;margin:auto;padding:32px 22px 50px}h1{font-size:clamp(29px,7vw,42px);line-height:1.15;letter-spacing:-.03em;margin:14px 0}p{margin:12px 0}.eyebrow{font-size:12px;letter-spacing:.15em;font-weight:700;color:#607a6a}.card{background:#ffffffd9;border:1px solid #d8e4d9;border-radius:24px;padding:23px;margin-top:22px;box-shadow:0 12px 35px #426e4b09}.sub{color:#64776e;font-size:14px}.toy{height:100px;display:flex;align-items:center;justify-content:center;gap:22px}.folder{width:94px;height:67px;background:#f7cc69;border-radius:17px;position:relative;box-shadow:0 8px 0 #d6ab4c;transform:rotate(-6deg)}.folder:before{content:"";position:absolute;width:40px;height:16px;border-radius:10px 10px 0 0;background:#f7cc69;left:6px;top:-11px}.eyes{font-size:30px;font-weight:700;text-align:center;padding-top:6px;letter-spacing:12px;padding-left:12px}.drone{width:60px;height:60px;background:#bdcde6;border-radius:50%;border:6px solid #dae3f2;position:relative}.drone:after{content:"";width:15px;height:15px;background:#4e657b;border-radius:50%;position:absolute;top:16px;left:16px}body[data-state="1"] .drone{background:#e5bc69}body[data-state="2"] .drone{background:#ec9b94}.transport{display:flex;gap:12px;flex-wrap:wrap}button{font:inherit;cursor:pointer;touch-action:manipulation;border:1px solid #d2dfd4;border-radius:14px;padding:13px 18px;min-height:50px;background:white;color:inherit;font-weight:650}button:focus-visible{outline:3px solid #568a6f;outline-offset:3px}button:disabled{opacity:.45;cursor:wait}#start{background:#285d48;color:white;border-color:#285d48;flex:1}#stop{flex:0 0 90px}.states{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}button[aria-pressed="true"]{background:#e1efd8;border-color:#7da77a;box-shadow:inset 0 0 0 1px #7da77a}.states small{display:block;font-size:11px;font-weight:400}.grid{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}.beats{display:flex;gap:7px}.beat{height:10px;width:10px;border-radius:50%;background:#dce7dc}.beat.on{background:#417b5c;box-shadow:0 0 0 4px #417b5c14}progress{width:100%;height:8px;accent-color:#477859;display:block;margin-top:12px}label{display:block;font-size:14px;margin-top:18px}input{width:100%;accent-color:#477859;height:32px}#status{min-height:46px;font-size:14px;color:#526f5f}footer{font-size:12px;color:#6c7e72;margin-top:20px}a{color:#356746}.pill{font-size:12px;padding:4px 9px;border-radius:50px;background:#e5eddf;display:inline-block;margin:3px}.state-note{font-size:13px;min-height:24px}details{font-size:13px;margin-top:18px}summary{cursor:pointer;font-weight:650}
+@media(max-width:420px){main{padding:23px 16px}.card{padding:18px}.states button{padding:12px 5px;font-size:14px}}
+</style>
+<body data-state="0"><main>
+<div class="eyebrow">MIMIC GAME · ORIGINAL CODE MUSIC</div>
+<h1>Pocket Directory</h1>
+<p class="sub">まるいディレクトリ。ファイルに化けて、リズムにまぎれる。</p>
+<span class="pill">96 BPM</span> <span class="pill">4/4</span> <span class="pill">32小節 / 80秒</span> <span class="pill">ループ</span>
+<section class="card" aria-label="BGMプレーヤー">
+<div class="toy" aria-hidden="true"><div class="folder"><div class="eyes">・・</div></div><div class="drone"></div></div>
+<p class="sub">音量を控えめにして、開始をタップしてください。</p>
+<div class="transport"><button id="start">タップして音を有効にする</button><button id="stop" disabled>停止</button></div>
+<div id="status" role="status" aria-live="polite">オフラインで使えます。音声はこのHTMLに内蔵されています。</div>
+<div class="states" aria-label="ゲーム状態">
+<button data-mode="0" aria-pressed="true">通常<small>かくれる</small></button>
+<button data-mode="1" aria-pressed="false">警戒<small>疑われ中</small></button>
+<button data-mode="2" aria-pressed="false">追跡<small>にげる</small></button>
+</div>
+<div id="state-note" class="state-note">通常：丸いベースと小さな電子音。</div>
+<div class="grid"><strong id="bar">小節 01 / 32</strong><div class="beats" aria-hidden="true"><i class="beat"></i><i class="beat"></i><i class="beat"></i><i class="beat"></i></div><span id="time">00:00 / 01:20</span></div>
+<progress id="progress" max="80" value="0" aria-label="ループ内の再生位置"></progress>
+<label for="volume">試聴音量 <output id="vol-label">55%</output></label><input id="volume" type="range" min="0" max="100" value="55">
+<details><summary>切替と音声について</summary><p>全stemを同時に走らせ、次の拍で追加レイヤーを0.25秒かけて切り替えます。通常 → 警戒 → 追跡の順に音が重なります。停止すると次回は1小節目から始まります。</p><p>内蔵試聴は24 kHz・モノラルの非圧縮音声です。同梱の制作WAVは48 kHzです。実スマホでの動作と聴感は未検証です。ブラウザやファイルアプリによってはHTMLをブラウザへ渡す操作が必要です。アプリ切替や画面ロックで中断する場合があります。</p></details>
+</section>
+<footer>数式によるオリジナル合成音。第三者サンプル・外部音源・オンラインサービス不使用。権利や配布条件の法的保証は含みません。</footer>
+</main>
+<script>
+'use strict';
+const encoded = __EMBEDDED_STEMS__;
+const DURATION=80, BEAT=60/96, RAMP=.25;
+let context, buffers, sources=[], stemGains=[], master, startedAt=0, playing=false, wanted=0, pending=null;
+const $=id=>document.getElementById(id);
+const buttons=[...document.querySelectorAll('[data-mode]')];
+const notes=['通常：丸いベースと小さな電子音。','警戒：監視のパルスとクリックを追加。','追跡：細かなアルペジオとリズムを追加。'];
+const mixMatrix=[[1,0,0],[1,1,0],[1,1,1]];
+function setVisual(mode){document.body.dataset.state=String(mode);buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===mode)));$('state-note').textContent=notes[mode]}
+async function init(){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)throw new Error('このブラウザはWeb Audioに対応していません。');
+  if(!context){context=new AC({latencyHint:'playback'});master=context.createGain();master.gain.value=Number($('volume').value)/100;master.connect(context.destination)}
+  // resume() occurs in the button gesture before loading/decoding audio.
+  await context.resume();
+  if(!buffers){
+    buffers=[];
+    for(const text of encoded){
+      const raw=atob(text), bytes=new Uint8Array(raw.length);
+      for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+      const b=await context.decodeAudioData(bytes.buffer);
+      if(Math.abs(b.duration-DURATION)>2/context.sampleRate)throw new Error('音声の長さが一致しません。');
+      buffers.push(b);
+    }
+  }
+}
+function startSources(){
+  sources=[];stemGains=[];startedAt=context.currentTime+.12;pending=null;
+  buffers.forEach((buffer,i)=>{
+    const source=context.createBufferSource(), gain=context.createGain();
+    source.buffer=buffer;source.loop=true;source.loopStart=0;source.loopEnd=DURATION;
+    gain.gain.value=mixMatrix[wanted][i];source.connect(gain);gain.connect(master);
+    source.start(startedAt,0);sources.push(source);stemGains.push(gain);
+  });
+  master.gain.cancelScheduledValues(context.currentTime);master.gain.setValueAtTime(0,context.currentTime);
+  master.gain.linearRampToValueAtTime(Number($('volume').value)/100,startedAt+.04);
+  playing=true;setVisual(wanted);$('status').textContent='再生中。状態をタップすると次の拍で切り替わります。';
+  $('start').disabled=true;$('start').textContent='再生中';$('stop').disabled=false;
+}
+$('start').addEventListener('click',async()=>{
+  try{$('start').disabled=true;$('status').textContent='音声を準備しています…';await init();if(!playing)startSources();else{$('start').textContent='再生中';$('status').textContent='再開しました。'}}
+  catch(e){$('status').textContent=e.message;$('start').disabled=false;$('start').textContent='タップして再試行';}
+});
+$('stop').addEventListener('click',()=>{
+  if(!playing)return;
+  const t=context.currentTime;master.gain.cancelScheduledValues(t);master.gain.setTargetAtTime(0,t,.008);
+  sources.forEach(s=>{s.stop(t+.06);s.onended=()=>s.disconnect()});
+  const old=stemGains;setTimeout(()=>old.forEach(g=>g.disconnect()),120);
+  sources=[];stemGains=[];playing=false;pending=null;$('start').disabled=false;$('start').textContent='もう一度再生';$('stop').disabled=true;
+  $('status').textContent='停止しました。次回は1小節目から再生します。';setVisual(wanted);
+});
+buttons.forEach((b,mode)=>b.addEventListener('click',()=>{
+  wanted=mode;
+  if(!playing){setVisual(mode);return}
+  const now=context.currentTime;
+  const next=startedAt+Math.ceil(Math.max(0,(now+.025-startedAt)/BEAT))*BEAT;
+  pending={mode,at:next};
+  stemGains.forEach((g,i)=>{
+    const p=g.gain;
+    // cancelAndHoldAtTime prevents jumps even after repeated rapid state taps.
+    if(p.cancelAndHoldAtTime)p.cancelAndHoldAtTime(now);
+    else{const current=p.value;p.cancelScheduledValues(now);p.setValueAtTime(current,now)}
+    p.setValueAtTime(p.value,next);p.linearRampToValueAtTime(mixMatrix[mode][i],next+RAMP);
+  });
+  $('status').textContent=['通常','警戒','追跡'][mode]+'へ、次の拍で切替。';
+}));
+$('volume').addEventListener('input',()=>{
+  const v=Number($('volume').value)/100;$('vol-label').textContent=Math.round(v*100)+'%';
+  if(context){master.gain.cancelScheduledValues(context.currentTime);master.gain.setTargetAtTime(v,context.currentTime,.025)}
+});
+function frame(){
+  let pos=0;
+  if(playing){
+    pos=Math.max(0,context.currentTime-startedAt)%DURATION;
+    if(pending&&context.currentTime>=pending.at){setVisual(pending.mode);pending=null;$('status').textContent='再生中。全stemの拍位置を同期しています。'}
+    if(context.state==='suspended'){$('start').disabled=false;$('start').textContent='タップして再開';$('status').textContent='ブラウザで音声が一時停止しています。'}
+  }
+  $('bar').textContent='小節 '+String(Math.floor(pos/BEAT/4)+1).padStart(2,'0')+' / 32';
+  $('time').textContent=String(Math.floor(pos/60)).padStart(2,'0')+':'+String(Math.floor(pos%60)).padStart(2,'0')+' / 01:20';
+  $('progress').value=pos;
+  document.querySelectorAll('.beat').forEach((el,i)=>el.classList.toggle('on',playing&&i===Math.floor(pos/BEAT)%4));
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+window.bgmDebug=()=>({playing,state:wanted,contextState:context?.state,sampleRate:context?.sampleRate,bufferLengths:buffers?.map(b=>b.length),bufferDurations:buffers?.map(b=>b.duration),startedAt,loopEnd:sources.map(s=>s.loopEnd),stemGains:stemGains.map(g=>g.gain.value)});
+</script></body></html>
