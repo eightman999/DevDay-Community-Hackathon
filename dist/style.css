@@ -19,3 +19,8 @@
 .privacy-impact{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:10px 16px;font-size:9px;color:var(--muted)}.privacy-impact b{color:var(--red);font:12px 'IBM Plex Mono',monospace;margin-left:8px}.threatcards article{display:flex;flex-direction:column}.threatcards article>p{margin:9px 0}.threatcards article>p strong{font-size:10px;color:var(--amber)}.threatcards article>a{font-size:10px;margin-top:10px;align-self:start}.threatcards article>small{margin-top:auto}.reportmetrics{flex-wrap:wrap}.reportmetrics>div{flex:1;min-width:130px}.paper h3{overflow-wrap:anywhere}
 
 .legend .purple{color:#ba89e0}.legend .altered{color:#e8ae66}
+
+/* Compact soundtrack controls share the existing wrapping toolbar. */
+.bgmvolume{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#abc4b5}.bgmvolume input{width:64px;accent-color:#9dca83}.bgmstatus{font-size:10px;color:#9dca83;max-width:100px}#bgmBtn[aria-pressed="false"]{opacity:.6}
+
+#seBtn[aria-pressed="false"]{opacity:.6}
